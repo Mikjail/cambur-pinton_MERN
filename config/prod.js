@@ -5,3 +5,4 @@ module.exports = {
     mongoDB_URI : process.env.MONGODB_URI,
     cookieKey: process.env.COOKIE_KEY
 }
+//mongodb://<dbuser>:<dbpassword>@ds153123.mlab.com:53123/camburpintondb
