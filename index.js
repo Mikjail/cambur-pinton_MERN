@@ -11,11 +11,11 @@ require('./models/Product');
 require('./models/Property');
 require('./services/passport');
 
-mongoose.connect(config.MONGODB_URI, (err, res) => {
+mongoose.connect(config.mongoDB_URI, (err, res) => {
     if (err) {
-    console.log ('ERROR connecting to: ' + config.MONGODB_URI + '. ' + err);
+    console.log ('ERROR connecting to: ' + config.mongoDB_URI + '. ' + err);
     } else {
-    console.log ('Succeeded connected to: ' + config.MONGODB_URI);
+    console.log ('Succeeded connected to: ' + config.mongoDB_URI);
     }
   });
 
