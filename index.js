@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const GoogleStrategy = require("passport-google-oauth20").Strategy
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const config = require('./config/keys');
 
 
