@@ -1,0 +1,16 @@
+
+.landing,
+.home-section,
+.location-section{
+  height: 100%;
+  width: 100%;
+}
+.landing{
+  .home-section {
+    background-image: url("../../images/backgroundHomePC.png"); 
+  }
+  .location-section{
+    background-color: black;
+    position: relative;
+  }
+}

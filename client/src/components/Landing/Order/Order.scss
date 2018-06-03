@@ -1,0 +1,19 @@
+@import '../../../theme.scss';
+nav{
+    &#location-nav{
+        background-color: black;
+        position: absolute;;
+        bottom: 0;
+        i{
+            float:none;
+        }
+        .breadcrumb {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            &.active{
+                color: $primary;
+            }
+        }
+        
+    }
+}
