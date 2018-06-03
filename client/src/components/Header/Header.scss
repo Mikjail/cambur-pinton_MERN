@@ -1,0 +1,13 @@
+@import '../../theme.scss';
+nav{
+    background-color: rgba(0,0,0,0);
+    height: 10%;
+    position:fixed;
+    border: none;
+    box-shadow: none;
+    z-index: 1;
+      
+    .btn.primary{
+        background-color: $primary;
+    }
+}

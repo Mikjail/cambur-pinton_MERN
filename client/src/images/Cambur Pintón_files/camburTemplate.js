@@ -1,0 +1,1 @@
+angular.module("camburTemplate", []).run(["$templateCache", function($templateCache) {}]);
