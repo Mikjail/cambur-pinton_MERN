@@ -1,16 +1,31 @@
+@import '../../theme.scss';
 
-.landing,
-.home-section,
-.location-section{
-  height: 100%;
-  width: 100%;
-}
 .landing{
-  .home-section {
-    background-image: url("../../images/backgroundHomePC.png"); 
-  }
-  .location-section{
-    background-color: black;
-    position: relative;
-  }
+    height: 100%;
+    overflow-x: auto;
+    display:flex;
+    flex-wrap: nowrap;
+
+    .section{
+        flex: 0 0 auto;
+        height:100%;
+        
+    }
+    .first-section{
+        width:100%;
+        background-image: url("../../images/backgroundHomePC.png");
+    }
+
+    .second-section{
+        overflow-y: auto;
+        width:100%;
+        background-color: black;
+    }
+
+    .third-section{
+        background-color: blue;
+    }
+    .forth-section{
+        background-color: red;
+    }
 }

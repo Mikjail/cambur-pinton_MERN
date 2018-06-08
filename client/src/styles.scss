@@ -1,6 +1,8 @@
 @import "./theme.scss";
 html, body, #root{
     height:100%;
-    color: $pimary;
-    
+}
+
+.first-row{
+    padding-top:10%;
 }

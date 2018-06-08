@@ -9,13 +9,10 @@ export class componentName extends Component {
   render() {
     return (
     <div className="landing">
-        <div className="home-section">
-              <Home />
-        </div>
-        <div className="location-section">
-              <Order />
-        </div>
-    </div>
+          <Home />
+          <Order />
+      </div>
+    
     )
   }
 }

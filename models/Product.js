@@ -5,6 +5,7 @@ const PropertySchema = require('./Property');
 
 const productSchema = new Schema({
     name: { type: String},
+    class: { type: String},
     properties: [PropertySchema]
 })
 

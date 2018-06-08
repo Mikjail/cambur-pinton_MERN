@@ -1,0 +1,10 @@
+//  Mixins
+@mixin foodSprite($img){
+    height: 570px;
+    width: 100%;
+    background: $img;
+    background-size: 1000px;
+}
+@mixin foodPosition($x){
+    background-position-x: $x; 
+}

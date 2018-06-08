@@ -23,8 +23,16 @@ module.exports = app =>{
     })
 
     app.get('/api/products', async (req,res) =>{
-        const products = await Product.find()
-        res.send(products);
+        try{
+            const products = await Product.find()
+            res.send(products);
+        }catch(error){
+            res.send({
+                status: 409,
+                message: 'Request could not be completed. Check the id',
+                data: ''
+            })
+        }
     })
 
 

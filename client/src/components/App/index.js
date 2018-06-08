@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+
+
 import Header  from '../Header';
 import Landing from '../Landing';
-import styles from './App.css';
+import './App.css';
 
 const OrderNow = () => <h2> OrderNow</h2>
-const MapView = () => <h2> MapView</h2>
 
-export class App extends Component {
+class App extends Component {
+  componentDidMount() {
+    this.props.fetchUser();
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -21,4 +28,4 @@ export class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, actions)(App);

@@ -1,13 +1,33 @@
 @import '../../theme.scss';
-nav{
+    
+.btn.primary{
+    background-color: $primary;
+    &:hover{
+        background-color: $primary;
+        transition:0.4s;
+    }
+}
+.logIn-section{
+    text-align: center;
+}
+
+#nav-mobile{
+    top:1%;
     background-color: rgba(0,0,0,0);
     height: 10%;
     position:fixed;
     border: none;
     box-shadow: none;
+    right:5%;
     z-index: 1;
-      
-    .btn.primary{
-        background-color: $primary;
+    i.material-icons{
+        &.large{
+            font-size: 4rem;
+            cursor: pointer;
+            color: $primary;
+        }
     }
 }
+    
+      
+

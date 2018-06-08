@@ -1,0 +1,26 @@
+@import '../../../../theme.scss';
+.collection{
+    border:none;
+    &.with-header {
+        
+        .collection-item{
+            margin-top: 10px;
+            padding:10px 0px 10px 5px;
+            &:hover{
+                background-color: #fbc97d; 
+                transition: 0.4s;
+            }
+            .product-price{
+                float: right;
+                margin-right: 5px;
+            }
+            i.tiny{
+                font-size: 1.3rem;
+                color:$primary;
+                &:hover{
+                    color:black;
+                }
+            }
+        }
+    }
+}
