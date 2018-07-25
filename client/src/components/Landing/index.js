@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import Home from './Home';
 import Order from './Order';
+import Summary from './Order/Food/Summary';
 import './Landing.css';
 
-export class componentName extends Component {
+export class Landing extends Component {
 
 
   render() {
@@ -17,4 +18,4 @@ export class componentName extends Component {
   }
 }
 
-export default componentName
+export default Landing

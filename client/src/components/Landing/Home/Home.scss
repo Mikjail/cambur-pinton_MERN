@@ -1,0 +1,21 @@
+@import '../../../theme.scss';
+.first-section{
+    width:100%;
+    background-image: url("../../../images/backgroundHomePC.png");
+}
+#nav-bar{
+    z-index: 2;
+    bottom:0;
+    position:absolute;
+    background-color: black;
+
+    ul{
+        display: flex;
+        justify-content: space-evenly;
+        i{
+            font-size: 35px;
+            color:$primary
+        }
+        
+    }
+}

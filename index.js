@@ -4,7 +4,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const config = require('./config/keys');
-
+const bodyParser = require('body-parser');
 
 require('./models/User');
 require('./models/Product');
@@ -29,6 +29,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.json());
 
 require('./routes/authRoutes')(app);
 require('./routes/orderRoutes')(app);

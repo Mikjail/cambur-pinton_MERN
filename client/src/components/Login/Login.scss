@@ -1,0 +1,59 @@
+@import '../../theme.scss';
+.login-section{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background:black;
+    height:100%;
+    width:100%;
+    hr{
+        width:100%;
+    }
+    .card-panel{
+        display:flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        width:35%;
+        height:55%;
+        padding: 0px 25px;
+        .header-panel{
+            text-align: center;
+            color:white;
+        }
+        .body-panel{
+            padding: 0px;
+        }
+    }
+    .google-btn{
+        display: flex;
+        width: 280px;
+        height: 40px;
+        background-color:white;
+        padding:0;
+        color: #757575;
+        border: 1px solid #acacac;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.24), 0 0 2px 0 rgba(0,0,0,.12);        
+        &:focus{
+            background-color: white;
+        }
+        &:hover{
+            background-color: white;
+        }
+        .google-icon{
+            background: url('../../images/icon/btngoogle.svg');
+            background-position-y: 50%;
+            width: 45px;
+            height: 38px;
+            border-right: 1px solid $primary;
+        }
+        .btn-title{
+            flex-grow: 1;
+        }
+    }
+    .btn-login{
+        width:100%;
+    }
+}
+

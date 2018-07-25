@@ -30,3 +30,5 @@ export const Breadcrumbs = (products) =>{
         </div>
     </nav>)
 }
+
+export default Breadcrumbs;

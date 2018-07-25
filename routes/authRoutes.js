@@ -1,6 +1,10 @@
 const passport = require('passport');
+const passportService = require('../services/passport');//login/signup ddbb
+const Authentication = require('../controllers/AuthController');;//login/signup ddbb
 
 module.exports = app => {
+
+    //GOOGLE OAUTH
     app.get('/auth/google', 
         passport.authenticate('google',{
         scope: ['profile', 'email']
@@ -21,4 +25,11 @@ module.exports = app => {
     app.get('/api/current_user', (req, res) => {
         res.send(req.user);
     });
+
+
+    //JWT AUTH
+    const requireAuth = passport.authenticate('jwt', { session: false});
+    const requireSignin = passport.authenticate('local', { session: false });
+
+
 }

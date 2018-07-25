@@ -1,0 +1,74 @@
+@import '../../../../../theme.scss';
+.card-panel{
+    width:100%;
+    padding:10px 25px;
+    &.desactive{
+        background-color: #d6d6d6;
+    }
+    .header-panel{
+        display: flex;
+        height: 40px;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        background-color: $primary;
+        color:white;
+    }
+    .body-panel{
+        display:flex;
+        justify-content: center;
+        padding: 60px 0px;
+        
+    }
+    .bottom-panel{
+        display:flex;
+        justify-content: center;
+
+        .btn{
+            &.desactive{
+                background-color: $desactive;
+            }
+        }
+    }
+    h5{
+        font-size: 1.20rem;
+        text-align: center;
+    }
+    select{
+        display:inline;
+        width: 40px;
+        height: 30px;    
+    }
+    .summary-detail{
+        display: flex;
+        justify-content: flex-start;
+        align-content: center;
+        align-items: baseline;
+        font-size: 12px;
+        .product-detail{
+            padding-left:10px;
+            flex-grow: 1;
+           
+          }
+          .product-price{
+            margin-right: 20px;
+            a{
+                margin-top: 3px;
+                margin-left: 8px;
+                position: absolute;
+                color: $primary
+            }
+          }
+    }
+    .total-details{
+        section{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+        }
+
+    }
+    
+}
+

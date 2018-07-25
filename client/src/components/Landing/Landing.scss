@@ -5,27 +5,12 @@
     overflow-x: auto;
     display:flex;
     flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
 
     .section{
         flex: 0 0 auto;
         height:100%;
         
     }
-    .first-section{
-        width:100%;
-        background-image: url("../../images/backgroundHomePC.png");
-    }
 
-    .second-section{
-        overflow-y: auto;
-        width:100%;
-        background-color: black;
-    }
-
-    .third-section{
-        background-color: blue;
-    }
-    .forth-section{
-        background-color: red;
-    }
 }
