@@ -1,16 +1,9 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const LocalStrategy = require('passport-local');
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = mongoose.model('users');
-
-
-//AUTH
-
-const requireAuth = passport.authenticate('jwt', { session: false});
-const requireSignin = passport.authenticate('local', { session: false });
 
 //GOOGLE OAUTH
 
@@ -32,42 +25,71 @@ passport.use(new GoogleStrategy({
         proxy: true
     }, 
     async (accessToken, refreshToken, profile, done) => {
-       const existingUser = await User.findOne({ googleId: profile.id})  
+       const existingUser = await User.findOne({ "local.email": profile.emails[0].value})  
         if(existingUser){
-            return done(null, existingUser);
+            if(existingUser.google.googleId){
+                return done(null, existingUser);
+            }
         }
         
-        const user = await new User({ googleId: profile.id, 
+        const user = await new User({   
+                                        google: { googleId: profile.id}, 
                                         name: profile.name.givenName || "", 
                                         lastName: profile.name.familyName || "",
-                                        email: profile.emails[0].value || ""  }).save()
+                                        local: {email: profile.emails[0].value || "" }
+                                    })
+        user.local.password = user.generateHash((Math.floor(Math.random() * 10000)).toString(36));
+        await user.save();
         done(null, user);                    
         
     })
 );
 
-// Setup options for JWT Strategy
-const jwtOptions = {
-    jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-    secretOrKey: keys.secret
-};
+const localOptions = { usernameField: 'email',passwordField: 'password'};
 
-//Create JWT Strategyx
-passport.use(new JwtStrategy(jwtOptions, function(payload, done){
-    // See if the user ID and payload exist in ou ddbb
-    // if it does call done with that user
-    // otherwise, call done without userObject
-    User.findById(payload.sub, function(err, user){ 
-        if(err){ return done(err, false);}
+passport.use(new LocalStrategy(
+    localOptions,
+    async (username, password, done) => {
+    try{
+       const user = await User.findOne({"local.email":username});
+            
+            if (!user) {
+              return done(null, false, { data: "Username doesn't exist." });
+            }
+            if(user.local.password){
+                if (!user.validPassword(password, user.local.password)) {
+                    return done(null, false, { data: 'Incorrect password.' });
+                  }
+            }
+            return done(null, user);     
+        
+    }catch(err){
+        return done(err);
+    }
+      
+}));
 
-        if(user){ 
-            return done(null, user);
+
+passport.use('local-signup', new LocalStrategy(localOptions,
+async (email, password, done) => {
+    let user = await User.findOne({"local.email": email})
+    if(user) {
+        console.log('user already exists');
+        return done(null, false,  {data: 'That email is already in use.'});
+    }
+    else {
+        let newUser = await new User({local: {email: email || ""  }});
+        newUser.local.password = newUser.generateHash(password);
+
+        let newUserVal = await newUser.save();
+        if(newUser) {
+            return done(null, newUserVal);
+            
+            }
+        else{
+
+            return done(null, false, {data: 'Please fill all fields'});
         }
-        else{ 
-            return done(null, false);
-        }
-    })
-
-})
-);
+    }
+}));
 

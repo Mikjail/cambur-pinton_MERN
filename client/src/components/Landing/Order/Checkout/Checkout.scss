@@ -4,10 +4,25 @@
     .card-panel{
         display: flex;
         flex-direction: column;
+        &.card-summary{
+            padding: 10px 10px;
+        }
         .summary{
             font-size: 13px;
-
+            tr{
+                &.summary-details{
+                    background-color: #fafafa;
+                    
+                   font-weight: 400;
+             
+                }
+                &.end-summary{
+                    border-top: 1px solid #d0d0d0;
+                }
+                
+            }
             th,td{
+                padding: 8px 5px;    
                 &:first-child{
                     text-align: left;
                 }

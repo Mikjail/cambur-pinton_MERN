@@ -5,15 +5,24 @@ import formField from './formField';
 import AddressField from './AddressField';
 import './AddressPanel.css';
 import {connect} from 'react-redux';
+import { compose } from 'redux';
 import * as actions from '../../../../../actions'
 
 export class AddressPanel extends Component {
 
     constructor(props){
         super(props)
+        this.state = { checkedItems: null }
     }
+    componentWillMount(){
+        const { auth } = this.props;
+        if(auth){
+            if(!this.state.checkedItems && auth.addresses.length> 0){
+                this.setState({checkedItems: auth.addresses[0]._id});
+                localStorage.setItem("address",auth.addresses[0]._id)
+            }
+        }
 
-    componentDidMount(){
     }
     renderFields(){
         return _.map(formField, ({label, name, type, styling})=>{
@@ -28,20 +37,18 @@ export class AddressPanel extends Component {
         })
     }
 
-    onSubmit(value, history){
-        const { user } = this.props;
-        user.addresses.push(value)
-        this.props.changeStatus(true);
-        this.props.onSubmitAddress(value, history);
-        
-    }
-
+    handleCheck(e) {
+        const item = e.target.value;
+        this.setState({ checkedItems: item});
+        localStorage.setItem("address",e.target.value)
+      }
+    
     renderAddresses(){
         
-        const { addresses, user } = this.props;
-
+        const { addresses, auth } = this.props;
+        console.log(this.props)
         if(!addresses){
-            return( <form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}>
+            return( <form onSubmit={this.props.handleSubmit(this.props.onSubmitAddress)}>
                 {this.renderFields()}
                 <div className="col s12 m12 l12">
                 <button type="submit" className="btn btn-login primary white-text">
@@ -50,52 +57,65 @@ export class AddressPanel extends Component {
                 </div>
             </form>)
         }
-        else{
-            return user.addresses.map(address => {
-                return(
-                    <ul key={address.street}>
-                    <li>
-                        {address.telephone} - {address.street} {address.number}, {address.floor} {address.apartment}. {address.zone}  
-                    </li>
-                    </ul>
-                );   
-            }) 
+        if(auth){
+            if(auth.addresses.length> 0){
+                return auth.addresses.map(address => {
+                    return(
+                        <ul key={address.street}>
+                        <li>
+                            <input type="radio" value={address._id} checked={this.state.checkedItems === address._id} onChange={this.handleCheck.bind(this)} />
+                            <span>{address.telephone} - {address.street} {address.number}, {address.floor} {address.apartment}. {address.zone} </span>
+                        </li>
+                        </ul>
+                    );   
+                })  
+            }
+        }else{
+            return(<div> PENSANDO</div>)
         }
-  }
+        
+    }
+  
 
-  toggleAddressPanel(value){
-    this.props.changeStatus(value);
-  }
 
   renderAddAdressLink(){
            
-    const { addresses } =  this.props;
+    const { addresses, auth } =  this.props;
+    
     if(addresses){
         return (
-            <a href="javascript:void(0);" onClick={()=>{this.toggleAddressPanel(false)}} className="right">
+            <a href="javascript:void(0);" onClick={()=>{this.props.changeStatus(false)}} className="right primary-link">
             Agregar Domicilio
                 </a>
           )
       }else{
-        return ( <a href="javascript:void(0);" onClick={()=>{this.toggleAddressPanel(true)}}className="right">
+        if(auth.addresses.length > 0){
+            return ( <a href="javascript:void(0);" onClick={()=>{this.props.changeStatus(true)}}className="right">
             cancelar
-        </a>
-        )
+        </a>)
+        }
       }
   }
   
   render() {
+      const{auth} = this.props;
+    if(auth){
     return (
         <div className="card-panel">
             <div className="card-title">
                     Domicilio
-                    {this.renderAddAdressLink()}
+                {this.renderAddAdressLink()}
             </div>
             <div className="card-body">
                 {this.renderAddresses()}
             </div>
         </div>
     )
+    }else{
+        return(
+            <div> loader </div>
+        )
+    }
   }
   
 }
@@ -107,13 +127,20 @@ function validate(values) {
     
     _.each(formField, ({ name })=>{
         if(!values[name]){
-           errors[name]= 'You must provide a value';
+           errors[name]= 'Requerido';
         }
     });
   
     return errors;
 }
+function mapStateToProps({auth}) {
+    return { auth };
+  }
+  
 
-AddressPanel = connect(null,actions)(AddressPanel);
+export default compose(
+    connect(mapStateToProps,actions),
+    reduxForm({ validate, form: 'addressForm', destroyOnUnmount: false })
+    )(AddressPanel);
 
-export default reduxForm({ validate, form: 'addressForm', destroyOnUnmount: false })(AddressPanel);
+

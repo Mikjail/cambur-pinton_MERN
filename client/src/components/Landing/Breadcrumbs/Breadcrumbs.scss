@@ -1,0 +1,43 @@
+@import '../../../theme.scss';
+nav{
+    position: fixed;
+    margin-top:0;
+    .line-progress-bar{
+        display: inline-block;
+        width: 100px;
+        height: 1px;
+        margin: 10px 17px;
+        background-color: white;
+    }
+    &#location-nav{
+        background-color:rgba(0,0,0,0);
+        top: 0;
+        box-shadow: none;
+        i{
+            float:none;
+        }
+        .breadcrumb {
+            font-size: 18px;
+            background-color: rgba(0,0,0,0);
+            color:white;
+            &:before{
+                display:none;
+            }
+            &.active{
+                color: $primary;
+            }
+        
+          
+        }
+        
+    }
+}
+@media only screen and(max-width: 400px){
+    nav {
+        margin-top: 10%;
+        .line-progress-bar{
+            width: 50px;
+            margin: 10px 2px;
+        }
+    }
+}

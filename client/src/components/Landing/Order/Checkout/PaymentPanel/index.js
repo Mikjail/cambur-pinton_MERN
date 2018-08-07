@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import mercadoPago from './mercadopago-logo.png';
-
+import {connect} from 'react-redux';
+import * as actions from '../../../../../actions';
+import { withRouter } from 'react-router-dom';
+import mercadoPago from '../../../../../images/icon/mercadopago-logo.png';
+import './PaymentPanel.css';
 export class PaymentPanel extends Component {
     
     constructor(props){
         super(props);
-        this.state = { payAmount: 0, total: parseFloat(localStorage.getItem("total")) };
+        this.state = { payAmount: "", total: parseFloat(localStorage.getItem("total")) };
     }
 
     handleChange(e) {
@@ -46,34 +49,41 @@ export class PaymentPanel extends Component {
 
     renderChange(){
         const {payAmount, total} = this.state;
+        const amount = (payAmount - total ).toFixed(2);
       if(this.isAbleToPay()){
-          return <p> Cambio:  {payAmount - total } </p>
+          return <p> Cambio:  ${amount} </p>
       }
     }
 
     render() {
-        const {paymentLink} = this.props;
+        const {paymentLink, history} = this.props;
+        const { total} = this.state;
 
         return (
         <div className="card-panel">
             <div className="card-title">
             Medio de Pago
+            <span className="right"> Total: ${total} </span>
             </div>
             <div>
             <div className="card-body">
                 <div className="card-panel card-panel-payment">
+               
                 <button className="card-title" onClick={()=> this.toggleCardBody('cash-container')}>
                     Efectivo
                 </button>
                 <div className="card-body" id="cash-container">
+               
                 <label>Con cuanto desea pagar?</label>
-                    <input type="number"  onChange={this.handleChange.bind(this)} value={this.state.payAmount} />
+                    <input type="number" name="paymentAmount" onChange={this.handleChange.bind(this)} value={this.state.payAmount} />
                     
                     {this.renderChange()}
                     
-                    <button className={"btn center "+ (this.isAbleToPay() ? 'primary' : 'disabled') }>
+                    <button onClick={()=>this.props.onSubmitOrder(history) } className={"btn center "+ (this.isAbleToPay() ? 'primary' : 'disabled') }>
                         Pedir
                     </button>
+
+                 
 
                 </div>
                 
@@ -100,4 +110,4 @@ export class PaymentPanel extends Component {
     }
 }
 
-export default PaymentPanel
+export default connect(null, actions)(withRouter(PaymentPanel))

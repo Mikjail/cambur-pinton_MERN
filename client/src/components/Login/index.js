@@ -1,13 +1,24 @@
 import React, { Component } from 'react'
 import _ from 'lodash';
 import  { reduxForm, Field } from 'redux-form';
-import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import { compose } from 'redux';
+import * as actions from '../../actions'
+import { withRouter, Link } from 'react-router-dom';
+
+import DivWithErrorHandling from '../../utils/handlingError';
 import formField from './formField';
 import LoginField from './LoginField';
-import validateEmails from '../../utils/validateEmails';
+import validateForm from '../../utils/validateEmails';
 import './Login.css';
 
 export class Login extends Component {
+
+    constructor(props){
+        super(props);
+        const user = localStorage.getItem('user');
+        if(user) this.props.history.push('/');
+    }
     renderFields(){
         return _.map(formField, ({label, name, type})=>{
            console.log(type)
@@ -21,30 +32,29 @@ export class Login extends Component {
         })
     }
 
-    goBackHome(){
-        console.log("hola mundo")
-    }
 
     render() {
-        console.log(this.props)
         return (
+     
         <div className="login-section"> 
             <div className="card-panel">
                 <div className="header-panel">
                     <h5>Login</h5>
                 </div>
                 <div className="body-panel">
-           
-                <form onSubmit={this.props.handleSubmit(this.goBackHome)}>
+                <form onSubmit={this.props.handleSubmit(this.props.onLogin)}>
                     {this.renderFields()}
-                  
+                    
+                    <div className="forgot-password">
+                        <a className="primary-link" href="">Olvido su contraseña ?</a>
+                    </div>
                     <button type="submit" className="btn btn-login primary white-text">
                         Login
                     </button>
-
+                    <DivWithErrorHandling showError={this.props.messageAlert} />
                 </form>
-                </div>
                 <hr />
+
                 <a href="/auth/google" className="btn center google-btn">
                     <span className="google-icon">
                     </span>
@@ -52,7 +62,12 @@ export class Login extends Component {
                         CONTINUAR CON GOOGLE
                     </span>
                 </a>
-                
+                <div className="forgot-password">
+                        No tiene cuenta?  <Link className="primary-link" to="/signup"> Registrese </Link>
+                </div>
+                </div>
+              
+               
             </div>
         </div>
         )
@@ -62,19 +77,24 @@ export class Login extends Component {
 function validate(values) {
     const errors = {};
 
-    errors.recipients= validateEmails(values.recipients || '');
+    errors.user= validateForm.validateEmail(values.user);
     
     _.each(formField, ({ name })=>{
         if(!values[name]){
-           errors[name]= 'You must provide a value';
+           errors[name]= 'Requerido';
         }
     });
   
     return errors;
 }
+function mapStateToProps({messageAlert}){
+        return {messageAlert};
+}
 
-export default reduxForm({ 
+export default  compose(
+    connect(mapStateToProps,actions),
+    reduxForm({ 
     validate, 
     form: 'loginForm',
     destroyOnUnmount: false 
-    })(Login);
+    }))(withRouter(Login));

@@ -8,6 +8,7 @@ import reduxThunk from 'redux-thunk';
 
 import './styles.css'
 import App from './components/App';
+import Footer from './components/Footer';
 import reducers from './reducers';
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));

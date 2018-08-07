@@ -7,27 +7,109 @@
         transition:0.4s;
     }
 }
-.logIn-section{
-    text-align: center;
-}
-
-#nav-mobile{
-    top:1%;
+nav.header-nav{
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     background-color: rgba(0,0,0,0);
-    height: 10%;
-    position:fixed;
-    border: none;
-    box-shadow: none;
-    right:5%;
-    z-index: 1;
-    i.material-icons{
-        &.large{
-            font-size: 4rem;
-            cursor: pointer;
-            color: $primary;
-        }
+    margin-top:10px;
+    padding: 0 10%;
+    a{
+        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     }
-}
-    
-      
+    box-shadow: none;
+    .order-btn{
+        background-color: $primary;
+        width: 100px;
+        text-align: center;
+    }
 
+    li{
+        width: 100px;
+        text-align: center;
+    }
+    
+}
+
+
+
+@media only screen and (max-width: 400px){
+    nav.header-nav{
+        position:fixed;
+        z-index: 99;
+        margin-top:0;
+        background-color: $primary;
+        .nav-wrapper{
+            #nav-mobile{
+                height:100%;
+                .order-btn{
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    
+                
+                    a{  
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100%;
+                        width: 100%;
+                    }
+                
+                 
+                }
+            }
+        }
+        i{
+            &.material-icons{
+                display:inline;
+            }
+        }
+        #menu-icon{
+            display: inline-block;
+            margin-top:8px;
+            cursor: pointer;
+        }
+        .bar1, .bar2, .bar3 {
+            width: 25px;
+            height: 4px;
+            background-color: white;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+        .change .bar1 {
+            -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+            transform: rotate(-45deg) translate(-9px, 6px);
+        }
+        
+        .change .bar2 {opacity: 0;}
+        
+        .change .bar3 {
+            -webkit-transform: rotate(45deg) translate(-8px, -8px);
+            transform: rotate(45deg) translate(-8px, -5px);
+        }
+        #navBody{
+            display: flex;
+            justify-content: center;
+            background-color: #00000094;
+            position: absolute;
+            left:0;
+            width: 100%;
+            height: 0px;
+            transition: 0.5s;
+            ul{   
+                margin-top: 100px;
+                li{
+                    .navBar-txt{
+                        display:none;
+                        color:  #ffffff;
+                        transition: 1s;
+                    }
+                    text-align: center;
+                    float:none
+                }
+            }
+           
+        }
+       
+    }
+   
+}

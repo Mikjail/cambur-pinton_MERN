@@ -1,5 +1,53 @@
 import axios from 'axios';
-import {FETCH_USER, FETCH_PRODUCTS, FETCH_ORDER} from './types';
+import {FETCH_USER, 
+    FETCH_PRODUCTS, 
+    FETCH_ORDER, 
+    AUTH_USER,
+    FETCH_MERCADOPAGO,
+    ALERT_MESSAGE} from './types';
+
+
+export const onLogin= ({user, password}, action, {history}) => async(dispatch) =>{
+   
+    try {
+    
+        const res = await axios.post('/api/login', {email:user, password:password} )
+        
+        console.log(res)
+
+        localStorage.setItem('user', JSON.stringify(res.data));
+           
+        history.push({
+            pathname: '/order',
+        });
+
+        dispatch({ type: AUTH_USER , payload: res.data});
+   
+    }catch({response}){
+        if(response.data){
+            const {data } = response.data;
+            dispatch({type: ALERT_MESSAGE, payload: data})
+        }
+    }
+}
+
+export const onSignup= ({email, password}, action, {history} ) => async(dispatch) =>{
+    
+    try {
+        const res = await axios.post('/api/signup', {email, password} )
+        
+        localStorage.setItem('user', JSON.stringify(res.data));
+        
+        history.push({
+            pathname: '/order',
+        });
+
+        dispatch({ type: AUTH_USER , payload: res.data});
+        }catch(error){
+            dispatch({type: ALERT_MESSAGE, payload: error.data })
+        }
+   
+}
 
 
 export const fetchUser =  () =>async (dispatch) => {
@@ -7,8 +55,10 @@ export const fetchUser =  () =>async (dispatch) => {
     try {
 
         const res = await axios.get('/api/current_user')
-        localStorage.setItem("user",JSON.stringify(res.data));
 
+        const user = res.data?JSON.stringify(res.data): ""
+        localStorage.setItem("user",user);
+        
         dispatch({type: FETCH_USER, payload: res.data })
         
     } catch (error) {
@@ -17,48 +67,58 @@ export const fetchUser =  () =>async (dispatch) => {
     
 }   
 
+export const fetchOrder = () =>async (dispatch) =>{
+
+        const order = JSON.parse(localStorage.getItem("order"));
+
+        dispatch({ type: FETCH_ORDER , payload: order})   
+
+}
+
+export const fetchPaylink = () => async(dispatch) =>{
+
+        const mercadopago = localStorage.getItem("mercadopago");
+
+        dispatch({ type: FETCH_MERCADOPAGO , payload: mercadopago})   
+ 
+}
 export const currentUser = () => (dispatch) =>{
     try{
-    const user = JSON.parse(localStorage.getItem("user"));
+        const user = JSON.parse(localStorage.getItem("user"));
 
-    dispatch({type: FETCH_USER, payload: user })
+        dispatch({type: FETCH_USER, payload: user })
     
     } catch (error) {
         console.log(error)     
     }
 }
+
 export const fetchProducts = () =>async (dispatch) =>{
     try {    
 
         let products = JSON.parse(localStorage.getItem("order"));
         localStorage.removeItem("order");
         localStorage.removeItem("total");
-        
+        localStorage.removeItem("mercadopago");
+
         if(!products){
             const res = await axios.get('./api/products');
             products = res.data;
         }
         
         dispatch({ type: FETCH_PRODUCTS , payload: products})  
-        dispatch({ type: FETCH_ORDER , payload: products}) 
     } catch (error) {
         console.log(error)
     }
 }
 
 
-export const fetchOrder = (products=[]) =>async (dispatch) =>{
-    try {    
-        dispatch({ type: FETCH_ORDER , payload: products})   
-    } catch (error) {
-        console.log(error)
-    }
-}
+
 
 export const addProduct = (order) =>async (dispatch) =>{
     try {    
-
-        dispatch({ type: FETCH_ORDER , payload: [...order]})   
+        
+        dispatch({ type: FETCH_PRODUCTS , payload: [...order]})  
     } catch (error) {
         console.log(error)
     }
@@ -72,25 +132,66 @@ export const onCheckout = (values, history) => async (dispatch) =>{
         localStorage.setItem("mercadopago", res.data.response.init_point)
 
         history.push({
-            pathname: '/checkout',
-            state: { paymentLink: res.data.response.init_point, products: values} 
+            pathname: '/order/checkout',
         });
 
     }catch (error) {
         history.push({
-            pathname: '/checkout',
-            state: { paymentLink:'', products: values} 
+            pathname: '/order/checkout',
         });
     }
 };
 
-export const onSubmitAddress = (values, history) => async dispatch =>{
-    console.log(values)
+
+// USER CRUD
+
+export const onSubmitAddress = (values,action, props) => async dispatch =>{
+
     const res = await axios.post('/api/updateAddress', {address: values});
     localStorage.setItem("user",JSON.stringify(res.data));
-
+    localStorage.setItem("address",res.data.addresses[0]._id);
+    props.changeStatus(true);
     dispatch({ type : FETCH_USER, payload: res.data});
 };
 
+export const onSubmitOrder = (history) => async dispatch =>{
+
+
+    const order = JSON.parse(localStorage.getItem("order"));
+    const user = JSON.parse(localStorage.getItem("user"));
+    const valueToSend = {
+        products: [],
+        address:""
+    }
+
+    order.forEach(elem =>{
+        elem.properties = elem.properties.filter(property =>{
+           return property.cant > 0 
+        })
+        if(elem.properties.length>0){
+            valueToSend.products.push(elem);
+        }
+    })
+
+    const address = user.addresses.filter(address =>{
+        return address._id == localStorage.getItem("address");
+    })
+
+    valueToSend.address =`${address[0].street} ${address[0].number}  ${address[0].floor}${address[0].apartment} -  ${address[0].zone}` ;
+    
+    try{
+        const res = await axios.post('/api/submitOrder', {order : valueToSend});
+        
+
+        history.push({
+            pathname: '/order/success',
+            
+        });
+
+    }catch(error){
+        console.log(error)
+    }
+
+}
 
 

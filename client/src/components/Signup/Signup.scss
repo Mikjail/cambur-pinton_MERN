@@ -1,0 +1,28 @@
+.login-section{
+    &.regsiter-section{
+
+
+    hr{
+        margin-bottom: 30px;
+    }
+    .card-panel{
+        height:auto;
+        .body-panel{
+            display: flex;
+            flex-direction: column;
+            input{
+                height:20px;
+            }
+        }
+    }
+    .google-btn{
+        margin-top: 20px;
+    }
+    .btn-login{
+        margin-bottom:30px;
+    }
+    .g-recaptcha{
+        margin-bottom: 20px;
+    }
+    }
+}

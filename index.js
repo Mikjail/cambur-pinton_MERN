@@ -2,9 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const config = require('./config/keys');
 const bodyParser = require('body-parser');
+var flash = require('connect-flash');
 
 require('./models/User');
 require('./models/Product');
@@ -30,8 +30,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
+app.use(flash());
 
 require('./routes/authRoutes')(app);
+require('./routes/userRoutes')(app);
 require('./routes/orderRoutes')(app);
 
 if(process.env.NODE_ENV === 'production'){

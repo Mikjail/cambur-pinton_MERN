@@ -10,7 +10,6 @@ export class Summary extends Component{
 
     constructor(props){
         super(props);
-        this.state = {amount: 0, total: 0, toggle: false}
     }
 
     addCant(event, property) {
@@ -22,8 +21,6 @@ export class Summary extends Component{
         let items = [];         
         for (let i = 0; i <= 12; i++) {             
              items.push(<option key={i} value={i}>{i}</option>);   
-             //here I will be creating my options dynamically based on
-             //what props are currently passed to the parent component
         }
         return items;
     }  
@@ -68,15 +65,18 @@ export class Summary extends Component{
         })
     }
 
-    proccesOrder(order, history){
-        localStorage.setItem('order', JSON.stringify(order));
-        localStorage.setItem('total', order.total)
-        let user = JSON.parse(localStorage.getItem('user'));
+    proccesOrder(products, history){
+        localStorage.setItem('order', JSON.stringify(products));
+        let user = localStorage.getItem('user');
 
         if(!user){
           history.push({pathname: '/login'});
+          this.props.fetchUser();
+          let summary = document.getElementById('summary-mobile-view');
+            summary.firstChild.classList.toggle('active');
          }else{
-            let products= order.filter(product=>{
+
+            let newProduct= products.filter(product=>{
                 return product.properties.find((property)=>{
                     if(property.cant > 0){
                         return product;
@@ -84,7 +84,7 @@ export class Summary extends Component{
                 })
             })
 
-            products.forEach(product=>{
+            newProduct.forEach(product=>{
                 product.properties =  product.properties.filter(property =>{
                     if(property.cant > 0){
                         return property;
@@ -92,83 +92,95 @@ export class Summary extends Component{
                 })
             })
 
-            this.props.onCheckout(order, history)
+            console.log(newProduct)
+            this.props.onCheckout(newProduct, history)
          }
      
       }
 
     renderSubtotal(){
-        let {order} = this.props;
+        let {products} = this.props;
+        let calc = { subtotal: 0, discount: 0, total: 0};
         let amount =0 
-        order.forEach(product =>{
-            product.properties.forEach(property => {
-                amount += property.cant  * property.price})
-        })
-        order.subtotal = amount + 100; 
-        order.discount = (order.subtotal* 0.10).toFixed(2);
-        order.total =(order.subtotal * 0.90).toFixed(2);
-        return order.subtotal;   
+      
+        if(products){
+            products.forEach(product =>{
+                product.properties.forEach(property => {
+                    amount += property.cant  * property.price})
+            });
+
+            calc.subtotal = amount + 100; 
+            calc.discount = (calc.subtotal* 0.10).toFixed(2);
+            calc.total =(calc.subtotal * 0.90).toFixed(2);
+            localStorage.setItem('total', calc.total)
+        }
+        return  calc;   
     }
 
 
     render(){
-       const { order, onCheckout, history } = this.props;
-        if(this.renderSubtotal() > 100) {
+       const { products, history } = this.props;
+       const calc = this.renderSubtotal();
+        if(calc.subtotal > 100) {
             return (
-                <div className="card-panel">
-                    <div className="header-panel">
-                        <h5>Tu Pedido </h5>
-                   </div>
-                   <hr />
-                   {this.renderSummaryList(order)}
-                    <hr />
-                   <div className="total-details">
-                        <section>
-                            <span className="total-title">Delivery</span>
-                            <span>$100</span>
-                        </section>
-                        <section>
-                            <span className="total-title">Subtotal </span> 
-                            <span> ${this.renderSubtotal()}</span>
-                        </section>
-                        <section>
-                            <span className="total-title">Descuento - 10% </span> 
-                            <span>${order.discount} </span>
-                        </section>
-                        <section>
-                            <span className="total-title">Total </span> 
-                            <span>${order.total}</span>
-                        </section>
+                <div className="summary-panel" id="summary-view">
+                    <div className="card-panel card-summary">
+                        <div className="header-panel">
+                            <h5>Tu Pedido </h5>
                     </div>
-                    <div className="center">
-                    <button
-                        onClick={() => this.proccesOrder(order, history)} 
-                        className="btn primary center">
-                         Pedir
-                    </button>
-                    {/* <Link   to={{ pathname: '/checkout', state: {products: order} }}
+                    <hr />
+                    {this.renderSummaryList(products)}
+                        <hr />
+                    <div className="total-details">
+                            <section>
+                                <span className="total-title">Delivery</span>
+                                <span>$100</span>
+                            </section>
+                            <section>
+                                <span className="total-title">Subtotal </span> 
+                                <span> ${calc.subtotal}</span>
+                            </section>
+                            <section className="primary-link">
+                                <span className="total-title">Descuento Web - 10% </span> 
+                                <span>${calc.discount} </span>
+                            </section>
+                            <section>
+                                <span className="total-title">Total </span> 
+                                <span>${calc.total}</span>
+                            </section>
+                        </div>
+                        <div className="center">
+                        <button
+                            onClick={() => this.proccesOrder(products, history)} 
                             className="btn primary center">
-                        Pedir
-                    </Link> */}
+                            Pedir
+                        </button>
+                        {/* <Link   to={{ pathname: 'order/checkout', state: {products: order} }}
+                                className="btn primary center">
+                            Pedir
+                        </Link> */}
 
+                        </div>
                     </div>
                </div>
            )
         }else{
             return(
-                <div className="card-panel desactive">
-                    <div className="header-panel">
-                      <h5> Pedido Vacio </h5>
-                    </div>
-                    <div className="body-panel">
-                        <i className="medium material-icons">
-                        add_shopping_cart
-                        </i>
-                    </div>
-                    <div className="bottom-panel">
-                    <button onClick={()=>this.toggleOrderList()}  className="btn desactive center">
-                        Pedir Ahora
-                    </button>
+                <div className="summary-panel" id="summary-view">
+                    <div className="card-panel desactive">
+                        <div className="header-panel">
+                        <h5> Pedido Vacio </h5>
+                        </div>
+                        <div className="body-panel">
+                            <i className="medium material-icons">
+                            add_shopping_cart
+                            </i>
+                        </div>
+                        <div className="bottom-panel">
+                        <button onClick={()=>this.toggleOrderList()}  className="btn desactive center hide-on-small-only">
+                            Pedir Ahora
+                        </button>
+                        </div>
                     </div>
                 </div>
             )
@@ -177,8 +189,8 @@ export class Summary extends Component{
     }
 }
 
-function mapStateToProp({order}){
-    return {order};
+function mapStateToProp({products}){
+    return {products};
 }
 
 export default connect(mapStateToProp,actions)(withRouter(Summary));

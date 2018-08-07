@@ -1,8 +1,28 @@
 @import "./theme.scss";
+
 html, body, #root{
     height:100%;
+    background-color: black;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .first-row{
     padding-top:10%;
+}
+a, button{
+    &.primary{
+        background-color: $primary;
+        &:hover,
+        &:focus{
+            background-color: $primary;
+        }
+    }
+}
+.error-message{
+    padding: 10px;
+    text-align: center;
+    color:red;
+}
+.primary-link{
+    color: $primary;
 }

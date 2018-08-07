@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Food from './Food';
+import Breadcrumbs from '../Breadcrumbs';
 import Checkout from './Checkout'
-import Breadcrumbs from './Food/Breadcrumbs';
-import Login from '../../Login';
+import Succcess from './Success';
+
 import './Order.css';
-export class Order extends Component {
-
-
-    render() {
+export const Order = ({ match }) => {
       return (
-        <BrowserRouter>
+    
             <div className="second-section section">
-                <Breadcrumbs />
-                <Route exact path="/" component={Food} />
-                <Route path="/checkout" component={Checkout} />
-                <Route path="/login" component={Login} />  
+                        
+                     <Breadcrumbs />
+                    <Route exact path={match.url} component={Food} />
+                    <Route path={`${match.url}/checkout`} component={Checkout} />
+                    <Route path={`${match.url}/success`} component={Succcess} />  
             </div>
-        </BrowserRouter>
+
+        
       )
-    }
 }
 
 export default Order;
