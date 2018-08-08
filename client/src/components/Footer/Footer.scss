@@ -1,6 +1,8 @@
 @import '../../theme.scss';
 .page-footer{
     background-color: #3a3939;
+    position: absolute;
+    width: 100%;
     p{
         a{
             color:white;

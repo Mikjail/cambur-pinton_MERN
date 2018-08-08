@@ -40,7 +40,6 @@ class App extends Component {
                   <div className="hide-on-med-and-up" id="summary-mobile-view">
                       {this.renderSummary()}
                   </div>
-                  <Footer />
             </div>
       </BrowserRouter>
     )
