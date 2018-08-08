@@ -27,7 +27,7 @@ export class Signup extends Component {
     componentDidMount(){
         document.getElementById("signUp-btn").disabled = true;
     }
-    
+
     renderFields(){
         return _.map(formField, ({label, name, type})=>{
            console.log(type)
@@ -68,7 +68,7 @@ export class Signup extends Component {
                                 Registrar Usuario
                             </button>
                             <DivWithErrorHandling showError={this.props.messageAlert} />
-                            <div className="g-recaptcha" data-sitekey="6Le412YUAAAAAM5_erf_gO4uoty8oTTjW4jSmWJj" data-callback="enableBtn"></div>
+                            <div className="g-recaptcha" data-sitekey="6Le412YUAAAAAM5_erf_gO4uoty8oTTjW4jSmWJj" data-callback="enableButton"></div>
                         </form>
                         <div className="forgot-password">
                                 Ya tiene cuenta?  <Link className="primary-link" to="/login"> Login</Link>
