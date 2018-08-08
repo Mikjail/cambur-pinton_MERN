@@ -94,9 +94,13 @@
                 width:100%;
                 .field-container{
                     height:70px;
+                    margin-bottom: 20px
                 }
                 form{
-                    width:100%
+                    width:100%;
+                    input{
+                        height:30px;
+                    }
                 }
             }
         }

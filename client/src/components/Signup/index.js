@@ -42,7 +42,7 @@ export class Signup extends Component {
             <div className="login-section regsiter-section"> 
                 <div className="card-panel">
                     <div className="header-panel">
-                            <h5>Register</h5>
+                            <h5>Registrese</h5>
                     </div>
                     <div className="body-panel">
                         <a href="/auth/google" className="btn center google-btn">
