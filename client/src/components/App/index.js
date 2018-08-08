@@ -27,15 +27,13 @@ class App extends Component {
         return <Summary />
       
     }
-    
-
   }
 
   render() {
     return (
       <BrowserRouter forceRefresh={true}>
             <div className="appView">
-                  <Header in/>
+               
                   <Landing />
                   <div className="hide-on-med-and-up" id="summary-mobile-view">
                       {this.renderSummary()}

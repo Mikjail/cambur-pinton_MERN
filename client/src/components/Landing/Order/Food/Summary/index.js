@@ -92,7 +92,6 @@ export class Summary extends Component{
                 })
             })
 
-            console.log(newProduct)
             this.props.onCheckout(newProduct, history)
          }
      
