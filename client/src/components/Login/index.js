@@ -63,7 +63,7 @@ export class Login extends Component {
                     </span>
                 </a>
                 <div className="forgot-password">
-                        No tiene cuenta?  <Link className="primary-link" to="/signup"> Registrese </Link>
+                        No tiene cuenta?  <a className="primary-link" href="/signup"> Registrese </a>
                 </div>
                 </div>
               

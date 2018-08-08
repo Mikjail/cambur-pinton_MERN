@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
+import ReactDOM from 'react-dom';
 import shoppingCart from '../../images/icon/cart/btnCartNegro.png'
 import './Header.css';
 
@@ -10,6 +12,7 @@ class Header extends Component{
         super(props);
     }
 
+   
     renderLogin(){
         const { auth } = this.props;
 
@@ -93,13 +96,20 @@ class Header extends Component{
         return(
         <div id="navBody" className="hide-on-med-and-up">
             <ul>
-                <li><a className="navBar-txt" href="/">HOME</a></li>
-                <li><a className="navBar-txt" href="/order">PEDIR</a></li>
-                <li><a className="navBar-txt" href="/">CONTACTO</a></li>
+                <li><p className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>HOME</p></li>
+                <li><p className="navBar-txt" onClick={()=>{this.navigateTo("/order")}}>PEDIR</p></li>
+                <li><p className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>CONTACTO</p></li>
                 {this.renderLogin()} 
             </ul>
         </div>
         )
+    }
+
+    navigateTo(path){
+        const {history} = this.props;
+
+        this.toggleCardBody();
+        history.push({pathname: path});
     }
 
     renderCantProd(){
@@ -123,4 +133,4 @@ function mapStateToProps({ auth, products }){
     return { auth, products}
 }
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(withRouter(Header));

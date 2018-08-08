@@ -19,11 +19,15 @@ export class Signup extends Component {
 
     constructor(props){
         super(props);
-
         const user = localStorage.getItem('user');
         if(user) this.props.history.push('/')
     
     }
+
+    componentDidMount(){
+        document.getElementById("signUp-btn").disabled = true;
+    }
+    
     renderFields(){
         return _.map(formField, ({label, name, type})=>{
            console.log(type)
@@ -37,6 +41,9 @@ export class Signup extends Component {
         })
     }
 
+    enableButton(){
+        document.getElementById("signUp-btn").disabled = false;
+    }
     render() {
         return (
             <div className="login-section regsiter-section"> 
@@ -57,11 +64,11 @@ export class Signup extends Component {
             
                         <form onSubmit={this.props.handleSubmit(this.props.onSignup)}>
                             {this.renderFields()}
-                            <button type="submit" className="btn btn-login primary white-text">
+                            <button type="submit" id="signUp-btn" className="btn btn-login primary white-text">
                                 Registrar Usuario
                             </button>
                             <DivWithErrorHandling showError={this.props.messageAlert} />
-                            <div className="g-recaptcha" data-sitekey="6Le412YUAAAAAM5_erf_gO4uoty8oTTjW4jSmWJj"></div>
+                            <div className="g-recaptcha" data-sitekey="6Le412YUAAAAAM5_erf_gO4uoty8oTTjW4jSmWJj" data-callback="enableBtn"></div>
                         </form>
                         <div className="forgot-password">
                                 Ya tiene cuenta?  <Link className="primary-link" to="/login"> Login</Link>
