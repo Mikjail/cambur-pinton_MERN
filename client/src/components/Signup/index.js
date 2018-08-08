@@ -78,11 +78,6 @@ export class Signup extends Component {
   }
 }
 
-function enableButton(response){
-    console.log(response);
-    document.getElementById("signUp-btn").disabled = false;
-}
-
 function validate(values) {
     const errors = {};
     
