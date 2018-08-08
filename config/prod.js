@@ -6,5 +6,5 @@ module.exports = {
     cookieKey: process.env.COOKIE_KEY,
     mercadoPago_client_id:process.env.MERCADOPAGO_CLIENT_ID,
     mercadoPago_client_secret:process.env.MERCADOPAGO_CLIENT_SECRET,
-    delivery: proccess.env.DELIVERY
+    delivery: process.env.DELIVERY
 }
