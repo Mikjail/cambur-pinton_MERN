@@ -41,6 +41,7 @@ export class Login extends Component {
                 <div className="header-panel">
                     <h5>Login</h5>
                 </div>
+                <div className="space-between"></div>
                 <div className="body-panel">
                 <form onSubmit={this.props.handleSubmit(this.props.onLogin)}>
                     {this.renderFields()}
@@ -53,6 +54,7 @@ export class Login extends Component {
                     </button>
                     <DivWithErrorHandling showError={this.props.messageAlert} />
                 </form>
+                <div className="space-between"></div>
                 <hr />
 
                 <a href="/auth/google" className="btn center google-btn">

@@ -83,18 +83,20 @@
 @media screen and (max-width: 600px){
     .login-section{
         width: 90%; 
-
         margin: auto;
         .card-panel{
             margin-top: 10%;
             width:100%;
-            height: 78%;
+            height: auto;
+            justify-content: space-evenly;
+            .space-between{
+                height: 50px;
+            }
             .body-panel{
                 padding: 0px;
                 width:100%;
                 .field-container{
-                    height:70px;
-                    margin-bottom: 20px
+                    height:45px;
                 }
                 form{
                     width:100%;
