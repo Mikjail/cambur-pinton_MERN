@@ -41,7 +41,8 @@ export class Signup extends Component {
         })
     }
 
-    enableButton(){
+    enableButton(response){
+        console.log(response);
         document.getElementById("signUp-btn").disabled = false;
     }
     render() {
@@ -68,7 +69,7 @@ export class Signup extends Component {
                                 Registrar Usuario
                             </button>
                             <DivWithErrorHandling showError={this.props.messageAlert} />
-                            <div className="g-recaptcha" data-sitekey="6Le412YUAAAAAM5_erf_gO4uoty8oTTjW4jSmWJj" data-callback="enableButton"></div>
+                            <div className="g-recaptcha" data-sitekey="6Le412YUAAAAAM5_erf_gO4uoty8oTTjW4jSmWJj" data-callback={(response)=>{this.enableButton(response)}}></div>
                         </form>
                         <div className="forgot-password">
                                 Ya tiene cuenta?  <Link className="primary-link" to="/login"> Login</Link>
