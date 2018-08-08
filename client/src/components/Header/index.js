@@ -77,6 +77,7 @@ class Header extends Component{
                         <a href="#!">
                             <img src={shoppingCart}>
                             </img>
+                            {this.renderCantProd()}
                         </a>
                     </li>
                 </ul>
@@ -100,10 +101,26 @@ class Header extends Component{
         </div>
         )
     }
+
+    renderCantProd(){
+        const { products} = this.props;
+        let amount=0;
+        if(products.length>0){
+            products.forEach(product =>{
+                product.properties.forEach(property => {
+                    amount += property.cant;
+                });
+            });
+        }
+        if(amount > 0){
+            return   <span className="cant-added"> {amount}</span>;
+        }
+        
+    }
 }
 
-function mapStateToProps({ auth }){
-    return { auth}
+function mapStateToProps({ auth, products }){
+    return { auth, products}
 }
 
 export default connect(mapStateToProps)(Header);

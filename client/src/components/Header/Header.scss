@@ -20,6 +20,14 @@ nav.header-nav{
         background-color: $primary;
         width: 100px;
         text-align: center;
+        .cant-added{
+            position: absolute;
+            padding-top: 15px;
+            padding-right: 39px;
+            font-size: 15px;
+            font-weight: 400;
+        
+        }
     }
 
     li{
