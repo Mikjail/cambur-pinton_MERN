@@ -62,9 +62,16 @@
                             .product-operation{
                                 display:flex;
                                 width: 100%;
+                                height: 100%;
+                                align-items: center;
                                 justify-content: space-around;
                                 .operation-btn{
                                     color:$primary;
+                                    height: 100%;
+                                    width: 100%;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
                                 }
                                 .product-cant{
                                     margin-top:-3px;
