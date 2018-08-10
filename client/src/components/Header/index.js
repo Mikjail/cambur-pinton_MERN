@@ -14,7 +14,7 @@ class Header extends Component{
    
     renderLogin(){
         const { auth } = this.props;
-
+        console.log(auth)
        switch(auth){
         case null:
         return;

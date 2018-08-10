@@ -7,34 +7,7 @@ import {FETCH_USER,
     ALERT_MESSAGE,
     LOADER} from './types';
 
-export const onLogin= (user, password,history) => async(dispatch) =>{
-   
-    try {
-        
-        dispatch({ type: ALERT_MESSAGE, payload:""});
-        dispatch({ type: LOADER, payload:true});
 
-        const res = await axios.post('/api/login', {email:user, password:password} )
-        
-       
-
-        localStorage.setItem('user', JSON.stringify(res.data));
-           
-        history.push({
-            pathname: '/order',
-        });
-
-        dispatch({ type: AUTH_USER , payload: res.data});
-
-    }catch({response}){
-        if(response.data){
-            const {data } = response.data;
-           
-            dispatch({type: ALERT_MESSAGE, payload: data})
-            dispatch({ type: LOADER, payload:false});
-        }
-    }
-}
 
 export const fetchOrder = () =>async (dispatch) =>{
 
@@ -127,7 +100,8 @@ export const onSignup= ({email, password}, action, {history} ) => async(dispatch
         });
 
         dispatch({ type: AUTH_USER , payload: res.data});
-    
+        dispatch({ type: LOADER, payload:false});
+
         }catch(response){
             if(response.data){
                 const {data } = response.data;
@@ -138,6 +112,37 @@ export const onSignup= ({email, password}, action, {history} ) => async(dispatch
    
 }
 
+// LOGIN
+export const onLogin= (user, password,history) => async(dispatch) =>{
+   
+    try {
+        
+        dispatch({ type: ALERT_MESSAGE, payload:""});
+        dispatch({ type: LOADER, payload:true});
+
+        const res = await axios.post('/api/login', {email:user, password:password} )
+        
+       
+
+        localStorage.setItem('user', JSON.stringify(res.data));
+           
+        history.push({
+            pathname: '/order',
+        });
+
+        dispatch({ type: AUTH_USER , payload: res.data});
+        dispatch({ type: LOADER, payload:false});
+
+    }catch({response}){
+        if(response.data){
+            const {data } = response.data;
+           
+            dispatch({type: ALERT_MESSAGE, payload: data})
+            dispatch({ type: LOADER, payload:false});
+        }
+    }
+}
+
 // CURRENT USER
 export const fetchUser =  () =>async (dispatch) => {
     // dispatch is coming thanks to redux-thunk so we don't have to 
@@ -146,6 +151,7 @@ export const fetchUser =  () =>async (dispatch) => {
         const res = await axios.get('/api/current_user')
 
         const user = res.data?JSON.stringify(res.data): ""
+        
         localStorage.setItem("user",user);
         
         dispatch({type: FETCH_USER, payload: res.data })

@@ -19,8 +19,6 @@ class App extends Component {
   }
 
   renderSummary(){
-    console.log(this.props);
-
     if(!this.props.orders){
      
         return <Summary />
