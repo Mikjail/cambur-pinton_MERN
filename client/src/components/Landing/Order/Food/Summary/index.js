@@ -7,7 +7,7 @@ import './Summary.css';
 
 export class Summary extends Component{
 
-
+    
     constructor(props){
         super(props);
     }

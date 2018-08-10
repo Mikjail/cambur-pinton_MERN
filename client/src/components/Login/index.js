@@ -4,7 +4,8 @@ import  { reduxForm, Field } from 'redux-form';
 import {connect} from 'react-redux';
 import { compose } from 'redux';
 import * as actions from '../../actions'
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+
 
 import DivWithErrorHandling from '../../utils/handlingError';
 import formField from './formField';
@@ -16,6 +17,7 @@ export class Login extends Component {
 
     constructor(props){
         super(props);
+        
         const user = localStorage.getItem('user');
         if(user) this.props.history.push('/');
     }
@@ -35,7 +37,6 @@ export class Login extends Component {
 
     render() {
         return (
-     
         <div className="login-section"> 
             <div className="card-panel">
                 <div className="header-panel">
@@ -43,18 +44,23 @@ export class Login extends Component {
                 </div>
                 <div className="space-between"></div>
                 <div className="body-panel">
-                <form onSubmit={this.props.handleSubmit(this.props.onLogin)}>
-                    {this.renderFields()}
+                <form onSubmit={
+                    this.props.handleSubmit(({user, password}, action, {history})=>{
                     
+                    this.props.onLogin(user,password, history)})}>
+                    
+                    {this.renderFields()}
+
                     <div className="forgot-password">
                         <a className="primary-link" href="">Olvido su contraseña ?</a>
                     </div>
+                    <div className="space-between"></div>
                     <button type="submit" className="btn btn-login primary white-text">
                         Login
                     </button>
                     <DivWithErrorHandling showError={this.props.messageAlert} />
                 </form>
-                <div className="space-between"></div>
+            
                 <hr />
 
                 <a href="/auth/google" className="btn center google-btn">
@@ -78,7 +84,6 @@ export class Login extends Component {
 
 function validate(values) {
     const errors = {};
-
     errors.user= validateForm.validateEmail(values.user);
     
     _.each(formField, ({ name })=>{

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import * as actions from '../../../../actions';
 import requireAuth from '../../../../utils/requireAuth';
 import AddressPanel from './AddressPanel';
 import PaymentPanel from './PaymentPanel';
-import * as actions from '../../../../actions';
+import Loader from '../../../Loader'
 import {Summary} from './Summary';
 import './Checkout.css';
-import { connect } from 'react-redux';
 
 export class Checkout extends Component {
   state = {user:null, addressAvailable:false }
@@ -35,8 +36,8 @@ export class Checkout extends Component {
   
   render() {
     const {addressAvailable} = this.state;
-    console.log(this.props)
     const { order, mercadopago, auth} =this.props;
+    
     if(auth && order){
       return (
         <div className="container">
@@ -57,16 +58,7 @@ export class Checkout extends Component {
         </div>
       )
     }
-      return(
-        <div className="container">
-        <div className="row">
-        <div className="col l6 m6 s12">
-        ESTE SERIA EL LOADER
-        </div>
-        </div>
-        </div>
-      )
-    
+      return <Loader />
     
   }
 }

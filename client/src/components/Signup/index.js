@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import * as actions from '../../actions'
 import { withRouter, Link } from 'react-router-dom';
 
+
 import DivWithErrorHandling from '../../utils/handlingError';
 import formField from './formField';
 import LoginField from '../Login/LoginField';
@@ -40,7 +41,7 @@ export class Signup extends Component {
             />
         })
     }
-
+  
 
     render() {
         return (

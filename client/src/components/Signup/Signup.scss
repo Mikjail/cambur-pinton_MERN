@@ -28,8 +28,10 @@
 }
 @media screen and (max-width: 600px){
     .login-section{
-        .card-panel{
-           
+        &.regsiter-section{
+            .g-recaptcha{
+                margin-bottom: 0px;
+            }
         }
     }
 }

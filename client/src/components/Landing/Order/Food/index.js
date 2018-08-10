@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import * as actions from '../../../../actions';
 
-
+import Loader from '../../../Loader';
 import Summary from './Summary';
 import MenuDesk  from './MenuDesk';
 import MenuMobile  from './MenuMobile';
@@ -20,13 +20,13 @@ export class Food extends Component {
   
     render() {
     return (
-    <div className="container food-section">
-            <MenuDesk />
-            <MenuMobile />
-    <div className="hide-on-small-only">
-            <Summary />
+        <div className="container food-section">
+                <MenuDesk />
+                <MenuMobile />
+        <div className="hide-on-small-only">
+                <Summary />
+            </div>
         </div>
-    </div>
     )
   }
 }

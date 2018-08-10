@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import * as actions from '../../../../../actions';
 import { withRouter } from 'react-router-dom';
+
+import DivWithErrorHandling from '../../../../../utils/handlingError'
 import mercadoPago from '../../../../../images/icon/mercadopago-logo.png';
 import './PaymentPanel.css';
 export class PaymentPanel extends Component {
@@ -68,13 +70,13 @@ export class PaymentPanel extends Component {
             <div>
             <div className="card-body">
                 <div className="card-panel card-panel-payment">
-               
-                <button className="card-title" onClick={()=> this.toggleCardBody('cash-container')}>
-                    Efectivo
-                </button>
-                <div className="card-body" id="cash-container">
-               
-                <label>Con cuanto desea pagar?</label>
+
+                    <button className="card-title" onClick={()=> this.toggleCardBody('cash-container')}>
+                        Efectivo
+                    </button>
+                    <div className="card-body" id="cash-container">
+                
+                    <label>Con cuanto desea pagar?</label>
                     <input type="number" name="paymentAmount" onChange={this.handleChange.bind(this)} value={this.state.payAmount} />
                     
                     {this.renderChange()}
@@ -82,23 +84,21 @@ export class PaymentPanel extends Component {
                     <button onClick={()=>this.props.onSubmitOrder(history) } className={"btn center "+ (this.isAbleToPay() ? 'primary' : 'disabled') }>
                         Pedir
                     </button>
-
-                 
-
+                    
                 </div>
                 
                 </div>
                 <div className="card-panel card-panel-payment">
-                <button className="card-title" onClick={()=> this.toggleCardBody('pago-online')}>
-                    Pago Online
-                </button>
-                <div className="card-body" id="pago-online">
-                <img className="mercadopago-logo" src={mercadoPago}/>
-                <a
-                href={paymentLink}
-                className={"btn center "+ (this.isAbleToPayOnline() ? 'primary' : 'disabled') }>
-                    Realizar Pago
-                </a>
+                    <button className="card-title" onClick={()=> this.toggleCardBody('pago-online')}>
+                        Pago Online
+                    </button>
+                    <DivWithErrorHandling showError={this.props.messageAlert} />
+                    <div className="card-body" id="pago-online">
+                    <img className="mercadopago-logo" src={mercadoPago}/>
+                    <a href={paymentLink}
+                        className={"btn center "+ (this.isAbleToPayOnline() ? 'primary' : 'disabled') }>
+                            Realizar Pago
+                    </a>
                 </div>
             
                 </div>
@@ -110,4 +110,8 @@ export class PaymentPanel extends Component {
     }
 }
 
-export default connect(null, actions)(withRouter(PaymentPanel))
+function mapStateToProps({messageAlert}){
+    return {messageAlert}
+}
+
+export default connect(mapStateToProps, actions)(withRouter(PaymentPanel))

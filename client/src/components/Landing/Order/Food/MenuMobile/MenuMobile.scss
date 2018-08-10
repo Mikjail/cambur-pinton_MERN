@@ -66,6 +66,9 @@
                                 align-items: center;
                                 justify-content: space-around;
                                 .operation-btn{
+                                    &:active{
+                                        color:black;
+                                    }         
                                     color:$primary;
                                     height: 100%;
                                     width: 100%;
@@ -89,4 +92,12 @@
 
     }
     
+}
+button{
+    &:focus,
+    &:active
+    {
+        background-color: #f5e8c1;
+
+    }
 }

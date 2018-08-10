@@ -6,6 +6,7 @@ import AddressField from './AddressField';
 import './AddressPanel.css';
 import {connect} from 'react-redux';
 import { compose } from 'redux';
+import Loader from '../../../../Loader';
 import * as actions from '../../../../../actions'
 
 export class AddressPanel extends Component {
@@ -112,9 +113,7 @@ export class AddressPanel extends Component {
         </div>
     )
     }else{
-        return(
-            <div> loader </div>
-        )
+        return <Loader />
     }
   }
   

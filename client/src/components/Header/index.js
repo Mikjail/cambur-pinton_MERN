@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
-import ReactDOM from 'react-dom';
 import shoppingCart from '../../images/icon/cart/btnCartNegro.png'
 import './Header.css';
 
@@ -76,7 +75,7 @@ class Header extends Component{
                 </div>
                 
                 <ul id="nav-mobile" className="right hide-on-med-and-up" onClick={()=> this.toggleSummary()}>
-                    <li className="order-btn">
+                    <li className="waves-effect order-btn">
                         <a href="#!">
                             <img src={shoppingCart}>
                             </img>

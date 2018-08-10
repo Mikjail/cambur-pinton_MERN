@@ -4,16 +4,19 @@ import {FETCH_USER,
     FETCH_ORDER, 
     AUTH_USER,
     FETCH_MERCADOPAGO,
-    ALERT_MESSAGE} from './types';
+    ALERT_MESSAGE,
+    LOADER} from './types';
 
-
-export const onLogin= ({user, password}, action, {history}) => async(dispatch) =>{
+export const onLogin= (user, password,history) => async(dispatch) =>{
    
     try {
-    
+        
+        dispatch({ type: ALERT_MESSAGE, payload:""});
+        dispatch({ type: LOADER, payload:true});
+
         const res = await axios.post('/api/login', {email:user, password:password} )
         
-        console.log(res)
+       
 
         localStorage.setItem('user', JSON.stringify(res.data));
            
@@ -22,50 +25,16 @@ export const onLogin= ({user, password}, action, {history}) => async(dispatch) =
         });
 
         dispatch({ type: AUTH_USER , payload: res.data});
-   
+
     }catch({response}){
         if(response.data){
             const {data } = response.data;
+           
             dispatch({type: ALERT_MESSAGE, payload: data})
+            dispatch({ type: LOADER, payload:false});
         }
     }
 }
-
-export const onSignup= ({email, password}, action, {history} ) => async(dispatch) =>{
-    
-    try {
-        const res = await axios.post('/api/signup', {email, password} )
-        
-        localStorage.setItem('user', JSON.stringify(res.data));
-        
-        history.push({
-            pathname: '/order',
-        });
-
-        dispatch({ type: AUTH_USER , payload: res.data});
-        }catch(error){
-            dispatch({type: ALERT_MESSAGE, payload: error.data })
-        }
-   
-}
-
-
-export const fetchUser =  () =>async (dispatch) => {
-    // dispatch is coming thanks to redux-thunk so we don't have to 
-    try {
-
-        const res = await axios.get('/api/current_user')
-
-        const user = res.data?JSON.stringify(res.data): ""
-        localStorage.setItem("user",user);
-        
-        dispatch({type: FETCH_USER, payload: res.data })
-        
-    } catch (error) {
-        console.log(error)     
-    }
-    
-}   
 
 export const fetchOrder = () =>async (dispatch) =>{
 
@@ -128,6 +97,7 @@ export const addProduct = (order) =>async (dispatch) =>{
 export const onCheckout = (values, history) => async (dispatch) =>{
 
     try{
+        dispatch({ type: LOADER, payload:true});
         const res = await axios.post("/api/checkout", {products: values});
         localStorage.setItem("mercadopago", res.data.response.init_point)
 
@@ -143,20 +113,74 @@ export const onCheckout = (values, history) => async (dispatch) =>{
 };
 
 
-// USER CRUD
+// SIGNUP
+export const onSignup= ({email, password}, action, {history} ) => async(dispatch) =>{
+    
+    try {
+        dispatch({ type: LOADER, payload:true});
+        const res = await axios.post('/api/signup', {email, password} )
+        
+        localStorage.setItem('user', JSON.stringify(res.data));
+        
+        history.push({
+            pathname: '/order',
+        });
 
+        dispatch({ type: AUTH_USER , payload: res.data});
+    
+        }catch(response){
+            if(response.data){
+                const {data } = response.data;
+                dispatch({type: ALERT_MESSAGE, payload: data})
+                dispatch({ type: LOADER, payload:false});
+            }
+        }
+   
+}
+
+// CURRENT USER
+export const fetchUser =  () =>async (dispatch) => {
+    // dispatch is coming thanks to redux-thunk so we don't have to 
+    try {
+
+        const res = await axios.get('/api/current_user')
+
+        const user = res.data?JSON.stringify(res.data): ""
+        localStorage.setItem("user",user);
+        
+        dispatch({type: FETCH_USER, payload: res.data })
+        
+    } catch (error) {
+        console.log(error)     
+    }
+    
+}   
+
+// ADD ADDRESS
 export const onSubmitAddress = (values,action, props) => async dispatch =>{
-
-    const res = await axios.post('/api/updateAddress', {address: values});
-    localStorage.setItem("user",JSON.stringify(res.data));
-    localStorage.setItem("address",res.data.addresses[0]._id);
-    props.changeStatus(true);
-    dispatch({ type : FETCH_USER, payload: res.data});
+    dispatch({ type: LOADER, payload:true});
+    try{
+        const res = await axios.post('/api/updateAddress', {address: values});
+    
+        localStorage.setItem("user",JSON.stringify(res.data));
+        localStorage.setItem("address",res.data.addresses[0]._id);
+        
+        props.changeStatus(true);
+    
+        dispatch({ type: LOADER, payload:false});
+        dispatch({ type : FETCH_USER, payload: res.data});
+    }catch(error){
+        console.log(error);
+        dispatch({ type: LOADER, payload:false});
+    }
+    
 };
 
+
+//ADD ORDER
 export const onSubmitOrder = (history) => async dispatch =>{
 
-
+    dispatch({ type: LOADER, payload:true});
     const order = JSON.parse(localStorage.getItem("order"));
     const user = JSON.parse(localStorage.getItem("user"));
     const valueToSend = {
@@ -187,9 +211,15 @@ export const onSubmitOrder = (history) => async dispatch =>{
             pathname: '/order/success',
             
         });
+        dispatch({ type: LOADER, payload:false});
 
-    }catch(error){
-        console.log(error)
+    }catch(response){
+        if(response.data){
+            const { data } = response.data;
+
+            dispatch({type: ALERT_MESSAGE, payload: data })
+            dispatch({ type: LOADER, payload:false});
+        }
     }
 
 }

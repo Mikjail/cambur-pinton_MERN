@@ -1,0 +1,17 @@
+@import '../../theme.scss';
+.loader{
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 99;
+    align-items: center;
+    background-color: #f3f3f391;
+    .spinner-blue, .spinner-blue-only {
+        border-color: $primary;
+    }
+}
