@@ -3,7 +3,7 @@
 @media screen and (max-width:400px){
     .summary-panel,
     .summary-checkout-panel{
-        z-index:99;
+        z-index:50;
         &.active{
             display: block;
         }

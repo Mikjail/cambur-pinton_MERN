@@ -51,7 +51,8 @@ passport.use(new LocalStrategy(
     localOptions,
     async (username, password, done) => {
     try{
-       const user = await User.findOne({"local.email":username});
+
+       const user = await User.findOne({"local.email":username.toLowerCase()});
             
             if (!user) {
               return done(null, false, { data: "Username doesn't exist." });
@@ -72,13 +73,15 @@ passport.use(new LocalStrategy(
 
 passport.use('local-signup', new LocalStrategy(localOptions,
 async (email, password, done) => {
-    let user = await User.findOne({"local.email": email})
+    console.log(email.toLowerCase())
+
+    let user = await User.findOne({"local.email": email.toLowerCase() })
     if(user) {
-        console.log('user already exists');
+        
         return done(null, false,  {data: 'That email is already in use.'});
     }
     else {
-        let newUser = await new User({local: {email: email || ""  }});
+        let newUser = await new User({local: {email: email.toLowerCase() || ""  }});
         newUser.local.password = newUser.generateHash(password);
 
         let newUserVal = await newUser.save();

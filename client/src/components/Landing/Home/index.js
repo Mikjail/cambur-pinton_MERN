@@ -12,10 +12,10 @@ export default () => {
               <img src={brandlogo} />
        </div>
 
-       <div className="hide-on-medium-and-up logo-mobile">
+       <div className="hide-on-med-and-up logo-mobile">
               <img src={brandLogoMobile} />
        </div>
-       <div className="hide-on-medium-and-up pedirIcon-mobile">
+       <div className="hide-on-med-and-up pedirIcon-mobile">
        <Link to="/order">
               <img src={iconPedir} />
         </Link>

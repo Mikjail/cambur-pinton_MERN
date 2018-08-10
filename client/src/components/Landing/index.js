@@ -18,6 +18,7 @@ export class Landing extends Component {
     }
 
     renderHeader(){
+        console.log(this.props.location.pathname)
         if(this.props.location.pathname != '/login' && this.props.location.pathname != '/signup' ){
             return  <Header />
         }
@@ -31,7 +32,7 @@ export class Landing extends Component {
 
     render() {
       return (
-        <BrowserRouter>
+        <BrowserRouter forceRefresh={true}>
             <div className="landing">
                 {this.renderHeader()}
                 {this.renderLoader()}

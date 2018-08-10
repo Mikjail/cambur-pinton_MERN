@@ -71,3 +71,11 @@
     }
  
 }
+
+@media only screen and (max-width: 400px){
+    .container{
+        .row{
+            margin:0;
+        }
+    }
+}

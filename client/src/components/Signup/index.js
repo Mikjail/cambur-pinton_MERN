@@ -98,9 +98,12 @@ function validate(values) {
     return errors;
 }
 
+function componentDidMount({messageAlert}){
+    return {messageAlert};
+}
 
 export default compose(
-    connect(null,actions),
+    connect(componentDidMount,actions),
     reduxForm({ 
     validate, 
     form: 'registerForm',

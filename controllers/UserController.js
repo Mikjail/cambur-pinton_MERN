@@ -4,37 +4,6 @@ const Orders = mongoose.model('orders');
 const config = require('../config/keys');
 
 class UserController {
-
-    async signup(req, done) {
-        // find a user whose email is the same as the forms email
-        // we are checking to see if the user trying to login already exists
-       const user = await User.findOne({ 'local.email' :  email });
-            try {
-               // check to see if theres already a user with that email
-                if (user) {
-                    return done(null, false, { message:'signupMessage That email is already taken.'});
-                } 
-        
-                // if there is no user with that email
-                // create the user
-                var newUser  = new User();
-
-                // set the user's local credentials
-                newUser.local.email    = email;
-                newUser.local.password = newUser.generateHash(password);
-
-                // save the user
-                const res = await newUser.save()
-                
-                
-                done(null, res);
-
-            } catch (error) {
-                  res.status(422).send(error);
-            }
-            
-        
-    }
     
     async login(req, done) { 
         

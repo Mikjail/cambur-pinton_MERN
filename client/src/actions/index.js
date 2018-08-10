@@ -102,7 +102,8 @@ export const onSignup= ({email, password}, action, {history} ) => async(dispatch
         dispatch({ type: AUTH_USER , payload: res.data});
         dispatch({ type: LOADER, payload:false});
 
-        }catch(response){
+        }catch({response}){
+            console.log(response.data)
             if(response.data){
                 const {data } = response.data;
                 dispatch({type: ALERT_MESSAGE, payload: data})
