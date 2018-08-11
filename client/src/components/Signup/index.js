@@ -31,7 +31,7 @@ export class Signup extends Component {
 
     renderFields(){
         return _.map(formField, ({label, name, type})=>{
-           console.log(type)
+           
             return <Field
             key={name} 
             component={LoginField} 

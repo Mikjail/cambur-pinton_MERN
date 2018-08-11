@@ -13,12 +13,8 @@ import './Landing.css';
 
 export class Landing extends Component {
 
-    componentDidMount(){
-        console.log(this.props)
-    }
-
     renderHeader(){
-        console.log(this.props.location.pathname)
+        
         if(this.props.location.pathname != '/login' && this.props.location.pathname != '/signup' ){
             return  <Header />
         }

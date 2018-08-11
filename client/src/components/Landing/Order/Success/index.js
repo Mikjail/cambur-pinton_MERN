@@ -10,7 +10,7 @@ export class Successs extends Component {
 
   componentDidMount(){
     let navBar = document.getElementsByClassName("breadcrumb");
-    console.log(navBar)
+    
     for (let index = 0; index < navBar.length; index++) {
         navBar[index].classList.remove("active");
         if(index <= 3){
@@ -23,7 +23,8 @@ export class Successs extends Component {
     return (
     <div className="container success-section">
         <div className="schedule-img">
-
+        </div>
+        <div className="space-between hide-on-med-and-up">
         </div>
         <h3>
             Gracias por tu compra!

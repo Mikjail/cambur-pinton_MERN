@@ -73,7 +73,6 @@ passport.use(new LocalStrategy(
 
 passport.use('local-signup', new LocalStrategy(localOptions,
 async (email, password, done) => {
-    console.log(email.toLowerCase())
 
     let user = await User.findOne({"local.email": email.toLowerCase() })
     if(user) {

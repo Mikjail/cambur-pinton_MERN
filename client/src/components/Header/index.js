@@ -14,7 +14,7 @@ class Header extends Component{
    
     renderLogin(){
         const { auth } = this.props;
-        console.log(auth)
+        
        switch(auth){
         case null:
         return;
@@ -53,7 +53,7 @@ class Header extends Component{
     
     toggleSummary(){
         let summary = document.getElementById('summary-mobile-view');
-        console.log(summary.firstChild)
+        
         summary.firstChild.classList.toggle('active');
     }
 

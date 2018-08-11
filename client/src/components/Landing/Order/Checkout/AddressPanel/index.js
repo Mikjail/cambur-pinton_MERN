@@ -47,7 +47,7 @@ export class AddressPanel extends Component {
     renderAddresses(){
         
         const { addresses, auth } = this.props;
-        console.log(this.props)
+        
         if(!addresses){
             return( <form onSubmit={this.props.handleSubmit(this.props.onSubmitAddress)}>
                 {this.renderFields()}

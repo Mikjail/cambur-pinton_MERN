@@ -6,5 +6,6 @@ module.exports = {
     cookieKey: 'mika123',
     mercadoPago_client_id:"474547905751159",
     mercadoPago_client_secret:"pB2bs62pUejF7vtCfZ7afWzKZghwpli8",
+    sendGridKey: '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',
     delivery: 100
 }

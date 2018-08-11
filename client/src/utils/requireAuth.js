@@ -19,10 +19,8 @@ export default ChildComponent => {
         let order = localStorage.getItem("order");
         let user = localStorage.getItem("user");
         
-        console.log(!user)
-        
       if (!user  || !order) {
-        console.log("paso por aca")
+        
         this.props.history.push('/order');
       }
     }

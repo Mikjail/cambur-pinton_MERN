@@ -103,7 +103,6 @@ export const onSignup= ({email, password}, action, {history} ) => async(dispatch
         dispatch({ type: LOADER, payload:false});
 
         }catch({response}){
-            console.log(response.data)
             if(response.data){
                 const {data } = response.data;
                 dispatch({type: ALERT_MESSAGE, payload: data})
@@ -177,7 +176,7 @@ export const onSubmitAddress = (values,action, props) => async dispatch =>{
         dispatch({ type: LOADER, payload:false});
         dispatch({ type : FETCH_USER, payload: res.data});
     }catch(error){
-        console.log(error);
+        
         dispatch({ type: LOADER, payload:false});
     }
     

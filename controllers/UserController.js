@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Address = mongoose.model('addresses');
 const Orders = mongoose.model('orders');
 const config = require('../config/keys');
-
+const Mailer = require('../services/Mailer');
+const confirmOrderTemplate = require('../services/emailTemplates/confirmOrderTemplate')
 class UserController {
     
     async login(req, done) { 
@@ -64,8 +65,14 @@ class UserController {
             })
 
             req.user.orders.push(newOrder);
+            
             const user = await req.user.save();
 
+            //SEND EMAIL 
+            const mailer = new Mailer( req.user.local.email, confirmOrderTemplate({user:req.user, order:order}))
+            
+            await mailer.send();
+            
             res.send(user);
         
            }catch(error){
