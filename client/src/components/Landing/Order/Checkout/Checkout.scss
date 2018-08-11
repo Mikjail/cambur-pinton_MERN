@@ -4,6 +4,7 @@
     .card-panel{
         display: flex;
         flex-direction: column;
+        background-color: #f7f7f7;
         &.card-summary{
             padding: 10px 10px;
         }
@@ -49,6 +50,7 @@
         }
        
         #cash-container{
+            background-color: white;
             display: flex;
             flex-direction: column;
             align-items: center;

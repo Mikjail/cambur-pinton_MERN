@@ -64,7 +64,7 @@ export class MenuMobile extends Component {
     renderCollpasePanel(products){
         return products.map( product =>{
             return(<Collapsible key={product._id}>
-                        <CollapsibleItem header={product.name}>
+                        <CollapsibleItem header={product.name} icon='arrow_drop_down'>
                     
                                 <div className="product-container">
                                     

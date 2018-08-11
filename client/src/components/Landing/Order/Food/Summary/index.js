@@ -27,7 +27,7 @@ export class Summary extends Component{
 
     deleteItemFromList(property){
         property.cant = 0;
-        this.props.addProduct(this.props.order);
+        this.props.addProduct(this.props.products);
     }
 
     toggleOrderList(){

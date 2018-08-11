@@ -7,7 +7,7 @@ nav{
         width: 100px;
         height: 1px;
         margin: 10px 17px;
-        background-color: white;
+        background-color: #b9b9b9;
     }
     &#location-nav{
         background-color:rgba(0,0,0,0);
@@ -19,7 +19,7 @@ nav{
         .breadcrumb {
             font-size: 18px;
             background-color: rgba(0,0,0,0);
-            color:white;
+            color:#b9b9b9;
             &:before{
                 display:none;
             }
