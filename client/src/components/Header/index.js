@@ -27,6 +27,7 @@ class Header extends Component{
 
     }
 
+  
     toggleCardBody(){
 
         let { toggleMenu} =this.state;
@@ -76,11 +77,8 @@ class Header extends Component{
                 
                 <ul id="nav-mobile" className="right hide-on-med-and-up" onClick={()=> this.toggleSummary()}>
                     <li className="waves-effect order-btn">
-                        <a href="#!">
-                            <img src={shoppingCart}>
-                            </img>
-                            {this.renderCantProd()}
-                        </a>
+                        {this.renderShoppingCart()}
+                     
                     </li>
                 </ul>
             </div>
@@ -111,7 +109,7 @@ class Header extends Component{
         history.push({pathname: path});
     }
 
-    renderCantProd(){
+    renderShoppingCart(){
         const { products} = this.props;
         let amount=0;
         if(products.length>0){
@@ -122,7 +120,11 @@ class Header extends Component{
             });
         }
         if(amount > 0){
-            return   <span className="cant-added"> {amount}</span>;
+           
+            return  ( <a href="#!">
+                    <img src={shoppingCart} />
+                    <span className="cant-added"> {amount}</span>
+                    </a>) 
         }
         
     }

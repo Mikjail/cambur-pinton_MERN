@@ -13,13 +13,6 @@ import './Landing.css';
 
 export class Landing extends Component {
 
-    renderHeader(){
-        
-        if(this.props.location.pathname != '/login' && this.props.location.pathname != '/signup' ){
-            return  <Header />
-        }
-        
-    }
     renderLoader(){
         if(this.props.loader){
             return <Loader />
@@ -30,7 +23,7 @@ export class Landing extends Component {
       return (
         <BrowserRouter forceRefresh={true}>
             <div className="landing">
-                {this.renderHeader()}
+                <Header />
                 {this.renderLoader()}
                 <Route exact path="/" component={Home} />
                 <Route path="/order" component={Order}/>
