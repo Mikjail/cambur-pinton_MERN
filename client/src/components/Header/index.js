@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
+import * as actions from '../../actions';
+
 import shoppingCart from '../../images/icon/cart/btnCartNegro.png'
 import './Header.css';
 
 class Header extends Component{
 
     state= {toggleMenu: true}
-    constructor(props){
-        super(props);
+    componentDidMount(){
+        this.props.fetchProducts();
     }
 
-   
     renderLogin(){
         const { auth } = this.props;
         
@@ -39,7 +40,7 @@ class Header extends Component{
         menuIcon.classList.toggle("change");
 
         if(toggleMenu){
-            navBody.style["height"]="600px"
+            navBody.style["height"]="100%"
             for (let index = 0; index < navBodyTxt.length; index++) {
                 navBodyTxt[index].style.display='block';   
             }
@@ -64,7 +65,7 @@ class Header extends Component{
             <div className="nav-wrapper ">
                 <a href="/" className="brand-logo"></a>
 
-                <ul id="nav-mobile" className="right  hide-on-med-and-down">
+                <ul id="nav-mobile" className="right  hide-on-small-and-down">
                     <li className="order-btn"><a href="/order">PEDIR</a></li>
                     {this.renderLogin()} 
                 </ul>
@@ -93,9 +94,9 @@ class Header extends Component{
         return(
         <div id="navBody" className="hide-on-med-and-up">
             <ul>
-                <li><p className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>HOME</p></li>
-                <li><p className="navBar-txt" onClick={()=>{this.navigateTo("/order")}}>PEDIR</p></li>
-                <li><p className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>CONTACTO</p></li>
+                <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>HOME</a></li>
+                <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/order")}}>PEDIR</a></li>
+                <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>CONTACTO</a></li>
                 {this.renderLogin()} 
             </ul>
         </div>
@@ -134,4 +135,4 @@ function mapStateToProps({ auth, products }){
     return { auth, products}
 }
 
-export default connect(mapStateToProps)(withRouter(Header));
+export default connect(mapStateToProps,actions)(withRouter(Header));

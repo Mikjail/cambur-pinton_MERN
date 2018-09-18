@@ -69,7 +69,7 @@ class UserController {
             const user = await req.user.save();
 
             //SEND EMAIL 
-            const mailer = new Mailer( req.user.local.email, confirmOrderTemplate({user:req.user, order:order}))
+            const mailer = new Mailer( req.user.local.email, confirmOrderTemplate({user:req.user, order:newOrder}))
             
             await mailer.send();
             

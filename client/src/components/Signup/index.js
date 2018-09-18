@@ -91,10 +91,7 @@ function validate(values) {
            errors[name]= 'Requerido';
         }
     });
-
- 
-
-
+    
     return errors;
 }
 

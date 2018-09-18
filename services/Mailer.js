@@ -30,7 +30,7 @@ class Mailer extends helper.Mail {
         const personalize = new helper.Personalization();
         
         personalize.addTo(this.recipients);
-        personalize.addTo(new helper.Email('mikjailsalazar@gmail.com'));
+        personalize.addTo(new helper.Email('salazarmikjail@gmail.com'));
 
         this.addPersonalization(personalize);
     }

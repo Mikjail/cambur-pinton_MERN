@@ -4,10 +4,6 @@ import requireAuth from '../../../../utils/requireAuth';
 import './Success.css';
 export class Successs extends Component {
 
-  constructor(props){
-      super(props);
-  }
-
   componentDidMount(){
     let navBar = document.getElementsByClassName("breadcrumb");
     
@@ -30,10 +26,10 @@ export class Successs extends Component {
             Gracias por tu compra!
         </h3> 
         <Link to="/"
-            onClick={()=>{localStorage.removeItem('order')}}
             className="btn primary center">
             Volver
         </Link>
+        <div className="space-between"></div>
     </div>
     )
   }

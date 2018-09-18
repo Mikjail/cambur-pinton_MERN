@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import _ from 'lodash';
 import  { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import _ from 'lodash';
+
 import formField from './formField';
 import AddressField from './AddressField';
-import './AddressPanel.css';
-import {connect} from 'react-redux';
-import { compose } from 'redux';
 import Loader from '../../../../Loader';
+
 import * as actions from '../../../../../actions'
+import './AddressPanel.css';
 
 export class AddressPanel extends Component {
 

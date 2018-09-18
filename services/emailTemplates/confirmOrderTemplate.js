@@ -1,6 +1,80 @@
 const keys = require('../../config/keys');
 
-module.exports = (order) =>{
+module.exports = ({user, order}) =>{
+
+	let tableSummary=`
+	<table align="left" border="0" cellpadding="0" cellspacing="0" style="margin-left:15%; max-width:100%; min-width:70%;" width="70%" class="mcnTextContentContainer">
+	<thead>
+		<th class="summary-title-left">
+			Producto
+		</th>
+		<th  class="summary-title-left">
+			Sabor
+		</th>
+		<th  class="summary-title-right">
+			Cantidad
+		</th>
+		<th  class="summary-title-right">
+			Total
+		</th>
+	</thead>
+	<tbody>`;
+	for (let index = 0; index < order.products.length; index++) {
+		for (let indexJ = 0; indexJ < order.products[index].properties.length; indexJ++) {
+			tableSummary += `
+			<tr>
+				<td class="mcnTextContent">
+				${order.products[index].name}
+				</td>
+				<td>
+					${order.products[index].properties[indexJ].name}
+				</td>
+				<td class="summary-text-right mcnTextContent">
+					${order.products[index].properties[indexJ].cant}
+				</td>
+				<td class="summary-text-right mcnTextContent">
+					${order.products[index].properties[indexJ].price * order.products[index].properties[indexJ].cant} $Ar
+				</td>
+			</tr>
+			`
+			
+		}
+	}
+	
+	tableSummary += `
+	<tr>
+	<td colspan=3 class="summary-text-right">
+			Delivery
+	</td>
+	<td class="summary-text-right">
+		100 $Ar
+	</td>
+	</tr>
+	<tr>
+	<td colspan=3 class="summary-text-right">
+			SubTotal
+	</td>
+	<td class="summary-text-right">
+		${order.subtotal} $Ar
+	</td>
+	</tr>
+	<tr>
+	<td colspan=3 class="summary-text-right" style="color:orange">
+		Compra Web -10%
+	</td>
+	<td class="summary-text-right"  style="color:orange">
+		${order.discount} $Ar
+	</td>
+	</tr>
+	<tr>
+	<td colspan=3 class="summary-text-right" style="font-size: 14px; font-weight: 600;">
+		Total
+	</td>
+	<td class="summary-text-right" style="font-size: 14px; font-weight: 600;">
+		${order.total} $Ar
+	</td>
+	</tr>
+	</tbody> </table>`
 return `<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 	<head>
@@ -105,6 +179,19 @@ return `<!doctype html>
 		}
 		.mcnDividerBlock{
 			table-layout:fixed !important;
+		}
+		.summary-title-left{
+			text-align: left;
+			font-size: 19px;
+			font-weight: 500;
+		}
+		.summary-title-right{
+			text-align: right;
+			font-size: 19px;
+			font-weight: 500;
+		}
+		.summary-text-right{
+			text-align: right;
 		}
 	/*
 	@tab Page
@@ -607,8 +694,11 @@ return `<!doctype html>
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         
                             <span style="font-size:36px">Gracias por tu Compra!</span>
-                        </td>
-                    </tr>
+						</td>
+					</tr>
+					<tr>
+						${tableSummary}
+					</tr>
                 </tbody></table>
 				<!--[if mso]>
 				</td>

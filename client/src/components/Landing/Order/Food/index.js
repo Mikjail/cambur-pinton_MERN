@@ -13,8 +13,10 @@ import './Food.css';
 export class Food extends Component {
 
     componentDidMount(){
+        localStorage.removeItem("order");
+        localStorage.removeItem("total");
+        localStorage.removeItem("mercadopago");
         this.props.fetchOrder();
-       
     }
 
   

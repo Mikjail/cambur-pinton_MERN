@@ -24,6 +24,7 @@ export const fetchPaylink = () => async(dispatch) =>{
         dispatch({ type: FETCH_MERCADOPAGO , payload: mercadopago})   
  
 }
+
 export const currentUser = () => (dispatch) =>{
     try{
         const user = JSON.parse(localStorage.getItem("user"));
@@ -39,22 +40,17 @@ export const fetchProducts = () =>async (dispatch) =>{
     try {    
 
         let products = JSON.parse(localStorage.getItem("order"));
-        localStorage.removeItem("order");
-        localStorage.removeItem("total");
-        localStorage.removeItem("mercadopago");
 
         if(!products){
             const res = await axios.get('./api/products');
             products = res.data;
         }
         
-        dispatch({ type: FETCH_PRODUCTS , payload: products})  
+        dispatch({ type: FETCH_PRODUCTS , payload: [...products]})  
     } catch (error) {
         console.log(error)
     }
 }
-
-
 
 
 export const addProduct = (order) =>async (dispatch) =>{
@@ -66,6 +62,14 @@ export const addProduct = (order) =>async (dispatch) =>{
     }
 }
 
+export const clearProducts = () => async dispatch =>{
+    try {
+        localStorage.removeItem("order");
+        dispatch({ type: FETCH_PRODUCTS , payload: [...[]]})  
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const onCheckout = (values, history) => async (dispatch) =>{
 
@@ -73,12 +77,14 @@ export const onCheckout = (values, history) => async (dispatch) =>{
         dispatch({ type: LOADER, payload:true});
         const res = await axios.post("/api/checkout", {products: values});
         localStorage.setItem("mercadopago", res.data.response.init_point)
-
+        
+        dispatch({ type: LOADER, payload:false});
         history.push({
             pathname: '/order/checkout',
         });
 
     }catch (error) {
+        dispatch({ type: LOADER, payload:false});
         history.push({
             pathname: '/order/checkout',
         });

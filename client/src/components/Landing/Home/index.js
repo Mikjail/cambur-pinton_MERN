@@ -4,8 +4,13 @@ import './Home.css';
 import brandlogo from '../../../images/ImagotipoBlanco.png';
 import iconPedir from '../../../images/botonPideYa.png';
 import brandLogoMobile from '../../../images/logotipoHome.png';
+import { connect } from 'react-redux';
+import * as actions from '../../../actions';
 
-export default () => {
+const Home = (props) => {
+  props.clearProducts();
+  console.log(props)
+
   return ( 
     <div className="section first-section">
        <div className="hide-on-small-only logo-home right">
@@ -23,3 +28,5 @@ export default () => {
     </div>
   )
 }
+
+export default connect(null,actions)(Home)

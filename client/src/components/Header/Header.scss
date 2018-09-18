@@ -39,7 +39,7 @@ nav.header-nav{
 
 
 
-@media only screen and (max-width: 400px){
+@media only screen and (max-width: 600px){
     nav.header-nav{
         position:fixed;
         z-index: 99;
@@ -97,8 +97,8 @@ nav.header-nav{
         #navBody{
             display: flex;
             justify-content: center;
-            background-color: #00000094;
-            position: absolute;
+            background-color:#000000de;
+            position: fixed;
             left:0;
             width: 100%;
             height: 0px;
@@ -110,6 +110,7 @@ nav.header-nav{
                         display:none;
                         color:  #ffffff;
                         transition: 1s;
+                        cursor: pointer;
                     }
                     text-align: center;
                     float:none

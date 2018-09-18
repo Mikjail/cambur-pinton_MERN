@@ -6,11 +6,7 @@ import './Summary.css';
 
 
 export class Summary extends Component{
-
     
-    constructor(props){
-        super(props);
-    }
 
     addCant(event, property) {
         property.cant = event.target.value;
@@ -102,7 +98,7 @@ export class Summary extends Component{
         let calc = { subtotal: 0, discount: 0, total: 0};
         let amount =0 
       
-        if(products){
+        if(products && products.length > 0){
             products.forEach(product =>{
                 product.properties.forEach(property => {
                     amount += property.cant  * property.price})

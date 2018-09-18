@@ -7,6 +7,7 @@
         background-color: #f7f7f7;
         &.card-summary{
             padding: 10px 10px;
+            
         }
         .summary{
             font-size: 13px;
@@ -78,6 +79,13 @@
     .container{
         .row{
             margin:0;
+        }
+        .card-panel{
+            &.card-summary{
+                position:fixed;
+                width: 100%
+                
+            }
         }
     }
 }

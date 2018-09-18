@@ -21,7 +21,7 @@ export class Landing extends Component {
 
     render() {
       return (
-        <BrowserRouter forceRefresh={true}>
+        <BrowserRouter>
             <div className="landing">
                 <Header />
                 {this.renderLoader()}
@@ -36,9 +36,9 @@ export class Landing extends Component {
   }
   
 }
-function componentDidMount({loader}){
+function mapStateToProps({loader}){
     return {loader};
 }
 
 
-export default connect(componentDidMount)(withRouter(Landing));
+export default connect(mapStateToProps)(withRouter(Landing));

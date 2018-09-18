@@ -6,24 +6,33 @@ module.exports = async (req, res, next) => {
     const { user } = req;
     const { products } = req.body;
 
-
+    console.log(user);
     mercadopago.configure({
         client_id: config.mercadoPago_client_id,
         client_secret: config.mercadoPago_client_secret
     });
 
     let items = parseProduct(products);
+
     // Create a preference structure
     let preference = {
     items: items,
       payer: {
         "name": user.name,
         "surname": user.lastName ,
-        "email": user.email
+        "email": user.local.email
       },
+      payment_methods:{
+        excluded_payment_types:[
+          { id: "ticket" },
+          { id: "atm" },
+          { id: "prepaid_card"}]
+      }
     };
 
-    const prefRes = await mercadopago.preferences.create(preference);
+    const prefRes = await mercadopago.createPreference(preference);
+
+
     res.send(prefRes);
   }catch(error){
     // If an error has occurred

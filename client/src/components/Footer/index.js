@@ -12,12 +12,16 @@ export default () => {
           <p className="grey-text text-lighten-4">
             Come rico y se feliz!
           </p>
-          <p>
+          <p className="text-center">
+          <i className="tiny material-icons">location_on</i> Honduras 4514, Capital Federal
+          </p>
+          <p className="text-center">
            <a href="tel:1147862620">+54 11 47865620</a>
           </p>
-          <p>
+          <p className="text-center">
           <a href="tel:1120045538">+54 11 20045538</a>
           </p>
+        
         </div>
         <div className="col l4 offset-l2 s12 footer-container">
           
