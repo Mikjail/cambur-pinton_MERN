@@ -39,7 +39,7 @@ nav.header-nav{
 
 
 
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 992px){
     nav.header-nav{
         position:fixed;
         z-index: 99;
@@ -72,7 +72,7 @@ nav.header-nav{
             }
         }
         #menu-icon{
-            display: inline-block;
+            display: inline-block !important;
             margin-top:8px;
             cursor: pointer;
         }
@@ -95,7 +95,7 @@ nav.header-nav{
             transform: rotate(45deg) translate(-8px, -5px);
         }
         #navBody{
-            display: flex;
+            display: flex !important;
             justify-content: center;
             background-color:#000000de;
             position: fixed;

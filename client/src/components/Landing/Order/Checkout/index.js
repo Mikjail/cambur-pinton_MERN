@@ -42,15 +42,12 @@ export class Checkout extends Component {
       return (
         <div className="container">
           <div className="row">
-          <div className="col l6 m6 s12">
+          <div className="col l6 offset-m2 m8 s12">
             <AddressPanel user={auth} addresses={addressAvailable} changeStatus={(value)=>this.setState({addressAvailable: value})}/>
             <PaymentPanel addresses={addressAvailable} paymentLink={mercadopago} />
           </div>
           <div className="col offset-l2 l4 offset-m2 m4 s12">
             <Summary products={order} />
-          </div>
-          <div className="col l6 m6 s12">
-  
           </div>
   
           </div>

@@ -26,11 +26,13 @@ export class PaymentPanel extends Component {
          case 'cash-container':
             panel1.style["display"]="flex";
             panel2.style["display"] ="none";
-            return
+            return;
          case "pago-online":
             panel1.style["display"]="none";
             panel2.style["display"] ="flex";
-            return
+            return;
+        default:
+            return;
         }
       }
   
@@ -94,7 +96,7 @@ export class PaymentPanel extends Component {
                     </button>
                     <DivWithErrorHandling showError={this.props.messageAlert} />
                     <div className="card-body" id="pago-online">
-                    <img className="mercadopago-logo" src={mercadoPago}/>
+                    <img alt="logo-mercadopago" className="mercadopago-logo" src={mercadoPago}/>
                     <a href={paymentLink}
                         className={"btn center "+ (this.isAbleToPayOnline() ? 'primary' : 'disabled') }>
                             Realizar Pago

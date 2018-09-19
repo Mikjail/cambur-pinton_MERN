@@ -57,7 +57,7 @@ renderCardList(indexStart, indexEnd){
 
   render() {
     return (
-      <div className="hide-on-small-only">
+      <div className="hide-on-med-and-down">
          <div className="row menu-detail">
           {this.renderCardList(0,2)}
         </div>

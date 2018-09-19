@@ -1,4 +1,4 @@
-import {Collapsible, CollapsibleItem, Toast} from 'react-materialize'
+import {Collapsible, CollapsibleItem} from 'react-materialize'
 import React, { Component } from 'react'
 import Loader from '../../../../Loader';
 import {connect} from 'react-redux';
@@ -63,7 +63,8 @@ export class MenuMobile extends Component {
 
     renderCollpasePanel(products){
         return products.map( product =>{
-            return(<Collapsible key={product._id}>
+            return(<div className="col m8 offset-m2 s12" key={product._id}>
+                    <Collapsible>
                         <CollapsibleItem header={product.name} icon='arrow_drop_down'>
                     
                                 <div className="product-container">
@@ -72,14 +73,16 @@ export class MenuMobile extends Component {
                                 </div>
                             
                         </CollapsibleItem>
-                    </Collapsible>)
+                    </Collapsible>
+                </div>
+           )
         })
     }
     render() {
     const { products } = this.props;
         if(products.length > 0){
             return (
-                <div className="menu-mobile hide-on-med-and-up">
+                <div className="row menu-mobile">
                     {this.renderCollpasePanel(products)}
                 </div>
             )

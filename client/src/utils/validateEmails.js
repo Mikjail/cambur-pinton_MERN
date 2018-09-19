@@ -6,7 +6,7 @@ const validation = {
         if(!re.test(email)) return 'Email Invalido'
     },
     confirmPass(values){
-        if(values['password'] != values['confirmPass'] ){
+        if(values['password'] !== values['confirmPass'] ){
            return 'La contraseña debe coincidir';
         }
 

@@ -3,7 +3,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
-import Loader from '../Loader'
 import Landing from '../Landing';
 import Summary from '../Landing/Order/Food/Summary';
 
@@ -31,7 +30,7 @@ class App extends Component {
       <BrowserRouter forceRefresh={true}>
             <div className="appView">
                   <Landing />
-                  <div className="hide-on-med-and-up" id="summary-mobile-view">
+                  <div className="show-on-medium-and-down" id="summary-mobile-view">
                       {this.renderSummary()}
                   </div>
             </div>

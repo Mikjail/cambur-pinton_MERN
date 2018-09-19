@@ -13,16 +13,16 @@ const Home = (props) => {
 
   return ( 
     <div className="section first-section">
-       <div className="hide-on-small-only logo-home right">
-              <img src={brandlogo} />
+       <div className="hide-on-med-and-down logo-home right">
+              <img alt="logo-cambur-pinton" src={brandlogo} />
        </div>
 
-       <div className="hide-on-med-and-up logo-mobile">
-              <img src={brandLogoMobile} />
+       <div className="show-on-medium-and-down logo-mobile">
+              <img alt="logo-cambur-pinton" src={brandLogoMobile} />
        </div>
-       <div className="hide-on-med-and-up pedirIcon-mobile">
+       <div className="show-on-medium-and-down pedirIcon-mobile">
        <Link to="/order">
-              <img src={iconPedir} />
+              <img alt="icon-cart" src={iconPedir} />
         </Link>
        </div>
     </div>

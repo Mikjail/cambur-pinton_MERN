@@ -20,7 +20,7 @@ export class Successs extends Component {
     <div className="container success-section">
         <div className="schedule-img">
         </div>
-        <div className="space-between hide-on-med-and-up">
+        <div className="space-between show-on-medium-and-down">
         </div>
         <h3>
             Gracias por tu compra!

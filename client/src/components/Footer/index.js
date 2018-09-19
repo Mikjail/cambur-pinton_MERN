@@ -7,11 +7,14 @@ export default () => {
     <footer className="page-footer">
     <div className="container">
       <div className="row">
-        <div className="col l6 s12">
+        <div className="col l4 s12">
           <h5 className="white-text">Cambur Pinton</h5>
           <p className="grey-text text-lighten-4">
             Come rico y se feliz!
           </p>
+        </div>
+        <div className="col l4 s12">
+       
           <p className="text-center">
           <i className="tiny material-icons">location_on</i> Honduras 4514, Capital Federal
           </p>
@@ -23,12 +26,13 @@ export default () => {
           </p>
         
         </div>
-        <div className="col l4 offset-l2 s12 footer-container">
+        <div className="col l4 s12 footer-container">
           
           <ul className="social-media">
             <li><SocialIcon url="https://www.facebook.com/camburpintonBA" /></li>
             <li><SocialIcon url="https://www.instagram.com/camburpintonba" /></li>
-            <li><a target="_blank" href="https://www.tripadvisor.com.ar/Restaurant_Review-g312741-d13226143-Reviews-Cambur_Pinton-Buenos_Aires_Capital_Federal_District.html"><img src="https://www.tripadvisor.com.ar/img/cdsi/img2/branding/socialWidget/32x32_white-21690-2.png" /></a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://www.tripadvisor.com.ar/Restaurant_Review-g312741-d13226143-Reviews-Cambur_Pinton-Buenos_Aires_Capital_Federal_District.html">
+            <img alt="tripadvisor-camburpinton" src="https://www.tripadvisor.com.ar/img/cdsi/img2/branding/socialWidget/32x32_white-21690-2.png" /></a></li>
           </ul>
         </div>
       </div>

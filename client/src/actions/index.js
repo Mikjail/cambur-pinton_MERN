@@ -8,7 +8,7 @@ import {FETCH_USER,
     LOADER} from './types';
 
 
-
+//get orders saved in localstorage
 export const fetchOrder = () =>async (dispatch) =>{
 
         const order = JSON.parse(localStorage.getItem("order"));
@@ -17,6 +17,7 @@ export const fetchOrder = () =>async (dispatch) =>{
 
 }
 
+//get paymentlink
 export const fetchPaylink = () => async(dispatch) =>{
 
         const mercadopago = localStorage.getItem("mercadopago");
@@ -25,6 +26,7 @@ export const fetchPaylink = () => async(dispatch) =>{
  
 }
 
+//Get current user
 export const currentUser = () => (dispatch) =>{
     try{
         const user = JSON.parse(localStorage.getItem("user"));
@@ -36,6 +38,7 @@ export const currentUser = () => (dispatch) =>{
     }
 }
 
+//Get Products
 export const fetchProducts = () =>async (dispatch) =>{
     try {    
 
@@ -52,7 +55,7 @@ export const fetchProducts = () =>async (dispatch) =>{
     }
 }
 
-
+//Add/update product cant
 export const addProduct = (order) =>async (dispatch) =>{
     try {    
         
@@ -62,6 +65,7 @@ export const addProduct = (order) =>async (dispatch) =>{
     }
 }
 
+//Clear Order 
 export const clearProducts = () => async dispatch =>{
     try {
         localStorage.removeItem("order");
@@ -71,23 +75,25 @@ export const clearProducts = () => async dispatch =>{
     }
 }
 
+//Apply order to mercadolibre
 export const onCheckout = (values, history) => async (dispatch) =>{
 
     try{
+        
         dispatch({ type: LOADER, payload:true});
+     
         const res = await axios.post("/api/checkout", {products: values});
-        localStorage.setItem("mercadopago", res.data.response.init_point)
+        localStorage.setItem("mercadopago", res.data.response.init_point);
         
         dispatch({ type: LOADER, payload:false});
+        
         history.push({
             pathname: '/order/checkout',
         });
 
     }catch (error) {
+
         dispatch({ type: LOADER, payload:false});
-        history.push({
-            pathname: '/order/checkout',
-        });
     }
 };
 
@@ -210,13 +216,14 @@ export const onSubmitOrder = (history) => async dispatch =>{
     })
 
     const address = user.addresses.filter(address =>{
-        return address._id == localStorage.getItem("address");
+        return address._id === localStorage.getItem("address");
     })
 
     valueToSend.address =`${address[0].street} ${address[0].number}  ${address[0].floor}${address[0].apartment} -  ${address[0].zone}` ;
     
     try{
-        const res = await axios.post('/api/submitOrder', {order : valueToSend});
+        
+        await axios.post('/api/submitOrder', {order : valueToSend});
         
 
         history.push({

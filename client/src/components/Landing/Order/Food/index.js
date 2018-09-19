@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import * as actions from '../../../../actions';
 
-import Loader from '../../../Loader';
 import Summary from './Summary';
 import MenuDesk  from './MenuDesk';
 import MenuMobile  from './MenuMobile';
@@ -25,7 +24,7 @@ export class Food extends Component {
         <div className="container food-section">
                 <MenuDesk />
                 <MenuMobile />
-        <div className="hide-on-small-only">
+        <div className="hide-on-med-and-down">
                 <Summary />
             </div>
         </div>

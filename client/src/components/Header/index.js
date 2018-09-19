@@ -65,18 +65,18 @@ class Header extends Component{
             <div className="nav-wrapper ">
                 <a href="/" className="brand-logo"></a>
 
-                <ul id="nav-mobile" className="right  hide-on-small-and-down">
+                <ul id="nav-mobile" className="right  hide-on-med-and-down">
                     <li className="order-btn"><a href="/order">PEDIR</a></li>
                     {this.renderLogin()} 
                 </ul>
             
-                <div className="hide-on-med-and-up" id="menu-icon" onClick={()=> this.toggleCardBody()}>
+                <div className="show-on-medium-and-down" id="menu-icon" onClick={()=> this.toggleCardBody()}>
                     <div className="bar1"></div>
                     <div className="bar2"></div>
                     <div className="bar3"></div>
                 </div>
                 
-                <ul id="nav-mobile" className="right hide-on-med-and-up" onClick={()=> this.toggleSummary()}>
+                <ul id="nav-mobile" className="right show-on-medium-and-down" onClick={()=> this.toggleSummary()}>
                     <li className="waves-effect order-btn">
                         {this.renderShoppingCart()}
                      
@@ -92,7 +92,7 @@ class Header extends Component{
 
     renderMobileMenu(){
         return(
-        <div id="navBody" className="hide-on-med-and-up">
+        <div id="navBody" className="show-on-medium-and-down">
             <ul>
                 <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>HOME</a></li>
                 <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/order")}}>PEDIR</a></li>
@@ -123,7 +123,7 @@ class Header extends Component{
         if(amount > 0){
            
             return  ( <a href="#!">
-                    <img src={shoppingCart} />
+                    <img alt="shopping-cart" src={shoppingCart} />
                     <span className="cant-added"> {amount}</span>
                     </a>) 
         }

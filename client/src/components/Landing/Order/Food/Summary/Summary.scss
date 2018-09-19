@@ -1,6 +1,6 @@
 @import '../../../../../theme.scss';
 
-@media screen and (max-width:900px){
+@media screen and (max-width:992px){
     .summary-panel,
     .summary-checkout-panel{
         z-index:50;
@@ -22,7 +22,7 @@
     }
 }
 
-@media screen and (min-width: 900px){
+@media screen and (min-width: 992px){
     .summary-panel{
         font-size: 13px;
         width:20%;

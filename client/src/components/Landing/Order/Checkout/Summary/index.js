@@ -5,10 +5,10 @@ export class Summary extends Component {
 
     renderSubtotal(products){
         let amount =0 
-        products.forEach(product =>{
+        products.forEach( product => {
             product.properties.forEach(property => {
                 amount += property.cant  * property.price})
-        })
+        });
         products.subtotal = amount + 100; 
         products.discount = (products.subtotal * 0.10).toFixed(2);
         products.total =(products.subtotal * 0.90).toFixed(2);

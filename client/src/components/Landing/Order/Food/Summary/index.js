@@ -56,7 +56,6 @@ export class Summary extends Component{
                        </div>
                     );
                 }
-              
             })
         })
     }
@@ -122,7 +121,7 @@ export class Summary extends Component{
                     <div className="card-panel card-summary">
                         <div className="header-panel">
                             <h5>Tu Pedido </h5>
-                    </div>
+                        </div>
                     <hr />
                     {this.renderSummaryList(products)}
                         <hr />
@@ -172,7 +171,7 @@ export class Summary extends Component{
                             </i>
                         </div>
                         <div className="bottom-panel">
-                        <button onClick={()=>this.toggleOrderList()}  className="btn desactive center hide-on-small-only">
+                        <button onClick={()=>this.toggleOrderList()}  className="btn desactive center hide-on-med-and-down">
                             Pedir Ahora
                         </button>
                         </div>

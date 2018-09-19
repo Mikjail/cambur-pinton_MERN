@@ -3,7 +3,7 @@ const keys = require('../../config/keys');
 module.exports = ({user, order}) =>{
 
 	let tableSummary=`
-	<table align="left" border="0" cellpadding="0" cellspacing="0" style="margin-left:15%; max-width:100%; min-width:70%;" width="70%" class="mcnTextContentContainer">
+	<table align="left" border="0" cellpadding="0" cellspacing="0" class="table-pinton">
 	<thead>
 		<th class="summary-title-left">
 			Producto
@@ -11,7 +11,7 @@ module.exports = ({user, order}) =>{
 		<th  class="summary-title-left">
 			Sabor
 		</th>
-		<th  class="summary-title-right">
+		<th  class="summary-title-center">
 			Cantidad
 		</th>
 		<th  class="summary-title-right">
@@ -23,16 +23,16 @@ module.exports = ({user, order}) =>{
 		for (let indexJ = 0; indexJ < order.products[index].properties.length; indexJ++) {
 			tableSummary += `
 			<tr>
-				<td class="mcnTextContent">
+				<td class=" summary-text">
 				${order.products[index].name}
 				</td>
-				<td>
+				<td class=" summary-text">
 					${order.products[index].properties[indexJ].name}
 				</td>
-				<td class="summary-text-right mcnTextContent">
+				<td class="summary-text-center  summary-text">
 					${order.products[index].properties[indexJ].cant}
 				</td>
-				<td class="summary-text-right mcnTextContent">
+				<td class="summary-text-right  summary-text">
 					${order.products[index].properties[indexJ].price * order.products[index].properties[indexJ].cant} $Ar
 				</td>
 			</tr>
@@ -43,34 +43,34 @@ module.exports = ({user, order}) =>{
 	
 	tableSummary += `
 	<tr>
-	<td colspan=3 class="summary-text-right">
+	<td colspan=3 class="summary-text-right  summary-text">
 			Delivery
 	</td>
-	<td class="summary-text-right">
+	<td class="summary-text-right  summary-text">
 		100 $Ar
 	</td>
 	</tr>
 	<tr>
-	<td colspan=3 class="summary-text-right">
+	<td colspan=3 class="summary-text-right  summary-text">
 			SubTotal
 	</td>
-	<td class="summary-text-right">
+	<td class="summary-text-right summary-text">
 		${order.subtotal} $Ar
 	</td>
 	</tr>
 	<tr>
-	<td colspan=3 class="summary-text-right" style="color:orange">
+	<td colspan=3 class="summary-text-right  summary-text" style="color:orange">
 		Compra Web -10%
 	</td>
-	<td class="summary-text-right"  style="color:orange">
+	<td class="summary-text-right  summary-text"  style="color:orange">
 		${order.discount} $Ar
 	</td>
 	</tr>
 	<tr>
-	<td colspan=3 class="summary-text-right" style="font-size: 14px; font-weight: 600;">
+	<td colspan=3 class="summary-text-right  summary-text" style="font-weight: 600;">
 		Total
 	</td>
-	<td class="summary-text-right" style="font-size: 14px; font-weight: 600;">
+	<td class="summary-text-right  summary-text" style="font-weight: 600;">
 		${order.total} $Ar
 	</td>
 	</tr>
@@ -185,14 +185,40 @@ return `<!doctype html>
 			font-size: 19px;
 			font-weight: 500;
 		}
-		.summary-title-right{
-			text-align: right;
+		.summary-title-right,
+		.summary-title-center{
 			font-size: 19px;
 			font-weight: 500;
+		}
+		.summary-title-right{
+			text-align: right;
 		}
 		.summary-text-right{
 			text-align: right;
 		}
+		.table-pinton{
+			margin-left:15%; 
+			max-width:70%;
+			min-width:70%;
+		}
+		.summary-text{
+			font-size: 14px;
+		}
+		.summary-title-center,
+		.summary-text-center{
+			text-align: center
+		}
+		@media only screen and (max-width: 480px){
+			.table-pinton{
+				margin-left:0; 
+				max-width:100%;
+				min-width:100%;
+			}
+			.summary-text{
+				font-size: 12px !important;
+			}
+		}
+		
 	/*
 	@tab Page
 	@section Background Style
@@ -691,9 +717,9 @@ return `<!doctype html>
                 <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width:100%; min-width:100%;" width="100%" class="mcnTextContentContainer">
                     <tbody><tr>
                         
-                        <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
+                        <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px; text-align:center;">
                         
-                            <span style="font-size:36px">Gracias por tu Compra!</span>
+                            <span style="font-size:18px; text-align:center;">Gracias por tu Compra!</span>
 						</td>
 					</tr>
 					<tr>
