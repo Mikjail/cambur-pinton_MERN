@@ -17,10 +17,10 @@ const Home = (props) => {
               <img alt="logo-cambur-pinton" src={brandlogo} />
        </div>
 
-       <div className="show-on-medium-and-down logo-mobile">
+       <div className="hide-on-med-and-up show-on-medium-and-down logo-mobile">
               <img alt="logo-cambur-pinton" src={brandLogoMobile} />
        </div>
-       <div className="show-on-medium-and-down pedirIcon-mobile">
+       <div className="hide-on-med-and-up show-on-medium-and-down pedirIcon-mobile">
        <Link to="/order">
               <img alt="icon-cart" src={iconPedir} />
         </Link>

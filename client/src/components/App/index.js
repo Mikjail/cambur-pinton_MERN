@@ -30,7 +30,7 @@ class App extends Component {
       <BrowserRouter forceRefresh={true}>
             <div className="appView">
                   <Landing />
-                  <div className="show-on-medium-and-down" id="summary-mobile-view">
+                  <div className="hide-on-med-and-up show-on-medium-and-down" id="summary-mobile-view">
                       {this.renderSummary()}
                   </div>
             </div>

@@ -92,7 +92,9 @@ export const onCheckout = (values, history) => async (dispatch) =>{
         });
 
     }catch (error) {
-
+        history.push({
+            pathname: '/order/checkout',
+        });
         dispatch({ type: LOADER, payload:false});
     }
 };

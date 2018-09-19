@@ -70,13 +70,13 @@ class Header extends Component{
                     {this.renderLogin()} 
                 </ul>
             
-                <div className="show-on-medium-and-down" id="menu-icon" onClick={()=> this.toggleCardBody()}>
+                <div className="hide-on-med-and-up show-on-medium-and-down" id="menu-icon" onClick={()=> this.toggleCardBody()}>
                     <div className="bar1"></div>
                     <div className="bar2"></div>
                     <div className="bar3"></div>
                 </div>
                 
-                <ul id="nav-mobile" className="right show-on-medium-and-down" onClick={()=> this.toggleSummary()}>
+                <ul id="nav-mobile" className="right hide-on-med-and-up show-on-medium-and-down" onClick={()=> this.toggleSummary()}>
                     <li className="waves-effect order-btn">
                         {this.renderShoppingCart()}
                      
@@ -92,7 +92,7 @@ class Header extends Component{
 
     renderMobileMenu(){
         return(
-        <div id="navBody" className="show-on-medium-and-down">
+        <div id="navBody" className="hide-on-med-and-up show-on-medium-and-down">
             <ul>
                 <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>HOME</a></li>
                 <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/order")}}>PEDIR</a></li>
