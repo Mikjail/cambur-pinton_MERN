@@ -65,7 +65,7 @@ const parseProduct = function(products){
     currency_id: 'ARS',
     unit_price: totalAmount,
   }
-  console.log(element)
+  
   items.push(element);
   return items;
 }
