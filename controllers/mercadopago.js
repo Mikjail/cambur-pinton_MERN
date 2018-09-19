@@ -27,6 +27,10 @@ module.exports = async (req, res, next) => {
           { id: "ticket" },
           { id: "atm" },
           { id: "prepaid_card"}]
+      },
+      back_urls:{
+        success: 'https://guarded-savannah-73486.herokuapp.com/order/success',
+        failure: 'https://guarded-savannah-73486.herokuapp.com/order/failure'
       }
     };
 
@@ -56,7 +60,7 @@ const parseProduct = function(products){
         // items.push(element);
     }
   }
-  totalAmount += 100;
+  totalAmount +=  parseFloat(config.delivery);
   totalAmount =  totalAmount * 0.90;
   let element = {
     id: "1",

@@ -51,7 +51,7 @@ class UserController {
                     amount += property.cant  * property.price
                 })
             })
-            order.subtotal = amount + config.delivery;
+            order.subtotal = ( amount +  parseFloat(config.delivery));
             order.discount = ( order.subtotal * 0.10).toFixed(2);
             order.total =  ( order.subtotal * 0.90).toFixed(2);
 

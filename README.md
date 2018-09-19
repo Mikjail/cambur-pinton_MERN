@@ -6,8 +6,6 @@ This project was implemented with:
 
 ## Folder Structure
 
-After creation, your project should look like this:
-
 ```
 server/
   README.md
