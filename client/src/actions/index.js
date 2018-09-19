@@ -76,27 +76,44 @@ export const clearProducts = () => async dispatch =>{
 }
 
 //Apply order to mercadolibre
-export const onCheckout = (values, history) => async (dispatch) =>{
+export const onCheckout = () => async (dispatch) =>{
 
     try{
+        let products = JSON.parse(localStorage.getItem("order"));
         
+        let newProduct= products.filter(product=>{
+            return product.properties.find((property)=>{
+                if(property.cant > 0){
+                    return product;
+                }
+            })
+        })
+
+        newProduct.forEach(product=>{
+            product.properties =  product.properties.filter(property =>{
+                if(property.cant > 0){
+                    return property;
+                }
+            })
+        })
+
+    
         dispatch({ type: LOADER, payload:true});
      
-        const res = await axios.post("/api/checkout", {products: values});
-        localStorage.setItem("mercadopago", res.data.response.init_point);
-        
+        const res = await axios.post("/api/checkout", {products: newProduct});
+    
+        if(res.data.response){
+            localStorage.setItem("mercadopago", res.data.response.init_point);
+            dispatch({ type: FETCH_MERCADOPAGO , payload: res.data.response.init_point})   
+        }
+        console.log(res)
+
         dispatch({ type: LOADER, payload:false});
-        
-        history.push({
-            pathname: '/order/checkout',
-        });
+ 
 
     }catch (error) {
+        console.log(error);
         dispatch({ type: LOADER, payload:false});
-        history.push({
-            pathname: '/order/checkout',
-        });
-        
     }
 };
 

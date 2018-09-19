@@ -71,23 +71,8 @@ export class Summary extends Component{
             summary.firstChild.classList.toggle('active');
          }else{
 
-            let newProduct= products.filter(product=>{
-                return product.properties.find((property)=>{
-                    if(property.cant > 0){
-                        return product;
-                    }
-                })
-            })
-
-            newProduct.forEach(product=>{
-                product.properties =  product.properties.filter(property =>{
-                    if(property.cant > 0){
-                        return property;
-                    }
-                })
-            })
-
-            this.props.onCheckout(newProduct, history)
+            history.push({pathname: '/order/checkout'});
+            
          }
      
       }

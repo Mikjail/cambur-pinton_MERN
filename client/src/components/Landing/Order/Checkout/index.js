@@ -14,7 +14,7 @@ export class Checkout extends Component {
     super(props);
     this.props.currentUser();
     this.props.fetchOrder();
-    this.props.fetchPaylink();
+ 
     const user = JSON.parse(localStorage.getItem("user"));
     if(user){
       this.state = { 
@@ -22,9 +22,17 @@ export class Checkout extends Component {
       }
     }
   }
+
+  componentWillMount(){
+    this.props.onCheckout()
+  }
+  
   componentDidMount(){
     let navBar = document.getElementsByClassName("breadcrumb");
-    
+    const { mercadopago } = this.props;
+    if(mercadopago){
+      this.props.fetchPaylink();
+    }
     for (let index = 0; index < navBar.length; index++) {
         navBar[index].classList.remove("active");
         if(index <= 2){
