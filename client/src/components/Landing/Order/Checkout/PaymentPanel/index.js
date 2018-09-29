@@ -40,9 +40,11 @@ export class PaymentPanel extends Component {
       }
   
     isAbleToPay(){
-        const {payAmount, total} = this.state;
+        const {payAmount} = this.state;
         const {addresses, addressSelected} = this.props;
-        if(addresses && addressSelected && (total <= payAmount)){
+        let totalAmount =this.calcTotal();
+
+        if(addresses && addressSelected && (parseFloat(totalAmount) <= payAmount)){
             return true;
         }
         
@@ -58,16 +60,17 @@ export class PaymentPanel extends Component {
     }
 
     renderChange(){
-        const {payAmount, total} = this.state;
-        const amount = (payAmount - total ).toFixed(2);
+        const {payAmount} = this.state;
+        let totalAmount =this.calcTotal();
+        const amount = (payAmount - totalAmount).toFixed(2);
       if(this.isAbleToPay()){
           return <p> Cambio:  ${amount} </p>
       }
     }
-    renderTotal(){
+    calcTotal(){
         const { products, delivery } = this.props;
         let amount=0;
-        console.log(delivery)
+        
         products.forEach(product=>{
             amount += product.properties.reduce((accum,property) => accum += (property.cant  * property.price),0);
           });
@@ -110,7 +113,7 @@ export class PaymentPanel extends Component {
         <div className="card-panel">
             <div className="card-title">
             Medio de Pago
-            <span className="right"> Total: {this.renderTotal()} </span>
+            <span className="right"> Total: {this.calcTotal()} </span>
             </div>
             <div>
             <div className="card-body">
