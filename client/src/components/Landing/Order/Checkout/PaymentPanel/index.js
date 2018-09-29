@@ -5,7 +5,6 @@ import * as actions from '../../../../../actions';
 
 import {ComponentLoader } from '../../../../shared/ComponentLoader';
 import { DELIVERY } from '../../../../../utils/keys';
-import DivWithErrorHandling from '../../../../../utils/handlingError'
 import mercadoPago from '../../../../../images/icon/mercadopago-logo.png';
 import './PaymentPanel.css';
 
@@ -129,7 +128,7 @@ export class PaymentPanel extends Component {
                     
                     {this.renderChange()}
                     
-                    <button onClick={()=>this.props.onSubmitOrder(history) } className={"btn center "+ (this.isAbleToPay() ? 'primary' : 'disabled') }>
+                    <button onClick={()=>this.props.onSubmitOrder(history, this.props) } className={"btn center "+ (this.isAbleToPay() ? 'primary' : 'disabled') }>
                         Pedir
                     </button>
                     

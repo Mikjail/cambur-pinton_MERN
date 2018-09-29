@@ -28,6 +28,7 @@ export class AddressPanel extends Component {
                 this.props.setCheckedAddress(defaultAddress._id);
                 this.props.addressSelectedStatus(true);
                 let adress = checkedAddress ? auth.addresses.find(address => address._id == checkedAddress): defaultAddress
+                console.log(adress.delivery)
                 this.props.addDeliveryStatus(adress.delivery);
                 this.props.onCheckout(adress.delivery);
             }
@@ -62,9 +63,9 @@ export class AddressPanel extends Component {
         this.props.addressSelectedStatus(true);
         let address = auth.addresses.find(address => address._id == item);
         if(delivery.radius !== address.delivery.radius){
-            this.props.addDeliveryStatus(address.delivery);
             this.props.onCheckout(address.delivery);
         }
+        this.props.addDeliveryStatus(address.delivery);
         this.props.setCheckedAddress(item);
       }
 

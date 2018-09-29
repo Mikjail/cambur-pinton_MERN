@@ -269,7 +269,7 @@ export const removeAddress = (values, props) => async dispatch =>{
 
 
 //ADD ORDER
-export const onSubmitOrder = (history) => async dispatch =>{
+export const onSubmitOrder = (history,props) => async dispatch =>{
 
     dispatch({ type: LOADER, payload:true});
     const order = JSON.parse(localStorage.getItem("order"));
@@ -287,12 +287,12 @@ export const onSubmitOrder = (history) => async dispatch =>{
             valueToSend.products.push(elem);
         }
     })
-
-    const address = user.addresses.filter(address =>{
-        return address._id === localStorage.getItem("address");
+    
+    const address = user.addresses.find(address =>{
+        return address.delivery._id === props.delivery._id
     })
-
-    valueToSend.address =`${address[0].street} ${address[0].number}  ${address[0].floor}${address[0].apartment} -  ${address[0].zone}` ;
+  
+    valueToSend.address =`${address.street} ${address.floor}${address.apartment} -  ${address.zone}` ;
     
     try{
         
