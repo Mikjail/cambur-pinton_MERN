@@ -5,12 +5,12 @@ module.exports = async (req, res, next) => {
   try{
 
     const { user } = req;
-    const { products } = req.body;
+    const { products, delivery } = req.body;
 
     
     const mercadoPago  = new MercadoPago(config.mercadoPago_client_id, config.mercadoPago_client_secret);
     
-    let items = parseProduct(products);
+    let items = parseProduct(products,delivery);
 
     // Create a preference structure
     let preference = {
@@ -42,24 +42,15 @@ module.exports = async (req, res, next) => {
   }
 };
 
-const parseProduct = function(products){
+const parseProduct = (products,delivery) => {
   let items=[]
   let totalAmount=0;
   
   for (let index = 0; index < products.length; index++) {
-    for (let j = 0; j < products[index].properties.length; j++) {
-      totalAmount += (products[index].properties[j].cant *  products[index].properties[j].price)
-      // let element={};
-       
-        // element.id = products[index].properties[j]._id;
-        // element.title = `${products[index].name} - ${products[index].properties[j].name}`;
-        // element.quantity = products[index].properties[j].cant;
-        // element.currency_id ='ARS';
-        // element.unit_price = products[index].properties[j].price;
-        // items.push(element);
-    }
+    totalAmount += products[index].properties.reduce((total, product) => total += (product.cant * product.price),0);
   }
-  totalAmount +=  parseFloat(config.delivery);
+
+  totalAmount +=  parseFloat(config.delivery[delivery]);
   totalAmount =  totalAmount * 0.90;
   let element = {
     id: "1",

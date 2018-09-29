@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import { DELIVERY } from '../../../../../utils/keys';
 
 export class Summary extends Component {
 
     renderSubtotal(products){
-        let amount =0 
-        products.forEach( product => {
-            product.properties.forEach(property => {
-                amount += property.cant  * property.price})
+        let amount = 0;
+        let {delivery} = this.props;
+        products.forEach(product=>{
+          amount += product.properties.reduce((accum,property) => accum += (property.cant  * property.price),0);
         });
-        products.subtotal = amount + 100; 
+        products.subtotal = amount + DELIVERY[delivery.radius]; 
         products.discount = (products.subtotal * 0.10).toFixed(2);
         products.total =(products.subtotal * 0.90).toFixed(2);
+        localStorage.setItem('total', products.total)
         return products.subtotal;   
     }
     
@@ -35,7 +37,7 @@ export class Summary extends Component {
     
     
   render() {
-      let {products} = this.props;
+      let {products, delivery} = this.props;
     return (
         <div id="summary-mobile-view">
           <div className="summary-checkout-panel">
@@ -59,6 +61,16 @@ export class Summary extends Component {
               <tbody>
                   {this.renderSumary(products)}
                   <tr className="end-summary">
+                  <td colSpan="3">
+                    <span className="right">
+                    <strong>Delivery</strong>
+                    </span>
+                    </td>
+                    <td>
+                      ${DELIVERY[delivery.radius]}
+                    </td>
+                  </tr>
+                  <tr>
                   <td colSpan="3">
                     <span className="right">
                     <strong>Subtotal</strong>

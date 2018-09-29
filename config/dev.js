@@ -7,5 +7,6 @@ module.exports = {
     mercadoPago_client_id:"474547905751159",
     mercadoPago_client_secret:"pB2bs62pUejF7vtCfZ7afWzKZghwpli8",
     sendGridKey: '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',
-    delivery: 100
+    GOOGLE_API_KEY: "AIzaSyC9qoUtPZFr24eqjQ0Lfhf4HXUMg_T85CU",
+    delivery: {"firstRadius": 30, "secondRadius": 50}
 }

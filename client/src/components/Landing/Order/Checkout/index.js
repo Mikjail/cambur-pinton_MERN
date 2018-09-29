@@ -4,12 +4,11 @@ import * as actions from '../../../../actions';
 import requireAuth from '../../../../utils/requireAuth';
 import AddressPanel from './AddressPanel';
 import PaymentPanel from './PaymentPanel';
-import Loader from '../../../Loader'
 import {Summary} from './Summary';
 import './Checkout.css';
 
 export class Checkout extends Component {
-  state = {user:null, addressAvailable:false }
+  state = {user:null, addressAvailable:false, addressSelected: false }
   constructor(props){
     super(props);
     this.props.currentUser();
@@ -23,9 +22,7 @@ export class Checkout extends Component {
     }
   }
 
-  componentWillMount(){
-    this.props.onCheckout()
-  }
+  
   
   componentDidMount(){
     let navBar = document.getElementsByClassName("breadcrumb");
@@ -43,19 +40,26 @@ export class Checkout extends Component {
 
   
   render() {
-    const {addressAvailable} = this.state;
-    const { order, mercadopago, auth} =this.props;
+    const {addressAvailable, addressSelected} = this.state;
+    const { order, mercadopago, auth, delivery} =this.props;
     
     if(auth && order){
       return (
         <div className="container">
           <div className="row">
           <div className="col l6 offset-m2 m8 s12">
-            <AddressPanel user={auth} addresses={addressAvailable} changeStatus={(value)=>this.setState({addressAvailable: value})}/>
-            <PaymentPanel addresses={addressAvailable} paymentLink={mercadopago} />
+            <AddressPanel 
+            addresses={addressAvailable} 
+            addressSelected={addressSelected} 
+            availableAddressStatus={(value)=>this.setState({addressAvailable: value})}
+            addressSelectedStatus={(value) =>{this.setState({addressSelected: value})}}/>
+            <PaymentPanel 
+            addresses={addressAvailable} 
+            addressSelected={addressSelected} 
+            paymentLink={mercadopago} />
           </div>
           <div className="col offset-l2 l4 offset-m2 m4 s12">
-            <Summary products={order} />
+            <Summary products={order} delivery={delivery} />
           </div>
   
           </div>
@@ -63,14 +67,13 @@ export class Checkout extends Component {
         </div>
       )
     }
-      return <Loader />
-    
+    return   <div className="container"></div>;
   }
 }
 
 
-function mapStateToProps({auth, order, mercadopago}) {
-  return { auth, order, mercadopago };
+function mapStateToProps({auth, order, mercadopago, delivery}) {
+  return { auth, order, mercadopago, delivery };
 }
 
 export default connect(mapStateToProps, actions)(requireAuth(Checkout));

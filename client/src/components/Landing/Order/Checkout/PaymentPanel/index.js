@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
-import * as actions from '../../../../../actions';
 import { withRouter } from 'react-router-dom';
+import * as actions from '../../../../../actions';
 
+import {ComponentLoader } from '../../../../shared/ComponentLoader';
+import { DELIVERY } from '../../../../../utils/keys';
 import DivWithErrorHandling from '../../../../../utils/handlingError'
 import mercadoPago from '../../../../../images/icon/mercadopago-logo.png';
 import './PaymentPanel.css';
+
 export class PaymentPanel extends Component {
     
     constructor(props){
         super(props);
-        this.state = { payAmount: "", total: parseFloat(localStorage.getItem("total")) };
+        this.state = { payAmount: "" };
     }
 
     handleChange(e) {
@@ -38,14 +41,17 @@ export class PaymentPanel extends Component {
   
     isAbleToPay(){
         const {payAmount, total} = this.state;
-        if(this.props.addresses && (total <= payAmount)){
+        const {addresses, addressSelected} = this.props;
+        if(addresses && addressSelected && (total <= payAmount)){
             return true;
         }
+        
         return false
     }
     isAbleToPayOnline(){
-        const {paymentLink} = this.props;
-        if(this.props.addresses && paymentLink){
+        const {paymentLink, addresses ,addressSelected } = this.props;
+
+        if(addresses && paymentLink && addressSelected){
             return true;
         }
         return false;
@@ -58,16 +64,53 @@ export class PaymentPanel extends Component {
           return <p> Cambio:  ${amount} </p>
       }
     }
+    renderTotal(){
+        const { products, delivery } = this.props;
+        let amount=0;
+        console.log(delivery)
+        products.forEach(product=>{
+            amount += product.properties.reduce((accum,property) => accum += (property.cant  * property.price),0);
+          });
+          let subtotal = amount + DELIVERY[delivery.radius]; 
+          let total = (subtotal * 0.90).toFixed(2);
+          return total;   
+    }
+    renderAlertAddress(){
+        const {addressSelected } = this.props;
+        if(!addressSelected){
+            return (
+                <div className="primary-link">
+                    Seleccion un Domicilio
+                </div>
+            )
+        }
+        
+    }
+    renderOnlinePayment(){
+        const {componentLoader, paymentLink} = this.props;
+        if(!componentLoader){
+            return(
+                    <a href={paymentLink}
+                        className={"btn center "+ (this.isAbleToPayOnline() ? 'primary' : 'disabled') }>
+                            Realizar Pago
+                    </a>
+            );
+           
+        }else{
+            return <ComponentLoader />
+        }
+       
+     
+    }
 
     render() {
-        const {paymentLink, history} = this.props;
-        const { total} = this.state;
+        const { history} = this.props;
 
         return (
         <div className="card-panel">
             <div className="card-title">
             Medio de Pago
-            <span className="right"> Total: ${total} </span>
+            <span className="right"> Total: {this.renderTotal()} </span>
             </div>
             <div>
             <div className="card-body">
@@ -87,6 +130,7 @@ export class PaymentPanel extends Component {
                         Pedir
                     </button>
                     
+                    {this.renderAlertAddress()}
                 </div>
                 
                 </div>
@@ -94,14 +138,10 @@ export class PaymentPanel extends Component {
                     <button className="card-title" onClick={()=> this.toggleCardBody('pago-online')}>
                         Pago Online
                     </button>
-                    <DivWithErrorHandling showError={this.props.messageAlert} />
                     <div className="card-body" id="pago-online">
                     <img alt="logo-mercadopago" className="mercadopago-logo" src={mercadoPago}/>
-                    <a href={paymentLink}
-                        className={"btn center "+ (this.isAbleToPayOnline() ? 'primary' : 'disabled') }>
-                            Realizar Pago
-                    </a>
-                </div>
+                        {this.renderOnlinePayment()}
+                    </div>
             
                 </div>
             </div>
@@ -112,8 +152,8 @@ export class PaymentPanel extends Component {
     }
 }
 
-function mapStateToProps({messageAlert}){
-    return {messageAlert}
+function mapStateToProps({messageAlert, delivery, products, componentLoader}){
+    return {messageAlert, delivery, products, componentLoader}
 }
 
 export default connect(mapStateToProps, actions)(withRouter(PaymentPanel))

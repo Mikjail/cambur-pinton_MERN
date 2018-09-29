@@ -3,7 +3,7 @@ import Home from './Home';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import Loader from '../Loader';
+import Loader from '../shared/Loader';
 import Header from '../Header'
 import Order from './Order'
 import Login from '../Login';

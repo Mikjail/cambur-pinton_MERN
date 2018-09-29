@@ -5,6 +5,19 @@ input[type=radio]{
     position: relative !important;
     pointer-events: all !important;
 }
+.field-container{
+    margin-bottom: 30px;
+}
+.address-text{
+    width: 90%;
+    display: inline-block;
+}
+.remove-btn{
+    width:10%;
+    display:inline-block;
+    text-align: center;
+    cursor: pointer;
+}
 @media only screen and (max-width: 400px){
     .field-container{
         margin-bottom: 30px;

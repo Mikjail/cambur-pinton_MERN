@@ -1,6 +1,6 @@
 import {Collapsible, CollapsibleItem} from 'react-materialize'
 import React, { Component } from 'react'
-import Loader from '../../../../Loader';
+import Loader from '../../../../shared/Loader';
 import {connect} from 'react-redux';
 import * as actions from '../../../../../actions';
 import './MenuMobile.css';

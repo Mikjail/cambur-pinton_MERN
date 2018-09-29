@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Address = mongoose.model('addresses');
+const Delivery = mongoose.model('deliveries');
 const Orders = mongoose.model('orders');
 const config = require('../config/keys');
 const Mailer = require('../services/Mailer');
@@ -20,15 +21,16 @@ class UserController {
 
    async updateAddress(req, res, next){
         try{
-            const { address } = req.body;
-            
+            const { telephone,street, floor, apartment, zone, delivery } = req.body.address;
+            const newDelivery = new Delivery(delivery);
+
             const newAddress = new Address({
-                telephone: address.telephone,
-                street: address.street,
-                number: address.number,
-                floor: address.floor,
-                apartment: address.apartment,
-                zone: address.zone
+                telephone,
+                street,
+                floor,
+                apartment,
+                zone,
+                delivery: newDelivery
             });
         
             req.user.addresses.push(newAddress);
@@ -39,6 +41,22 @@ class UserController {
             res.status(422).send(error);
            }
            
+    }
+
+    async deleteAddress(req, res, next){
+        try {
+            const { id } = req.body;
+
+            let index = req.user.addresses.findIndex(address => address._id === id )
+            req.user.addresses.splice(index ,1);
+
+            const user = await req.user.save();
+
+            res.send(user);
+
+        } catch (error) {
+            res.status(422).send(error);
+        }
     }
 
     async addOrder(req, res){

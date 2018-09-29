@@ -7,6 +7,9 @@ import './Summary.css';
 
 export class Summary extends Component{
     
+    componentDidMount(){
+        this.props.currentUser();
+    }
 
     addCant(event, property) {
         property.cant = event.target.value;
@@ -66,7 +69,6 @@ export class Summary extends Component{
 
         if(!user){
           history.push({pathname: '/login'});
-          this.props.fetchUser();
           let summary = document.getElementById('summary-mobile-view');
             summary.firstChild.classList.toggle('active');
          }else{
@@ -84,14 +86,12 @@ export class Summary extends Component{
       
         if(products && products.length > 0){
             products.forEach(product =>{
-                product.properties.forEach(property => {
-                    amount += property.cant  * property.price})
+                amount += product.properties.reduce((accum,property) => accum += (property.cant  * property.price),0)
             });
 
-            calc.subtotal = amount + 100; 
+            calc.subtotal = amount; 
             calc.discount = (calc.subtotal* 0.10).toFixed(2);
             calc.total =(calc.subtotal * 0.90).toFixed(2);
-            localStorage.setItem('total', calc.total)
         }
         return  calc;   
     }
@@ -100,7 +100,7 @@ export class Summary extends Component{
     render(){
        const { products, history } = this.props;
        const calc = this.renderSubtotal();
-        if(calc.subtotal > 100) {
+        if(calc.subtotal > 0) {
             return (
                 <div className="summary-panel" id="summary-view">
                     <div className="card-panel card-summary">
@@ -111,10 +111,6 @@ export class Summary extends Component{
                     {this.renderSummaryList(products)}
                         <hr />
                     <div className="total-details">
-                            <section>
-                                <span className="total-title">Delivery</span>
-                                <span>$100</span>
-                            </section>
                             <section>
                                 <span className="total-title">Subtotal </span> 
                                 <span> ${calc.subtotal}</span>

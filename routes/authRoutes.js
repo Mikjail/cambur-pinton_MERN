@@ -27,7 +27,6 @@ module.exports = app => {
 
 
     //LOCAL STRATEGY
-    
     app.post('/api/signup',(req, res, next) => { 
         passport.authenticate('local-signup',(err, user, info)=> {
             if (err) {
@@ -43,8 +42,8 @@ module.exports = app => {
               return res.json(user);
             });
 
-    })(req, res, next)
-})
+        })(req, res, next)
+    })
     
 
     

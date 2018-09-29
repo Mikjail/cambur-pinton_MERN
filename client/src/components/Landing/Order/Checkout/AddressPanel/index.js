@@ -6,7 +6,6 @@ import _ from 'lodash';
 
 import formField from './formField';
 import AddressField from './AddressField';
-import Loader from '../../../../Loader';
 
 import * as actions from '../../../../../actions'
 import './AddressPanel.css';
@@ -15,20 +14,29 @@ export class AddressPanel extends Component {
 
     constructor(props){
         super(props)
-        this.state = { checkedItems: null }
     }
+
     componentWillMount(){
-        const { auth } = this.props;
+        this.props.fetchUser();
+    }
+
+    componentDidMount(){
+        const {auth, checkedAddress } = this.props;
+        let defaultAddress = auth.addresses[0];
         if(auth){
-            if(!this.state.checkedItems && auth.addresses.length> 0){
-                this.setState({checkedItems: auth.addresses[0]._id});
-                localStorage.setItem("address",auth.addresses[0]._id)
+            if(!checkedAddress && auth.addresses.length> 0){
+                this.props.setCheckedAddress(defaultAddress._id);
+                this.props.addressSelectedStatus(true);
+                let adress = checkedAddress ? auth.addresses.find(address => address._id == checkedAddress): defaultAddress
+                this.props.addDeliveryStatus(adress.delivery);
+                this.props.onCheckout(adress.delivery);
             }
         }
-
     }
+
     renderFields(){
         return _.map(formField, ({label, name, type, styling})=>{
+            
             return <Field
             key={name} 
             component={AddressField} 
@@ -40,15 +48,29 @@ export class AddressPanel extends Component {
         })
     }
 
+    removeAddress(id){
+        const { auth } =this.props
+        if(auth.addresses.length>1 && auth.addresses[0]._id !== id){
+            this.setState({checkedItems:auth.addresses[0]._id  })
+        }
+
+        this.props.removeAddress(id, this.props)
+    }
     handleCheck(e) {
+        const {auth, delivery} = this.props;
         const item = e.target.value;
-        this.setState({ checkedItems: item});
-        localStorage.setItem("address",e.target.value)
+        this.props.addressSelectedStatus(true);
+        let address = auth.addresses.find(address => address._id == item);
+        if(delivery.radius !== address.delivery.radius){
+            this.props.addDeliveryStatus(address.delivery);
+            this.props.onCheckout(address.delivery);
+        }
+        this.props.setCheckedAddress(item);
       }
-    
+
     renderAddresses(){
         
-        const { addresses, auth } = this.props;
+        const { addresses, auth,checkedAddress } = this.props;
         
         if(!addresses){
             return( <form onSubmit={this.props.handleSubmit(this.props.onSubmitAddress)}>
@@ -66,15 +88,23 @@ export class AddressPanel extends Component {
                     return(
                         <ul key={address.street}>
                         <li>
-                            <input type="radio" value={address._id} checked={this.state.checkedItems === address._id} onChange={this.handleCheck.bind(this)} />
-                            <span>{address.telephone} - {address.street} {address.number}, {address.floor} {address.apartment}. {address.zone} </span>
-                        </li>
+                            <div className="address-text">
+                                <input type="radio" value={address._id} checked={checkedAddress === address._id} onChange={this.handleCheck.bind(this)} />
+                                <span>{address.telephone} - {address.street}, {address.floor} {address.apartment}. {address.zone} </span>
+                            </div>
+                            <div className="remove-btn address-remove">
+                                <i onClick={()=>{this.removeAddress()}} className="tiny material-icons">
+                                    remove_circle_outline
+                                </i>
+                            </div>
+
+                         </li>
                         </ul>
                     );   
                 })  
             }
         }else{
-            return(<div> PENSANDO</div>)
+            return(<div> Loading... </div>)
         }
         
     }
@@ -87,13 +117,13 @@ export class AddressPanel extends Component {
     
     if(addresses){
         return (
-            <a href="javascript:void(0);" onClick={()=>{this.props.changeStatus(false)}} className="right primary-link">
+            <a href="javascript:void(0);" onClick={()=>{this.props.availableAddressStatus(false)}} className="right primary-link">
             Agregar Domicilio
                 </a>
           )
       }else{
         if(auth.addresses.length > 0){
-            return ( <a href="javascript:void(0);" onClick={()=>{this.props.changeStatus(true)}}className="right">
+            return ( <a href="javascript:void(0);" onClick={()=>{this.props.availableAddressStatus(true)}} className="right primary-link">
             cancelar
         </a>)
         }
@@ -115,7 +145,7 @@ export class AddressPanel extends Component {
         </div>
     )
     }else{
-        return <Loader />
+        return <div>Loading...</div>
     }
   }
   
@@ -134,8 +164,8 @@ function validate(values) {
   
     return errors;
 }
-function mapStateToProps({auth}) {
-    return { auth };
+function mapStateToProps({auth, delivery, checkedAddress}) {
+    return { auth, delivery, checkedAddress };
   }
   
 
