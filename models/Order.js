@@ -8,6 +8,7 @@ const OderSchema = new Schema({
     total: {type: Number, default: 0},
     subtotal: {type: Number, default: 0},
     discount: {type:Number, default: 0},
+    delivery: { type: Number, default: 0},
     orderDate: Date
 });
 

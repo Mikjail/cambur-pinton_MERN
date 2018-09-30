@@ -8,7 +8,7 @@ class Mailer extends helper.Mail {
         super();
         
         this.sgApi = sendgrid(keys.sendGridKey);
-        this.from_email= new helper.Email('no-reply@cambur-pinton.com');
+        this.from_email= new helper.Email('test-noreply@cambur-pinton.com');
         this.subject = "Cambur Pintón - Confirmación de pedido";
         this.body = new helper.Content('text/html', content);
         this.recipients = new helper.Email(email);
@@ -30,7 +30,7 @@ class Mailer extends helper.Mail {
         const personalize = new helper.Personalization();
         
         personalize.addTo(this.recipients);
-        personalize.addTo(new helper.Email('salazarmikjail@gmail.com'));
+        personalize.addTo(new helper.Email('info@cambur-pinton.com'));
 
         this.addPersonalization(personalize);
     }

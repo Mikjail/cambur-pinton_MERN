@@ -132,8 +132,6 @@ export class AddressPanel extends Component {
   }
   
   render() {
-      const{auth} = this.props;
-    if(auth){
     return (
         <div className="card-panel">
             <div className="card-title">
@@ -145,9 +143,6 @@ export class AddressPanel extends Component {
             </div>
         </div>
     )
-    }else{
-        return <div>Loading...</div>
-    }
   }
   
 }

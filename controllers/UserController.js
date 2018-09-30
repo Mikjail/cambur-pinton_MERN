@@ -61,7 +61,7 @@ class UserController {
 
     async addOrder(req, res){
         try{
-            const { order } = req.body;
+            const { order,delivery } = req.body;
             let amount=0;
 
             order.products.forEach(product =>{
@@ -69,7 +69,8 @@ class UserController {
                     amount += property.cant  * property.price
                 })
             })
-            order.subtotal = ( amount +  parseFloat(config.delivery));
+            order.delivery =  parseFloat(config.delivery[delivery])
+            order.subtotal =  amount +   order.delivery;
             order.discount = ( order.subtotal * 0.10).toFixed(2);
             order.total =  ( order.subtotal * 0.90).toFixed(2);
 
@@ -78,6 +79,7 @@ class UserController {
                 products: order.products,
                 total:  parseFloat(order.total),
                 subtotal:  order.subtotal ,
+                delivery: order.delivery,
                 discount:  parseFloat(order.discount),
                 orderDate:  new Date()
             })
@@ -85,9 +87,9 @@ class UserController {
             req.user.orders.push(newOrder);
             
             const user = await req.user.save();
-
+            
             //SEND EMAIL 
-            const mailer = new Mailer( req.user.local.email, confirmOrderTemplate({user:req.user, order:newOrder}))
+            const mailer = new Mailer( req.user.local.email, confirmOrderTemplate({order:newOrder}))
             
             await mailer.send();
             

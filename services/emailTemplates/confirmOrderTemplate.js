@@ -1,7 +1,7 @@
 const keys = require('../../config/keys');
 
-module.exports = ({user, order}) =>{
-
+module.exports = ({order}) =>{
+	let domicilio = `${order.address}`
 	let tableSummary=`
 	<table align="left" border="0" cellpadding="0" cellspacing="0" class="table-pinton">
 	<thead>
@@ -47,7 +47,7 @@ module.exports = ({user, order}) =>{
 			Delivery
 	</td>
 	<td class="summary-text-right  summary-text">
-		100 $Ar
+		${order.delivery}  $Ar
 	</td>
 	</tr>
 	<tr>
@@ -719,7 +719,8 @@ return `<!doctype html>
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px; text-align:center;">
                         
-                            <span style="font-size:18px; text-align:center;">Gracias por tu Compra!</span>
+							<span style="font-size:18px; text-align:center;">Gracias por tu Compra!</span>
+							<p style="font-size:14px">Domicilio: ${domicilio} </p>
 						</td>
 					</tr>
 					<tr>

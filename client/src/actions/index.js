@@ -296,7 +296,7 @@ export const onSubmitOrder = (history,props) => async dispatch =>{
     
     try{
         
-        await axios.post('/api/submitOrder', {order : valueToSend});
+        await axios.post('/api/submitOrder', {order : valueToSend, delivery: props.delivery.radius});
         
 
         history.push({

@@ -4,7 +4,8 @@ import * as actions from '../../../../actions';
 import requireAuth from '../../../../utils/requireAuth';
 import AddressPanel from './AddressPanel';
 import PaymentPanel from './PaymentPanel';
-import {Summary} from './Summary';
+import Summary from './Summary';
+import Loader from '../../../shared/Loader';
 import './Checkout.css';
 
 export class Checkout extends Component {
@@ -67,7 +68,7 @@ export class Checkout extends Component {
         </div>
       )
     }
-    return   <div className="container"></div>;
+    return   <Loader />;
   }
 }
 
