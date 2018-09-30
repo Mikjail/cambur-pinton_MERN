@@ -69,7 +69,8 @@ class UserController {
                     amount += property.cant  * property.price
                 })
             })
-            order.delivery =  parseFloat(config.delivery[delivery])
+            const DELIVERY_ENV = JSON.parse(config.delivery);
+            order.delivery =  parseFloat(DELIVERY_ENV[delivery])
             order.subtotal =  amount +   order.delivery;
             order.discount = ( order.subtotal * 0.10).toFixed(2);
             order.total =  ( order.subtotal * 0.90).toFixed(2);

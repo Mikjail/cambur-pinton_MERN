@@ -50,7 +50,9 @@ const parseProduct = (products,delivery) => {
     totalAmount += products[index].properties.reduce((total, product) => total += (product.cant * product.price),0);
   }
 
-  totalAmount +=  parseFloat(config.delivery[delivery]);
+  const DELIVERY_ENV = JSON.parse(config.delivery);
+  
+  totalAmount +=  parseFloat(DELIVERY_ENV[delivery]);
   totalAmount =  totalAmount * 0.90;
   let element = {
     id: "1",
