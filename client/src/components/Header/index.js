@@ -96,7 +96,6 @@ class Header extends Component{
             <ul>
                 <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>HOME</a></li>
                 <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/order")}}>PEDIR</a></li>
-                <li><a href="javascript:void(0)" className="navBar-txt" onClick={()=>{this.navigateTo("/")}}>CONTACTO</a></li>
                 {this.renderLogin()} 
             </ul>
         </div>
