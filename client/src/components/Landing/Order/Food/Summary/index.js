@@ -66,9 +66,9 @@ export class Summary extends Component{
     }
 
     proccesOrder(products, history){
+        this.setState({orderProccess : true})
         localStorage.setItem('order', JSON.stringify(products));
         let user = localStorage.getItem('user');
-        this.setState({orderProccess : true})
         if(!user){
           history.push({pathname: '/login'});
           let summary = document.getElementById('summary-mobile-view');
