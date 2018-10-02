@@ -228,6 +228,7 @@ export const onSubmitAddress = (values, action, props) => async dispatch =>{
         dispatch({ type: CHECKED_ADDRESS, payload:res.data.addresses[res.data.addresses.length -1]._id})
         localStorage.setItem("user",JSON.stringify(res.data));
         props.availableAddressStatus(true);
+        props.addressSelectedStatus(true);
     
         dispatch({ type: LOADER, payload:false});
         dispatch({ type : AUTH_USER, payload: res.data});

@@ -16,14 +16,20 @@ export class Contents extends Component {
     }
     
     componentDidUpdate(prevProps) {
-      if (this.props !== prevProps.map) this.renderAutoComplete();
+      if (this.props.map !== prevProps.map) this.renderAutoComplete();
     }
+
+    handleChange(e) {
+      const target = e.target;
+      const value =  target.value;
+      this.setState({address: value});
+  }
   
     renderAutoComplete() {
       const { google, map } = this.props;
-  
+      const {lat, lng} = this.state;
       if (!google || !map) return;
-        
+    
       const options= {
         location:{lat:-34.603722, lng:-58.381592},
         radius: 500,
@@ -34,53 +40,54 @@ export class Contents extends Component {
       let segundoRango = new google.maps.Polygon({paths: FIRST_PAID_ZONE})
 
       const autocomplete = new google.maps.places.Autocomplete(this.autocomplete, options);
-    
+      
       autocomplete.bindTo('bounds', map);
-      let error=0;
+      
       autocomplete.addListener('place_changed', () => {
+
         let isInsideRadius= false;
-        
-          const place = autocomplete.getPlace();
-        
-          let placeValue =this.props.input.value
   
-          if (!place.geometry) return;
-  
-          if(placeValue.split(',')[1] !== ` ${place.vicinity}` ){
+        let placeValue =this.props.input.value
+        
+        const place = autocomplete.getPlace();
+
+        if (!place.geometry) return;
+        
+        let latLngMap  =  {lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }
+
             try{
               if(google.maps.geometry.poly.containsLocation(place.geometry.location, rangoGratuito)){
-                
-                let latlng={ lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }
-                this.props.addDeliveryStatus({radius:'firstRadius', ...latlng});
+                this.props.addDeliveryStatus({radius:'firstRadius', ...latLngMap});
                 isInsideRadius=true;
 
               }
               if(google.maps.geometry.poly.containsLocation(place.geometry.location, segundoRango)){
-
-                let latlng={ lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }
-                this.props.addDeliveryStatus({ radius:'secondRadius',  ...latlng});
+                this.setState({ lat:latLngMap.lat, lng: latLngMap.lng})
+                this.props.addDeliveryStatus({ radius:'secondRadius',  ...latLngMap});
                 isInsideRadius=true
 
               }
               if(isInsideRadius){
-                this.props.input.onChange(`${placeValue}, ${place.vicinity || ''}`)
+                let zone = place.vicinity !== placeValue.split(', ')[1]? `, ${place.vicinity}`: ''
+                this.props.input.onChange(`${placeValue}${zone}`)
                 this.setState({outsideRange:""})
               }else{
                 this.props.input.onChange("")
                 this.setState({outsideRange:"Direccion fuera de rango"})
               }
-             
-
+              
             }catch(error){
               console.log(error);
-            }          
+            } 
+            
+            if (place.geometry.viewport && isInsideRadius){
+              map.fitBounds(place.geometry.viewport);
+              this.setState({ position: place.geometry.location });
+            }     
+        
           
-  
-          if (place.geometry.viewport && isInsideRadius){
-            map.fitBounds(place.geometry.viewport);
-            this.setState({ position: place.geometry.location });
-          }       
-        }
+          
+       
        
       });
     }
@@ -88,12 +95,13 @@ export class Contents extends Component {
     render() {
       const { position, outsideRange } = this.state;
       const{ input, error, touched} = this.props;
+
       return (
         <div className="field-container">
           <div>
               <input
-                {...input}
                 placeholder="ingrese domicilio"
+                {...input}
                 ref={ref => (this.autocomplete = ref)}
                 onKeyPress={e => {
                   if (e.key === 'Enter') e.preventDefault();}}

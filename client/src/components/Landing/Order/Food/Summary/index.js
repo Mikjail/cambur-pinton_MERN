@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../../../../actions';
 import './Summary.css';
+import { ComponentLoader } from '../../../../shared/ComponentLoader';
 
 
 export class Summary extends Component{
-    
+    state= { orderProccess: false }
+
     componentDidMount(){
-        this.props.currentUser();
+        this.props.currentUser();   
     }
 
     addCant(event, property) {
@@ -66,13 +68,13 @@ export class Summary extends Component{
     proccesOrder(products, history){
         localStorage.setItem('order', JSON.stringify(products));
         let user = localStorage.getItem('user');
-
+        this.setState({orderProccess : true})
         if(!user){
           history.push({pathname: '/login'});
           let summary = document.getElementById('summary-mobile-view');
             summary.firstChild.classList.toggle('active');
          }else{
-
+            
             history.push({pathname: '/order/checkout'});
             
          }
@@ -96,7 +98,17 @@ export class Summary extends Component{
         return  calc;   
     }
 
-
+    renderOrderButton(products, history){
+        const { orderProccess } = this.state
+        if(!orderProccess){
+          return(  <button
+            onClick={() => this.proccesOrder(products, history)} 
+            className="btn primary center">
+            Pedir
+        </button>)
+        }
+        return <ComponentLoader />
+    }
     render(){
        const { products, history } = this.props;
        const calc = this.renderSubtotal();
@@ -125,11 +137,7 @@ export class Summary extends Component{
                             </section>
                         </div>
                         <div className="center">
-                        <button
-                            onClick={() => this.proccesOrder(products, history)} 
-                            className="btn primary center">
-                            Pedir
-                        </button>
+                        {this.renderOrderButton(products, history)}
                         {/* <Link   to={{ pathname: 'order/checkout', state: {products: order} }}
                                 className="btn primary center">
                             Pedir
