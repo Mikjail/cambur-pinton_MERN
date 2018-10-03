@@ -50,6 +50,13 @@ export default function register() {
         registerValidSW(swUrl);
       }
     });
+    var defferedPrompt;
+    window.addEventListener('beforeinstallprompt', (event) => {
+      console.log("intento preguntar")
+      event.preventDefault();
+      defferedPrompt= event;
+      return false
+    })
    
   
   }
