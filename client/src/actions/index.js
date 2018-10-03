@@ -21,6 +21,8 @@ export const currentUser = () => (dispatch) =>{
         dispatch({type: AUTH_USER, payload: user })
     
     } catch (error) {
+        localStorage.removeItem('user');
+        
         console.log(error)     
     }
 }
