@@ -7,7 +7,6 @@
 
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
-
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -19,6 +18,8 @@ const isLocalhost = Boolean(
 );
 
 export default function register() {
+
+  // if (process.env.NODE_ENV === 'development' && 'serviceWorker' in navigator) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
@@ -28,7 +29,6 @@ export default function register() {
       // serve assets; see https://github.com/facebookincubator/create-react-app/issues/2374
       return;
     }
-
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
@@ -38,17 +38,20 @@ export default function register() {
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {
-          console.log(
-            'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://goo.gl/SC7cgQ'
-          );
+        navigator.serviceWorker.ready.then((event) => {
+          console.log("Service Worker started")
+          console.log(event);
+          // this.addEventListener('beforeinstallprompt', (event) => {
+          //   console.log("EPALEEEE")
+          // });
         });
       } else {
         // Is not local host. Just register service worker
         registerValidSW(swUrl);
       }
     });
+   
+  
   }
 }
 

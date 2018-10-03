@@ -1,5 +1,5 @@
 {
-  "short_name": "Cambur P",
+  "short_name": "Cambur P.",
   "name": "Cambur Pintón",
   "icons": [
     {
@@ -45,7 +45,7 @@
      }
   ],
   "scope": ".",
-  "start_url": "./index.html",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#f39200",
   "background_color": "#000000",

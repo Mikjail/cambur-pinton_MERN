@@ -10,7 +10,7 @@ export class Summary extends Component{
     state= { orderProccess: false }
 
     componentDidMount(){
-        this.props.currentUser();   
+        // this.props.currentUser();   
     }
 
     addCant(event, property) {
