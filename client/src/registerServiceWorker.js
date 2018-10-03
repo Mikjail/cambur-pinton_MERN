@@ -41,23 +41,14 @@ export default function register() {
         navigator.serviceWorker.ready.then((event) => {
           console.log("Service Worker started")
           console.log(event);
-          // this.addEventListener('beforeinstallprompt', (event) => {
-          //   console.log("EPALEEEE")
-          // });
         });
       } else {
         // Is not local host. Just register service worker
         registerValidSW(swUrl);
       }
     });
-    var defferedPrompt;
-    window.addEventListener('beforeinstallprompt', (event) => {
-      console.log("intento preguntar")
-      event.preventDefault();
-      defferedPrompt= event;
-      return false
-    })
-   
+
+
   
   }
 }

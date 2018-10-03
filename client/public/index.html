@@ -64,6 +64,7 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+    
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -77,6 +78,14 @@
       <script src='https://www.google.com/recaptcha/api.js'></script>
       <script async src="https://www.jscache.com/wejs?wtype=socialButtonIcon&amp;uniq=62&amp;locationId=13226143&amp;color=green&amp;size=lg&amp;lang=en_US&amp;display_version=2"></script>
       <script>
+        var defferedPrompt;
+        window.addEventListener('beforeinstallprompt', (event) => {
+          console.log("intento preguntar")
+          event.preventDefault();
+          defferedPrompt= event;
+          return false
+        })
+   
         function enableButton(response){
             document.getElementById("signUp-btn").disabled = false;
         }
