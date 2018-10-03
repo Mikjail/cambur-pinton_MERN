@@ -16,12 +16,15 @@ class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
     this.props.fetchOrder();
-    if(window.defferedPrompt){
-      window.defferedPrompt.prompt();
-      window.defferedPrompt.userChoice.then((choiceResult)=>{
-        console.log(choiceResult.outcome);
-      })
-    }
+    setTimeout(() => {
+      if(this.defferedPrompt){
+        window.defferedPrompt.prompt();
+        window.defferedPrompt.userChoice.then((choiceResult)=>{
+          console.log(choiceResult.outcome);
+        })
+      }
+    },2000);
+    
   }
 
   renderSummary(){
