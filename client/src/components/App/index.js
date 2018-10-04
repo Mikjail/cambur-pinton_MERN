@@ -17,7 +17,7 @@ class App extends Component {
     this.props.fetchUser();
     this.props.fetchOrder();
     setTimeout(() => {
-      if(this.defferedPrompt){
+      if(window.defferedPrompt){
         window.defferedPrompt.prompt();
         window.defferedPrompt.userChoice.then((choiceResult)=>{
           console.log(choiceResult.outcome);
