@@ -1,8 +1,8 @@
 module.exports = {
     staticFileGlobs: [
-      './build/**/**.html',
-      './build/images/**.*',
-      './static/**',
+      'build/static/css/**.css',
+      'build/static/js/**.js',
+      'build/static/media/**.*'
     ],
     swFilePath: './build/service-worker.js',
     navigateFallbackWhitelist: [/^(?!.*\/auth\/google$).*$/],
