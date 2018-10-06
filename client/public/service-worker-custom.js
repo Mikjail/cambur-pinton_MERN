@@ -1,8 +1,9 @@
-
+var CACHE_STATIC_NAME= 'static-v3';
+var CACHE_DYNAMIC_NAME= 'dynamic-v3';
 self.addEventListener('install', function(event) {
     console.log('[Service Worker] Installing Service Worker ...', event);
     event.waitUntil(
-        caches.open('static')
+        caches.open(CACHE_STATIC_NAME)
         .then(function(cache){
             console.log('[SERVICE WORKER] Precaching app shell');
             cache.addAll([
@@ -16,15 +17,23 @@ self.addEventListener('install', function(event) {
   
 self.addEventListener('activate', function(event) {
 console.log('[Service Worker] Activating Service Worker ....', event);
+event.waitUntil(
+    caches.keys()
+    .then( function(keyList){
+        return Promise.all(keyList.map(function(key){
+            if( key !== CACHE_STATIC_NAME && key !== CACHE_DYNAMIC_NAME){
+                console.log('[SERVICE WORKER] Removing old cache')
+                return caches.delete(key);
+            }
+        }))
+    })
+)
 return self.clients.claim();
 });
 
 self.addEventListener('fetch', function(event) {
-    // console.log(process.env.PUBLIC_URL);
-    console.log( event.request.url);
-    let redirecUrl = `/google/auth'`; 
-    console.log(redirecUrl)
-    if( event.request.url !==redirecUrl ){
+    let redirecUrl ="/auth/google"; 
+    if(!event.request.url.indexOf(redirecUrl) > -1){
         event.respondWith(
             fetch(event.request).catch(function(){
                caches.match(event.request).then(function(response){
@@ -33,11 +42,14 @@ self.addEventListener('fetch', function(event) {
                    }
                    else{
                        return fetch(event.request)
-                       .then(function(re){
-                           return caches.open('dynamic')
+                       .then(function(res){
+                           return caches.open(CACHE_DYNAMIC_NAME)
                            .then(function(cache){
                                cache.put(event.request.url, res.clone());
                                return res;
+                           })
+                           .catch(function(err){
+
                            })
                        })
                    }
