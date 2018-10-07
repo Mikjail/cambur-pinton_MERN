@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Map, Polygon, Marker, InfoWindow} from 'google-maps-react';
-import { FREE_ZONE, FIRST_PAID_ZONE } from '../../utils/keys';
+import { FREE_ZONE, FIRST_PAID_ZONE, SECOND_PAID_ZONE, DELIVERY } from '../../utils/keys';
 
 export class Contents extends Component {
     state = {
@@ -38,7 +38,7 @@ export class Contents extends Component {
       }
       let rangoGratuito  = new google.maps.Polygon({paths: FREE_ZONE})
       let segundoRango = new google.maps.Polygon({paths: FIRST_PAID_ZONE})
-
+      let tercerRango = new google.maps.Polygon({paths: SECOND_PAID_ZONE})
       const autocomplete = new google.maps.places.Autocomplete(this.autocomplete, options);
       
       autocomplete.bindTo('bounds', map);
@@ -57,15 +57,17 @@ export class Contents extends Component {
 
             try{
               if(google.maps.geometry.poly.containsLocation(place.geometry.location, rangoGratuito)){
-                this.props.addDeliveryStatus({radius:'firstRadius', ...latLngMap});
+                this.props.addDeliveryStatus({radius: DELIVERY.firstRadius, ...latLngMap});
                 isInsideRadius=true;
 
-              }
-              if(google.maps.geometry.poly.containsLocation(place.geometry.location, segundoRango)){
+              }else if(google.maps.geometry.poly.containsLocation(place.geometry.location, segundoRango)){
                 this.setState({ lat:latLngMap.lat, lng: latLngMap.lng})
-                this.props.addDeliveryStatus({ radius:'secondRadius',  ...latLngMap});
+                this.props.addDeliveryStatus({ radius: DELIVERY.secondRadius,  ...latLngMap});
                 isInsideRadius=true
-
+              } else if(google.maps.geometry.poly.containsLocation(place.geometry.location, tercerRango)){
+                this.setState({ lat:latLngMap.lat, lng: latLngMap.lng})
+                this.props.addDeliveryStatus({ radius: DELIVERY.thirdRadius,  ...latLngMap});
+                isInsideRadius=true
               }
               if(isInsideRadius){
                 let zone = place.vicinity !== placeValue.split(', ')[1]? `, ${place.vicinity}`: ''
