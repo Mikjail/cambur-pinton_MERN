@@ -1,7 +1,7 @@
 export const DELIVERY={
-  firstRadius: 'firstRadius',
-  secondRadius: 'secondRadius',
-  thirdRadius: 'thirdRadius'
+  firstRadius: 0,
+  secondRadius: 30,
+  thirdRadius: 50
 } 
 export const GOOGLE_API_KEY = "AIzaSyC9qoUtPZFr24eqjQ0Lfhf4HXUMg_T85CU";
 export const FREE_ZONE = [

@@ -57,16 +57,16 @@ export class Contents extends Component {
 
             try{
               if(google.maps.geometry.poly.containsLocation(place.geometry.location, rangoGratuito)){
-                this.props.addDeliveryStatus({radius: DELIVERY.firstRadius, ...latLngMap});
+                this.props.addDeliveryStatus({radius: 'firstRadius', ...latLngMap});
                 isInsideRadius=true;
 
               }else if(google.maps.geometry.poly.containsLocation(place.geometry.location, segundoRango)){
                 this.setState({ lat:latLngMap.lat, lng: latLngMap.lng})
-                this.props.addDeliveryStatus({ radius: DELIVERY.secondRadius,  ...latLngMap});
+                this.props.addDeliveryStatus({ radius: 'secondRadius',  ...latLngMap});
                 isInsideRadius=true
               } else if(google.maps.geometry.poly.containsLocation(place.geometry.location, tercerRango)){
                 this.setState({ lat:latLngMap.lat, lng: latLngMap.lng})
-                this.props.addDeliveryStatus({ radius: DELIVERY.thirdRadius,  ...latLngMap});
+                this.props.addDeliveryStatus({ radius: 'thirdRadius',  ...latLngMap});
                 isInsideRadius=true
               }
               if(isInsideRadius){
@@ -163,6 +163,14 @@ export class Contents extends Component {
                     strokeOpacity={0.8}
                     strokeWeight={2}
                     fillColor='#f39200'
+                    fillOpacity={0.35} 
+                    />
+                    <Polygon
+                    paths={SECOND_PAID_ZONE}
+                    strokeColor='rgb(165,39,20)'
+                    strokeOpacity={0.8}
+                    strokeWeight={2}
+                    fillColor='rgb(165,39,20)'
                     fillOpacity={0.35} 
                     />
                      <InfoWindow
