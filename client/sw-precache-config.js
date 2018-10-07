@@ -1,10 +1,6 @@
 module.exports = {
-    staticFileGlobs: [
-      'build/static/css/**.css',
-      'build/static/js/**.js',
-      'build/static/media/**.*'
-    ],
-    swFilePath: './build/service-worker.js',
+    staticFileGlobs:['build' + '/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff}'],
+    swFilePath: 'build/service-worker.js',
     navigateFallbackWhitelist: [/^(?!.*\/auth\/google$).*$/],
-    stripPrefix: 'build/'
+    stripPrefix: 'build'
   }
