@@ -5,6 +5,12 @@ import './Success.css';
 export class Successs extends Component {
 
   componentDidMount(){
+    if(window.defferedPrompt){
+        window.defferedPrompt.prompt();
+        window.defferedPrompt.userChoice.then((choiceResult)=>{
+          console.log(choiceResult.outcome);
+      })
+  }
     let navBar = document.getElementsByClassName("breadcrumb");
     
     for (let index = 0; index < navBar.length; index++) {

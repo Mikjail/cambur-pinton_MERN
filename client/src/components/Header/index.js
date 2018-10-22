@@ -54,15 +54,7 @@ class Header extends Component{
     }
     
     toggleSummary(){
-        let summary = document.getElementById('summary-mobile-view');
-        if(window.defferedPrompt){
-              window.defferedPrompt.prompt();
-              window.defferedPrompt.userChoice.then((choiceResult)=>{
-                console.log(choiceResult.outcome);
-            })
-        }
-          
-          
+        let summary = document.getElementById('summary-mobile-view');          
         summary.firstChild.classList.toggle('active');
     }
 
