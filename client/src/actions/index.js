@@ -173,7 +173,6 @@ export const fetchOrder = () =>async (dispatch) =>{
 
 //Apply order to mercadolibre
 export const onCheckout = (delivery) => async (dispatch) =>{
-
     try{
         let products = JSON.parse(localStorage.getItem("order"));
         let newProduct= products.filter(product=>{
@@ -225,15 +224,17 @@ export const onSubmitAddress = (values, action, props) => async dispatch =>{
         dispatch({ type: LOADER, payload:true});
 
         const res = await axios.post('/api/updateAddress', {address: addressToSend});
-
+        
 
         dispatch({ type: CHECKED_ADDRESS, payload:res.data.addresses[res.data.addresses.length -1]._id})
+        dispatch({ type: DELIVERY , payload: res.data.addresses[res.data.addresses.length -1].delivery})
         localStorage.setItem("user",JSON.stringify(res.data));
         props.availableAddressStatus(true);
         props.addressSelectedStatus(true);
-    
+        
         dispatch({ type: LOADER, payload:false});
         dispatch({ type : AUTH_USER, payload: res.data});
+       
     }catch(error){
         
         dispatch({ type: LOADER, payload:false});
@@ -290,11 +291,11 @@ export const onSubmitOrder = (history,props) => async dispatch =>{
             valueToSend.products.push(elem);
         }
     })
-    
+
     const address = user.addresses.find(address =>{
         return address.delivery._id === props.delivery._id
     })
-  
+
     valueToSend.address =`${address.street} ${address.floor}${address.apartment} -  ${address.zone}` ;
     
     try{

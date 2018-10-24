@@ -27,10 +27,9 @@ export class AddressPanel extends Component {
             if(!checkedAddress && auth.addresses.length> 0){
                 this.props.setCheckedAddress(defaultAddress._id);
                 this.props.addressSelectedStatus(true);
-                let adress = checkedAddress ? auth.addresses.find(address => address._id == checkedAddress): defaultAddress
-                console.log(adress.delivery)
-                this.props.addDeliveryStatus(adress.delivery);
-                this.props.onCheckout(adress.delivery);
+                let address = checkedAddress ? auth.addresses.find(address => address._id == checkedAddress): defaultAddress
+                this.props.addDeliveryStatus(address.delivery);
+                this.props.onCheckout(address.delivery);
             }
         }
     }
