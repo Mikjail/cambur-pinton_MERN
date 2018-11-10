@@ -1,7 +1,10 @@
 const keys = require('../../config/keys');
 
-module.exports = ({order}) =>{
-	let domicilio = `${order.address}`
+module.exports = ({order, user}) =>{
+	let name = `${user.name} ${user.lastName}`;
+	let domicilio = `${order.address}`;
+	let telephone = `${order.telephone}`;
+	let paymentMethod = order.paymentMethod === 'efectivo' ? order.paymentMethod : `Tarjeta de Credito - <strong>id: ${order.paymentMethod.collection_id} </strong>, <strong>Orden Ref:</strong> ${order.paymentMethod.merchant_order_id}`;
 	let tableSummary=`
 	<table align="left" border="0" cellpadding="0" cellspacing="0" class="table-pinton">
 	<thead>
@@ -719,8 +722,12 @@ return `<!doctype html>
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px; text-align:center;">
                         
-							<span style="font-size:18px; text-align:center;">Gracias por tu Compra!</span>
-							<p style="font-size:14px">Domicilio: ${domicilio} </p>
+							<span style="font-size:18px; text-align:center;">Gracias por tu Compra ${name}!</span>
+							<p style="font-size:14px"><strong>Domicilio: </strong> ${domicilio} </p>
+							<p style="font-size:14px"><strong>Telefono:  </strong> ${telephone} </p>
+							<p style="font-size:14px"><strong>Metodo de Pago:</strong> ${paymentMethod} </p>
+
+							
 						</td>
 					</tr>
 					<tr>

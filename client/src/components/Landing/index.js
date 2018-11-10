@@ -9,7 +9,10 @@ import Order from './Order'
 import Login from '../Login';
 import Register from '../Signup';
 import Footer from '../Footer';
+import Failure from './Order/Failure';
+import Proccess from '../Proccess';
 import './Landing.css';
+
 
 export class Landing extends Component {
 
@@ -29,6 +32,8 @@ export class Landing extends Component {
                 <Route path="/order" component={Order}/>
                 <Route path="/login" component={Login} />  
                 <Route path="/signup" component={Register} />
+                <Route path="/failure" component={Failure} />  
+                <Route path="/proccess" component={Proccess} />  
                 <Footer />
             </div>
         </BrowserRouter>

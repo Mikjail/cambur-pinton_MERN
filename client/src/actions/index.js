@@ -175,6 +175,8 @@ export const fetchOrder = () =>async (dispatch) =>{
 export const onCheckout = (delivery) => async (dispatch) =>{
     try{
         let products = JSON.parse(localStorage.getItem("order"));
+        localStorage.setItem("delivery", delivery._id);
+
         let newProduct= products.filter(product=>{
             return product.properties.find((property)=>{
                 if(property.cant > 0){
@@ -280,8 +282,10 @@ export const onSubmitOrder = (history,props) => async dispatch =>{
     const user = JSON.parse(localStorage.getItem("user"));
     const valueToSend = {
         products: [],
-        address:""
+        address:"",
+        telephone: ''
     }
+    console.log()
     
     order.forEach(elem =>{
         elem.properties = elem.properties.filter(property =>{
@@ -290,32 +294,42 @@ export const onSubmitOrder = (history,props) => async dispatch =>{
         if(elem.properties.length>0){
             valueToSend.products.push(elem);
         }
-    })
+    });
 
     const address = user.addresses.find(address =>{
         return address.delivery._id === props.delivery._id
-    })
+    });
 
     valueToSend.address =`${address.street} ${address.floor}${address.apartment} -  ${address.zone}` ;
+    valueToSend.telephone = `${address.telephone}`
+    
+    if(props.mercadopago) valueToSend.paymentMethod = props.mercadopago;
     
     try{
         
-        await axios.post('/api/submitOrder', {order : valueToSend, delivery: props.delivery.radius});
+        await axios.post('/api/submitOrder', {order : valueToSend, delivery: address.delivery.radius});
         
 
         history.push({
             pathname: '/order/success',
             
         });
+        
         dispatch({ type: LOADER, payload:false});
 
     }catch(response){
         if(response.data){
             const { data } = response.data;
-
-            dispatch({type: ALERT_MESSAGE, payload: data })
-            dispatch({ type: LOADER, payload:false});
+            dispatch({type: ALERT_MESSAGE, payload: data });
+            
         }
+        
+        history.push({
+            pathname: '/failure',
+        });
+
+        dispatch({ type: LOADER, payload:false});
+    
     }
 }
 

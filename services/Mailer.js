@@ -31,7 +31,7 @@ class Mailer extends helper.Mail {
         
         personalize.addTo(this.recipients);
         personalize.addTo(new helper.Email('info@cambur-pinton.com'));
-        console.log(this.recipients)
+        
         if(this.recipients.email !== 'nicholaisalazar@gmail.com'){
             personalize.addBcc(new helper.Email('nicholaisalazar@gmail.com'));
         }

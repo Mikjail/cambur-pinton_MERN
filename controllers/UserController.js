@@ -63,6 +63,7 @@ class UserController {
         try{
             const { order,delivery } = req.body;
             let amount=0;
+            let paymentMethod = order.paymentMethod ?  order.paymentMethod : 'efectivo' ;
 
             order.products.forEach(product =>{
                 product.properties.forEach(property => {
@@ -77,12 +78,14 @@ class UserController {
 
             const newOrder = new Orders({
                 address: order.address,
+                telephone: order.telephone,
                 products: order.products,
                 total:  parseFloat(order.total),
                 subtotal:  order.subtotal ,
                 delivery: order.delivery,
                 discount:  parseFloat(order.discount),
-                orderDate:  new Date()
+                orderDate:  new Date(),
+                paymentMethod: paymentMethod
             })
 
             req.user.orders.push(newOrder);
@@ -90,7 +93,7 @@ class UserController {
             const user = await req.user.save();
             
             //SEND EMAIL 
-            const mailer = new Mailer( req.user.local.email, confirmOrderTemplate({order:newOrder}))
+            const mailer = new Mailer( req.user.local.email, confirmOrderTemplate({order:newOrder, user: req.user}))
             
             await mailer.send();
             

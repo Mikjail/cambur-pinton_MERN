@@ -1,4 +1,4 @@
-const MercadoPago = require('mercadopago');
+const mercadopago = require('mercadopago');
 const config  = require('../config/keys');
 
 module.exports = async (req, res, next) => {
@@ -7,9 +7,9 @@ module.exports = async (req, res, next) => {
     const { user } = req;
     const { products, delivery } = req.body;
 
-    
-    const mercadoPago  = new MercadoPago(config.mercadoPago_client_id, config.mercadoPago_client_secret);
-    
+  
+    //  mercadopago.configure({client_id:config.mercadoPago_client_id, client_secret: config.mercadoPago_client_secret});
+    mercadopago.configure({'client_id': '8075613250763653', 'client_secret': 'vQsdgo6VhnL4Aebo0touuJrV90HW2Ova'})
     let items = parseProduct(products,delivery);
 
     // Create a preference structure
@@ -27,16 +27,19 @@ module.exports = async (req, res, next) => {
           { id: "prepaid_card"}]
       },
       back_urls:{
-        success: 'https://guarded-savannah-73486.herokuapp.com/order/success',
-        failure: 'https://guarded-savannah-73486.herokuapp.com/order/failure'
-      }
+        success: 'https://cambur-pinton.com/proccess',
+        failure: 'https://cambur-pinton.com/failure'
+      },
+      auto_return: "all"
     };
-
-    const prefRes = await mercadoPago.createPreference(preference);
-
+    
+  
+    const prefRes = await mercadopago.preferences.create(preference);
+    
 
     res.send(prefRes);
   }catch(error){
+    console.log(error)
     // If an error has occurred
     res.send(error)
   }
