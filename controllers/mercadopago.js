@@ -8,8 +8,8 @@ module.exports = async (req, res, next) => {
     const { products, delivery } = req.body;
 
   
-    //  mercadopago.configure({client_id:config.mercadoPago_client_id, client_secret: config.mercadoPago_client_secret});
-    mercadopago.configure({'client_id': '8075613250763653', 'client_secret': 'vQsdgo6VhnL4Aebo0touuJrV90HW2Ova'})
+     mercadopago.configure({client_id:config.mercadoPago_client_id, client_secret: config.mercadoPago_client_secret});
+    // mercadopago.configure({'client_id': '8075613250763653', 'client_secret': 'vQsdgo6VhnL4Aebo0touuJrV90HW2Ova'})
     let items = parseProduct(products,delivery);
 
     // Create a preference structure
