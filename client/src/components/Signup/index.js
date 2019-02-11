@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash';
-import  { reduxForm, Field } from 'redux-form';
-import {connect} from 'react-redux';
-import { compose } from 'redux';
-import * as actions from '../../actions'
-import { withRouter, Link } from 'react-router-dom';
+import { Field } from 'redux-form';
+import { Link } from 'react-router-dom';
 
 
 import DivWithErrorHandling from '../../utils/handlingError';
@@ -14,10 +11,7 @@ import validateForm from '../../utils/validateEmails';
 import './Signup.css';
 
 
-export class Signup extends Component {
-
-
-
+export default class Signup extends Component {
     constructor(props){
         super(props);
         const user = localStorage.getItem('user');
@@ -78,32 +72,3 @@ export class Signup extends Component {
             )
   }
 }
-
-function validate(values) {
-    const errors = {};
-    
-    errors.email= validateForm.validateEmail(values.email);
-    
-    errors.confirmPass = validateForm.confirmPass(values);
-
-    _.each(formField, ({ name })=>{
-        if(!values[name]){
-           errors[name]= 'Requerido';
-        }
-    });
-    
-    return errors;
-}
-
-function componentDidMount({messageAlert}){
-    return {messageAlert};
-}
-
-export default compose(
-    connect(componentDidMount,actions),
-    reduxForm({ 
-    validate, 
-    form: 'registerForm',
-    destroyOnUnmount: false })
-    )(withRouter(Signup));
-

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
 import queryString from 'query-string';
 import * as actions from '../../actions';
 import { connect } from 'react-redux';
-import axios from 'axios';
+
 
 export class Proccess extends Component {
     

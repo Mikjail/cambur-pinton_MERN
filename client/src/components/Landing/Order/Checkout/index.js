@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import * as actions from '../../../../actions';
-import requireAuth from '../../../../utils/requireAuth';
-import AddressPanel from './AddressPanel';
-import PaymentPanel from './PaymentPanel';
 import Summary from './Summary';
 import Loader from '../../../shared/Loader';
+import PaymentPanelContainer from '../../../../containers/PaymentPanelContainer';
+import AddressPanelContainer from '../../../../containers/AddressPanelContainer';
 import './Checkout.css';
 
-export class Checkout extends Component {
+
+export default class Checkout extends Component {
   state = {user:null, addressAvailable:false, addressSelected: false }
   constructor(props){
     super(props);
@@ -49,12 +47,12 @@ export class Checkout extends Component {
         <div className="container">
           <div className="row">
           <div className="col l6 offset-m2 m8 s12">
-            <AddressPanel 
+            <AddressPanelContainer 
             addresses={addressAvailable} 
             addressSelected={addressSelected} 
             availableAddressStatus={(value)=>this.setState({addressAvailable: value})}
             addressSelectedStatus={(value) =>{this.setState({addressSelected: value})}}/>
-            <PaymentPanel 
+            <PaymentPanelContainer
             addresses={addressAvailable} 
             addressSelected={addressSelected} 
             paymentLink={mercadopago} />
@@ -71,10 +69,3 @@ export class Checkout extends Component {
     return   <Loader />;
   }
 }
-
-
-function mapStateToProps({auth, order, mercadopago, delivery}) {
-  return { auth, order, mercadopago, delivery };
-}
-
-export default connect(mapStateToProps, actions)(requireAuth(Checkout));

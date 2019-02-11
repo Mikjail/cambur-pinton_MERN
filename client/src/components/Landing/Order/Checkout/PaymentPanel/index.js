@@ -1,19 +1,12 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import * as actions from '../../../../../actions';
-
 import {ComponentLoader } from '../../../../shared/ComponentLoader';
 import { DELIVERY } from '../../../../../utils/keys';
 import mercadoPago from '../../../../../images/icon/mercadopago-logo.png';
 import './PaymentPanel.css';
 
-export class PaymentPanel extends Component {
+export default  class PaymentPanel extends Component {
     
-    constructor(props){
-        super(props);
-        this.state = { payAmount: "" };
-    }
+    state = { payAmount: "" };
 
     handleChange(e) {
         const target = e.target;
@@ -153,9 +146,3 @@ export class PaymentPanel extends Component {
         )
     }
 }
-
-function mapStateToProps({messageAlert, delivery, products, componentLoader}){
-    return {messageAlert, delivery, products, componentLoader}
-}
-
-export default connect(mapStateToProps, actions)(withRouter(PaymentPanel))

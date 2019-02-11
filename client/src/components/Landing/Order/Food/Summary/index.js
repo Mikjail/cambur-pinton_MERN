@@ -1,17 +1,10 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import * as actions from '../../../../../actions';
 import './Summary.css';
 import { ComponentLoader } from '../../../../shared/ComponentLoader';
 
 
-export class Summary extends Component{
+export default class Summary extends Component{
     state= { orderProccess: false }
-
-    componentDidMount(){
-        // this.props.currentUser();   
-    }
 
     addCant(event, property) {
         property.cant = event.target.value;
@@ -138,11 +131,6 @@ export class Summary extends Component{
                         </div>
                         <div className="center">
                         {this.renderOrderButton(products, history)}
-                        {/* <Link   to={{ pathname: 'order/checkout', state: {products: order} }}
-                                className="btn primary center">
-                            Pedir
-                        </Link> */}
-
                         </div>
                     </div>
                </div>
@@ -171,9 +159,3 @@ export class Summary extends Component{
        
     }
 }
-
-function mapStateToProp({products}){
-    return {products};
-}
-
-export default connect(mapStateToProp,actions)(withRouter(Summary));

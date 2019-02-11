@@ -9,7 +9,6 @@ import * as actions from '../../../actions';
 
 const Home = (props) => {
   props.clearProducts();
-  console.log(props)
 
   return ( 
     <div className="section first-section">

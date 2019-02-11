@@ -3,11 +3,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
-import Landing from '../Landing';
+import LandingContainer from '../../containers/LandingContainer';
 import Summary from '../Landing/Order/Food/Summary';
 
 
 import './App.css';
+import SummaryContainer from '../../containers/SummaryContainer';
 
 
 
@@ -21,7 +22,7 @@ class App extends Component {
   renderSummary(){
     if(!this.props.orders){
      
-        return <Summary />
+        return <SummaryContainer />
       
     }
   }
@@ -30,7 +31,7 @@ class App extends Component {
     return (
       <BrowserRouter forceRefresh={true}>
             <div className="appView">
-                  <Landing />
+                  <LandingContainer />
                   <div className="hide-on-med-and-up show-on-medium-and-down" id="summary-mobile-view">
                       {this.renderSummary()}
                   </div>

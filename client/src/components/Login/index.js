@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
 import _ from 'lodash';
-import  { reduxForm, Field } from 'redux-form';
-import {connect} from 'react-redux';
-import { compose } from 'redux';
-import * as actions from '../../actions'
-import { withRouter } from 'react-router-dom';
+import  { Field } from 'redux-form';
 
 
 import DivWithErrorHandling from '../../utils/handlingError';
 import formField from './formField';
 import LoginField from './LoginField';
-import validateForm from '../../utils/validateEmails';
 import './Login.css';
 
-export class Login extends Component {
+export default class Login extends Component {
 
     constructor(props){
         super(props);
@@ -21,6 +16,7 @@ export class Login extends Component {
         const user = localStorage.getItem('user');
         if(user) this.props.history.push('/');
     }
+    
     renderFields(){
         return _.map(formField, ({label, name, type})=>{
            
@@ -81,27 +77,3 @@ export class Login extends Component {
         )
     }
 }
-
-function validate(values) {
-    const errors = {};
-    errors.user= validateForm.validateEmail(values.user);
-    
-    _.each(formField, ({ name })=>{
-        if(!values[name]){
-           errors[name]= 'Requerido';
-        }
-    });
-  
-    return errors;
-}
-function mapStateToProps({messageAlert}){
-        return {messageAlert};
-}
-
-export default  compose(
-    connect(mapStateToProps,actions),
-    reduxForm({ 
-    validate, 
-    form: 'loginForm',
-    destroyOnUnmount: false 
-    }))(withRouter(Login));

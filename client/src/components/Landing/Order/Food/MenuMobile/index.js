@@ -6,27 +6,28 @@ import * as actions from '../../../../../actions';
 import './MenuMobile.css';
 
 
-export class MenuMobile extends Component {
+export const MenuMobile = ({props}) => {
+    
 
-    addProduct(property){
+    const addProduct = (property) => { 
         
         if(property.cant <12){
             property.cant++;
         }
         
-        this.props.addProduct(this.props.products)
+        props.addProduct(props.products)
     }
 
-    substractProduct(property){
+    const substractProduct= (property) => {
      
         if(property.cant > 0){
             property.cant--;
         }
         
-        this.props.addProduct(this.props.products)
+        props.addProduct(props.products)
     }
 
-    renderList(product){
+    const renderList = (product) =>{
         return product.properties.map(property =>{
             return (
             
@@ -45,11 +46,11 @@ export class MenuMobile extends Component {
                         <div className="product-body">
                         
                             <div className="product-operation">
-                                <a href="javascript:void(0)" onClick={()=>this.substractProduct(property)} className="operation-btn">
+                                <a href="javascript:void(0)" onClick={()=>substractProduct(property)} className="operation-btn">
                                     <i className="tiny material-icons">remove_circle_outline</i>
                                 </a>
                                 <span className="product-cant">{property.cant}</span>
-                                <a href="#!" onClick={()=>this.addProduct(property)} className="operation-btn">
+                                <a href="#!" onClick={()=>addProduct(property)} className="operation-btn">
                                     <i className="tiny material-icons">add_circle_outline</i>
                                 </a>
                                
@@ -61,7 +62,7 @@ export class MenuMobile extends Component {
         })
     }
 
-    renderCollpasePanel(products){
+    const renderCollpasePanel = (products) =>{
         return products.map( product =>{
             return(<div className="col m8 offset-m2 s12" key={product._id}>
                     <Collapsible>
@@ -69,7 +70,7 @@ export class MenuMobile extends Component {
                     
                                 <div className="product-container">
                                     
-                                    {this.renderList(product)}
+                                    {renderList(product)}
                                 </div>
                             
                         </CollapsibleItem>
@@ -78,22 +79,21 @@ export class MenuMobile extends Component {
            )
         })
     }
-    render() {
-    const { products } = this.props;
-        if(products.length > 0){
-            return (
-                <div className="row menu-mobile">
-                    {this.renderCollpasePanel(products)}
-                </div>
-            )
-        }
-        return <Loader />
+
+
+
+    if(props.products.length > 0){
+        return (
+            <div className="row menu-mobile">
+                {renderCollpasePanel(props.products)}
+            </div>
+        )
     }
+    return <Loader />
+    
     
 }
 
-function mapStateToProps({products}){
-    return {products};
-}
 
-export default connect(mapStateToProps,actions)(MenuMobile)
+
+export default MenuMobile;

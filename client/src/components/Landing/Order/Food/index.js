@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import * as actions from '../../../../actions';
 
-import Summary from './Summary';
+import SummaryContainer from '../../../../containers/SummaryContainer';
 import MenuDesk  from './MenuDesk';
 import MenuMobile  from './MenuMobile';
 
 import './Food.css';
+
 
 
 export class Food extends Component {
@@ -20,16 +21,19 @@ export class Food extends Component {
 
   
     render() {
-    return (
-        <div className="container food-section">
-                <MenuDesk />
-                <MenuMobile />
-        <div className="hide-on-med-and-down">
-                <Summary />
+        return (
+            <div className="container food-section">
+                    <MenuDesk props={this.props}/>
+                    <MenuMobile props={this.props}/>
+            <div className="hide-on-med-and-down">
+                    <SummaryContainer />
+                </div>
             </div>
-        </div>
-    )
+        )
   }
 }
 
-export default  connect(null, actions)(Food);
+function mapStateToProps(props){
+    return props;
+}
+export default  connect(mapStateToProps, actions)(Food);

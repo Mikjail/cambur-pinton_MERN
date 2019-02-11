@@ -1,20 +1,14 @@
 import React, { Component } from 'react'
-import  { reduxForm, Field } from 'redux-form';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import  {  Field } from 'redux-form';
 import _ from 'lodash';
 
 import formField from './formField';
 import AddressField from './AddressField';
 
-import * as actions from '../../../../../actions'
+
 import './AddressPanel.css';
 
-export class AddressPanel extends Component {
-
-    constructor(props){
-        super(props)
-    }
+export default class AddressPanel extends Component {
 
     componentWillMount(){
         this.props.fetchUser();
@@ -56,6 +50,7 @@ export class AddressPanel extends Component {
 
         this.props.removeAddress(id, this.props)
     }
+
     handleCheck(e) {
         const {auth, delivery} = this.props;
         const item = e.target.value;
@@ -142,31 +137,5 @@ export class AddressPanel extends Component {
             </div>
         </div>
     )
-  }
-  
+  } 
 }
-
-function validate(values) {
-    const errors = {};
-
-    // errors.recipients= validateEmails(values.recipients || '');
-    
-    _.each(formField, ({ name })=>{
-        if(!values[name]){
-           errors[name]= 'Requerido';
-        }
-    });
-  
-    return errors;
-}
-function mapStateToProps({auth, delivery, checkedAddress}) {
-    return { auth, delivery, checkedAddress };
-  }
-  
-
-export default compose(
-    connect(mapStateToProps,actions),
-    reduxForm({ validate, form: 'addressForm', destroyOnUnmount: false })
-    )(AddressPanel);
-
-

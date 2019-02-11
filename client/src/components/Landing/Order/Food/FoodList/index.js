@@ -1,28 +1,29 @@
-import React, { Component } from 'react'
+import React from 'react'
 import * as actions from '../../../../../actions';
 import { connect } from 'react-redux';
 
 import './FoodList.css';
 
-class FoodList extends Component {
+const FoodList= (props) => {
 
-    addProduct(property){
-        const {arrayProd } = this.props;
+    const addProduct = (property) => {
+        const {arrayProd} = props;
         if(property.cant <12){
             property.cant++;
         }
        
-        this.props.addProduct(arrayProd)
+        props.addProduct(arrayProd)
     }
 
-    renderFood(){
-        const {product} = this.props;
+    const renderFood = () => {
+        
+        const {product, arrayProd} = props ;
         return product.properties.map(property =>{
             return (
                 <li className="collection-item" key={property.name}>
                     <div>
                         {property.name}
-                        <a href="#!" onClick={()=>this.addProduct(property)} className="secondary-content">
+                        <a href="#!" onClick={()=>addProduct(property)} className="secondary-content">
                             <i className="tiny material-icons">add</i>
                         </a>
                         <span className="product-price">${property.price}</span>
@@ -31,13 +32,16 @@ class FoodList extends Component {
         })
     }
 
-    render() {
+        if(props){
             return(
-                <ul className="collection with-header col s12 m12 l12" key={this.props.product.name}>
-                    {this.renderFood()}
+                <ul className="collection with-header col s12 m12 l12" key={props.product.name}>
+                    {renderFood()}
                 </ul>
             )
-    }
+        }else{
+            return<div></div>
+        }
+     
 }
 
-export default  connect(null,actions)(FoodList);
+export default connect(null,actions)(FoodList);
