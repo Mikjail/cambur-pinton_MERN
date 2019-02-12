@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Summary.css';
 import { ComponentLoader } from '../../../../shared/ComponentLoader';
+import calculator from '../../../../../utils/calculator';
 
 
 export default class Summary extends Component{
@@ -77,13 +78,8 @@ export default class Summary extends Component{
     renderSubtotal(){
         let {products} = this.props;
         let calc = { subtotal: 0, discount: 0, total: 0};
-        let amount =0 
-      
-        if(products && products.length > 0){
-            products.forEach(product =>{
-                amount += product.properties.reduce((accum,property) => accum += (property.cant  * property.price),0)
-            });
-
+        const amount = calculator.calculateSubtotal(products);
+        if(amount > 0){
             calc.subtotal = amount; 
             calc.discount = (calc.subtotal* 0.10).toFixed(2);
             calc.total =(calc.subtotal * 0.90).toFixed(2);
@@ -106,7 +102,7 @@ export default class Summary extends Component{
        const { products, history } = this.props;
        const calc = this.renderSubtotal();
         if(calc.subtotal > 0) {
-            return (
+            return(
                 <div className="summary-panel" id="summary-view">
                     <div className="card-panel card-summary">
                         <div className="header-panel">

@@ -3,6 +3,7 @@ import {ComponentLoader } from '../../../../shared/ComponentLoader';
 import { DELIVERY } from '../../../../../utils/keys';
 import mercadoPago from '../../../../../images/icon/mercadopago-logo.png';
 import './PaymentPanel.css';
+import calculator from '../../../../../utils/calculator';
 
 export default  class PaymentPanel extends Component {
     
@@ -61,21 +62,21 @@ export default  class PaymentPanel extends Component {
     }
     calcTotal(){
         const { products, delivery } = this.props;
-        let amount=0;
-        
-        products.forEach(product=>{
-            amount += product.properties.reduce((accum,property) => accum += (property.cant  * property.price),0);
-          });
-          let subtotal = amount + DELIVERY[delivery.radius]; 
-          let total = (subtotal * 0.90).toFixed(2);
-          return total;   
+        const amount=calculator.calculateSubtotal(products);
+        if(delivery.radius){
+            let subtotal = amount + DELIVERY[delivery.radius]; 
+            let total = (subtotal * 0.90).toFixed(2);
+            return total; 
+        }
+        return '$--';
+      
     }
     renderAlertAddress(){
         const {addressSelected } = this.props;
         if(!addressSelected){
             return (
                 <div className="primary-link">
-                    Seleccion un Domicilio
+                    Seleccione un Domicilio
                 </div>
             )
         }

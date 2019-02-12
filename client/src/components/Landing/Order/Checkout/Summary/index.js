@@ -1,24 +1,30 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { DELIVERY } from '../../../../../utils/keys';
-
-export class Summary extends Component {
-
-    renderSubtotal(products){
+import calculator from '../../../../../utils/calculator';
+const Summary = (props) => {
+    
+    const renderSubtotal =({products, delivery}) => {
         let amount = 0;
-        let {delivery} = this.props;
-        products.forEach(product=>{
-          amount += product.properties.reduce((accum,property) => accum += (property.cant  * property.price),0);
-        });
-        products.subtotal = amount + DELIVERY[delivery.radius]; 
-        products.discount = (products.subtotal * 0.10).toFixed(2);
-        products.total =(products.subtotal * 0.90).toFixed(2);
-        localStorage.setItem('total', products.total)
-        return products.subtotal;   
+        
+        amount = calculator.calculateSubtotal(products);
+        if(delivery.radius){
+          products.subtotal = amount + DELIVERY[delivery.radius];
+          products.discount = (products.subtotal * 0.10).toFixed(2);
+          products.total =(products.subtotal * 0.90).toFixed(2);  
+          
+          localStorage.setItem('total', products.total)
+          
+          return products.subtotal;   
+        }
+        products.subtotal= '--'
+        products.total= '--' 
+        products.discount = '--'
+        return '--'
     }
     
     
-      renderSumary(products){
+      const renderOrder= ({products}) => {
         return  products.map(product => {
           return product.properties.map(property => {
             if(property.cant > 0){
@@ -34,10 +40,7 @@ export class Summary extends Component {
           })
         })
       }
-    
-    
-  render() {
-      let {products, delivery} = this.props;
+      
     return (
         <div id="summary-mobile-view">
           <div className="summary-checkout-panel">
@@ -59,55 +62,54 @@ export class Summary extends Component {
                 </tr>
               </thead>
               <tbody>
-                  {this.renderSumary(products)}
+                  {renderOrder(props)}
                   <tr className="end-summary">
+                <td colSpan="3">
+                  <span className="right">
+                  <strong>Delivery</strong>
+                  </span>
+                  </td>
+                  <td>
+                    ${props.delivery.radius ? DELIVERY[props.delivery.radius] : '--'}
+                  </td>
+                </tr>
+                <tr>
+                <td colSpan="3">
+                  <span className="right">
+                  <strong>Subtotal</strong>
+                  </span>
+                  </td>
+                  <td>
+                    ${renderSubtotal(props)}
+                  </td>
+                </tr>
+                <tr> 
                   <td colSpan="3">
-                    <span className="right">
-                    <strong>Delivery</strong>
+                    <span className="right primary-link">
+                    <strong>10% descuento en compra web</strong>
                     </span>
-                    </td>
-                    <td>
-                      ${DELIVERY[delivery.radius]}
-                    </td>
-                  </tr>
-                  <tr>
+                  </td>
+                  <td className="primary-link">
+                    ${props.products.discount}
+                  </td>
+                </tr>
+                <tr>
                   <td colSpan="3">
-                    <span className="right">
-                    <strong>Subtotal</strong>
-                    </span>
-                    </td>
-                    <td>
-                      ${this.renderSubtotal(products)}
-                    </td>
-                  </tr>
-                  <tr> 
-                    <td colSpan="3">
-                      <span className="right primary-link">
-                      <strong>10% descuento en compra web</strong>
-                      </span>
-                    </td>
-                    <td className="primary-link">
-                      ${products.discount}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan="3">
-                    <span className="right">
-                    <strong>Total</strong>
-                    </span>
-                    </td>
-                    <td>
-                      ${products.total}
-                    </td>
-                  </tr>
+                  <span className="right">
+                  <strong>Total</strong>
+                  </span>
+                  </td>
+                  <td>
+                    ${props.products.total}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
         </div>
       </div>
-    )
-  }
+    );
 }
 
 export default Summary;
