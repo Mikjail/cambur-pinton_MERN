@@ -1,7 +1,12 @@
-# CAMBUR PINTON (MERN RELEASE)
-This project was implemented with:
 
-1. Front End: React with Redux(https://github.com/facebookincubator/create-react-app).
+# CAMBUR PINTON (MERN RELEASE)
+
+## DEMO
+https://guarded-savannah-73486.herokuapp.com/
+
+## Technologies:
+
+1. Front End: React with Redux.
 2. Back End: Nodejs (9.6.1), Express (4.16.3), Mongoose (5.1.3) 
 
 ## Folder Structure
@@ -21,6 +26,3 @@ server/
   package.json
 ```
 
-## DEMO
-
-https://guarded-savannah-73486.herokuapp.com/
