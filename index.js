@@ -39,7 +39,7 @@ require("./routes/orderRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // 1. Express will serve up prod assets like main.css and main.js
-  app.use(express.static("/build"));
+  app.use(express.static("build"));
 
   // 2. Express wirll serve up index.html if it doesn't recognize the file
   const path = require("path");
